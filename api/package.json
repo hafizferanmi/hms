@@ -1,0 +1,38 @@
+{
+  "name": "HMS",
+  "version": "0.0.1",
+  "description": "Hotel Management systems API",
+  "main": "app.js",
+  "scripts": {
+    "babel-node": "babel-node",
+    "dev": "cross-env DEBUG=API:* BABEL_DISABLE_CACHE=1 nodemon --exec npm run babel-node -- ./src/app.js",
+    "build": "NODE_ENV=production babel src -d dist",
+    "start": "NODE_ENV=production node dist/index.js",
+    "mongo:start": "docker-compose up -d mongodb",
+    "mongo:stop": "docker-compose stop mongodb",
+    "lint:js": "standard \"./src/**/*.js\""
+  },
+  "author": "Hafizferanmi",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "config": "^3.3.1",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "joi": "^17.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.20",
+    "nodemon": "^2.0.4",
+    "ramda": "^0.27.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-inline-import": "^3.0.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^2.0.4",
+    "standard": "^14.3.4"
+  }
+}
