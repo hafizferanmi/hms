@@ -7,7 +7,7 @@ const generateAuthToken = id => jwt.sign({ id }, getJwtSecret())
 
 const verifyAuthToken = token => jwt.verify(token, getJwtSecret())
 
-const getTokenFromHeader = header => header.replace('Bearer ', '')
+const getTokenFromHeader = header => header.replace('Bearer: ', '')
 
 export default {
   generateAuthToken,

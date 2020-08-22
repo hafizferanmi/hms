@@ -2,15 +2,22 @@ import Company from '../models/company'
 import Staff from '../models/staff'
 import helpers from '../helpers'
 import { STAFF_ROLES } from '../constants/staff'
+import ValidationSchemas from '../ValidationSchemas'
 
+const { CompanySchema } = ValidationSchemas
 const { hashPassword } = helpers.password
-const { JsonResponse, failed, success } = helpers.response
+const { failed, success } = helpers.response
+const { validateRequestBody } = helpers.misc
 
 export const createCompany = async (req, res) => {
-  const { company: companyName, subdomain, manager, email, password } = req.body
-  if (!companyName || !subdomain || !manager || !email || !password) {
-    res.json(failed('Name or subdomain cannot be empty'))
+  const { value, errorMsg } = validateRequestBody(CompanySchema, req.body)
+
+  if (errorMsg) {
+    return res.json(failed(errorMsg))
   }
+
+  const { company: companyName, subdomain, manager, email, password } = value
+
   let company
   try {
     const companyExists = await Company.findOne({ subdomain })
@@ -35,16 +42,20 @@ export const createCompany = async (req, res) => {
     delete staff.password
     return res.json(success({ company, staff }))
   } catch (e) {
-    await Company.deleteOne({ subdomain })
-    return res.json(failed('Error Occured, try again.'))
+    try {
+      await Company.deleteOne({ subdomain })
+      return res.json(failed('Error Occured, try again.'))
+    } catch (e) {
+      return res.json(failed('Something bad really happened. Looking to it immediately.'))
+    }
   }
 }
 
 export const allCompanies = async (req, res) => {
   try {
     const companies = await Company.find()
-    return res.json(JsonResponse(true, companies))
+    return res.json(success(companies))
   } catch (e) {
-    return res.json(JsonResponse(false, null, 'Error Occured, try again.'))
+    return res.json(failed('Error Occured, try again.'))
   }
 }
