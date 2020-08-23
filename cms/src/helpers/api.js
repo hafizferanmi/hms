@@ -20,7 +20,7 @@ export const fetchData = async (path) => {
 
 const sendData = async (path, body = {}) => {
   const res = await request.post(path, body)
-  return res.data.data
+  return res.data
 }
 
 export const deleteResource = async (path, body) => {
@@ -33,7 +33,4 @@ export const modifyResource = async (path, body) => {
   return res.data.data
 }
 
-export const adminLogin = (body) => sendData('/admin/login', body)
-export const fetchCompanies = () => fetchData('/company/all')
-export const addCompany = (body) => sendData('/company/create', body)
-export const updateCompany = (body) => modifyResource(`/company/${body._id}`, body)
+export const staffLogin = (body) => sendData('/staff/login', body)

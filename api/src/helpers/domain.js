@@ -1,8 +1,8 @@
 import { URL } from 'url'
 
-const getOrigin = (context) => new URL(context.request.get('origin'))
+const getOrigin = (req) => new URL(req.get('origin'))
 
-const getSubdomain = (context) => getOrigin(context).hostname.split('.')[0]
+const getSubdomain = (req) => getOrigin(req).hostname.split('.')[0]
 
 export default {
   getOrigin,

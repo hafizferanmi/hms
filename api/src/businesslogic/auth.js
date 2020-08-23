@@ -8,35 +8,41 @@ const debug = Debug('API: auth')
 
 const { isCorrectPassword } = helpers.password
 const { generateAuthToken } = helpers.jwt
-const { JsonResponse, failed, success } = helpers.response
+const { failed, success } = helpers.response
+const { getSubdomain } = helpers.domain
 
 export const staffLogin = async (req, res) => {
-  const { email, password, company: subdomain } = req.body
-  if (!email || !password || !subdomain) {
-    return res.json(JsonResponse(false, [], 'Login credentials failed'))
+  const subdomain = getSubdomain(req)
+  if (!subdomain) {
+    return res.json(failed('Invalid company!'))
+  }
+
+  const { email, password } = req.body
+  if (!email || !password) {
+    return res.json(failed('Login credentials failed'))
   }
 
   try {
     const company = await Company.findOne({ subdomain })
     if (!company) {
-      return res.json(JsonResponse(false, [], 'Staff does not belong to this company'))
+      return res.json(failed('Staff does not belong to this company'))
     } else {
       const companyId = company._id
       const staff = await Staff.findOne({ email, company: companyId })
       if (!staff) {
-        return res.json(JsonResponse(false, [], 'Error occured, try in a moment'))
+        return res.json(failed('Error occured, try in a moment'))
       }
 
       if (await isCorrectPassword(password, staff.password)) {
         const staffId = staff._id
         const token = generateAuthToken(staffId)
-        return res.json(JsonResponse(true, token))
+        return res.json(success({ token }))
       } else {
-        return res.json(JsonResponse(false, [], 'Invalid credentials'))
+        return res.json(failed('Invalid credentials'))
       }
     }
   } catch (e) {
-    return res.json(JsonResponse(false, [], 'Error occured, try in a moment'))
+    return res.json(failed('Error occured, try in a moment'))
   }
 }
 
