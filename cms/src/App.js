@@ -10,7 +10,7 @@ const App = () => {
   return (
     <Router>
       <LoggedOutRoute path='/' />
-      <AuthRoute path='/dashboard' />
+      <AuthRoute path='/secure' />
       <NotfoundPage default />
     </Router>
   )

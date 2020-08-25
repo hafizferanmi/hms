@@ -1,25 +1,26 @@
 import Joi from 'joi'
+import { stringSchema } from './helpers'
 
 const schema = Joi.object()
   .keys({
-    company: Joi.string()
+    company: stringSchema()
       .label('Company name')
       .required(),
 
-    subdomain: Joi.string()
+    subdomain: stringSchema()
       .label('Subdomain')
       .required(),
 
-    manager: Joi.string()
+    manager: stringSchema()
       .label('Managers name')
       .required(),
 
-    email: Joi.string()
+    email: stringSchema()
       .label('Email')
       .email()
       .required(),
 
-    password: Joi.string()
+    password: stringSchema()
       .label('Password')
       .required()
   })

@@ -5,19 +5,26 @@ import { useNavigate } from '@reach/router'
 import PageContent from '../GlobalStyle/PageContent'
 
 const HeaderTag = styled.header`
-  height: 70px;
-  padding: 0 30px;
+  background-color: #fff;
+  border: 0;
+  border-radius: 0;
+  -webkit-box-shadow: 0 0 6px rgba(0,0,0,.15);
+  box-shadow: 0 0 6px rgba(0,0,0,.15);
+  height: 44px;
+  min-height: 44px;
+  max-height: 44px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  color: black;
+  /* justify-content: space-space-around; */
+  z-index: 1;
 `
 const Logo = styled.div`
 `
 const Logout = styled.div`
-  cursor: pointer;
-  background: white;
-  padding: 5px;
-  color: black;
 `
 
 const Header = () => {
@@ -31,7 +38,7 @@ const Header = () => {
     <HeaderTag>
       <PageContent>
         <Logo>
-          HMS admin
+          HMS
         </Logo>
         <Logout onClick={handleLogout}>
           Logout

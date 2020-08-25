@@ -51,7 +51,7 @@ const ErrorMessage = styled.div`
   color: red;
 `
 
-const Loginform = ({ error, submitForm, loading, message }) => {
+const Loginform = ({ error, submitForm, message }) => {
   const { register, handleSubmit, errors, formState } = useForm({
     resolver: yupResolver(LoginFormSchema)
   })

@@ -1,4 +1,4 @@
-const STAFF_ROLES = Object.freeze({
+export const STAFF_ROLES = Object.freeze({
   FRONT_DESK_OFFICER: 'FRONT_DESK_OFFICER',
   ADMINISTRATOR: 'ADMINISTRATOR',
   GYM_MANAGER: 'GYM_MANAGER',
@@ -14,13 +14,8 @@ const STAFF_ROLES = Object.freeze({
   MANAGER: 'MANAGER'
 })
 
-const STAFF_STATUS = Object.freeze({
+export const STAFF_STATUS = Object.freeze({
   ON_LEAVE: 'ON_LEAVE',
   RESIGNED: 'RESIGNED',
   LEFT: 'LEFT'
 })
-
-export {
-  STAFF_ROLES,
-  STAFF_STATUS
-}
