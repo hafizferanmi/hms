@@ -9,9 +9,9 @@ const validateRequestBody = (schema, body) => {
   return { errorMsg, value }
 }
 
-const checkIfIdsAreEqual = (id1, id2) => id1.equals(id2)
+const areIdsEqual = (id1, id2) => id1.equals(id2)
 
 export default {
   validateRequestBody,
-  checkIfIdsAreEqual
+  areIdsEqual
 }

@@ -3,15 +3,16 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import { RecoilRoot } from 'recoil'
+import store from './redux'
+import { Provider } from 'react-redux'
 import GlobalStyle from './components/misc/GlobalStyle'
 
 ReactDOM.render(
   <React.StrictMode>
-    <RecoilRoot>
+    <Provider store={store}>
       <GlobalStyle />
       <App />
-    </RecoilRoot>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )

@@ -1,6 +1,8 @@
 import Joi from 'joi'
+import * as R from 'ramda'
 
 import { stringSchema } from './helpers'
+import { STAFF_ROLES } from '../constants/staff'
 
 const schema = Joi.object()
   .keys({
@@ -19,6 +21,7 @@ const schema = Joi.object()
 
     role: stringSchema()
       .label('Role')
+      .valid(...R.values(STAFF_ROLES))
       .required(),
 
     phone: stringSchema()

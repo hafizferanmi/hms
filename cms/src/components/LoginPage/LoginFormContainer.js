@@ -9,7 +9,7 @@ const LoginFormCantainer = () => {
   const navigateTo = useNavigate()
   const { error, loading, data, executeFn: submitForm } = useAsyncFn(staffLogin)
   const submitLoginForm = data => {
-    submitForm()
+    submitForm(data)
   }
 
   useEffect(() => {

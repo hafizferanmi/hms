@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router } from '@reach/router'
-import 'bootstrap/dist/css/bootstrap.min.css'
+
 import LoggedOutRoute from './components/misc/LoggedOutRoute'
 import AuthRoute from './components/misc/AuthRoute'
 

@@ -13,7 +13,7 @@ const StaffSchema = new Schema({
   phoneNo: {
     type: String
   },
-  company: {
+  companyId: {
     type: Schema.Types.ObjectId,
     ref: 'company'
   },
