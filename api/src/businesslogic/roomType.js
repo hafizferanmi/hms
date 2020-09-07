@@ -1,4 +1,5 @@
 import RoomType from '../models/roomTypes'
+import Room from '../models/room'
 import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
 import { authorizeBeforeOperation } from './authorization'
@@ -40,8 +41,8 @@ export const updateRoomType = async (req, res) => {
   const { name, desc } = value
 
   try {
-    const currentStaffCompanyId = req.staff.company
-    const updatedRoomType = await RoomType.findOneAndUpdate({ _id: currentStaffCompanyId }, { name, desc }, { new: true })
+    const roomTypeId = req.params.roomTypeId
+    const updatedRoomType = await RoomType.findOneAndUpdate({ _id: roomTypeId }, { name, desc }, { new: true })
     return res.json(success(updatedRoomType))
   } catch (e) {
     return res.json(failed('Error Occured. Could not update room type.'))
@@ -69,5 +70,23 @@ export const getRoomTypes = async (req, res) => {
     return res.json(success(companyRoomTypes))
   } catch (e) {
     return res.json(failed('Error occured. Try again.'))
+  }
+}
+
+export const getRoomType = async (req, res) => {
+  await authorizeBeforeOperation(req, res)
+
+  const roomTypeId = req.params.roomTypeId
+  try {
+    const roomType = await RoomType.find({ _id: roomTypeId })
+    const roomTypeRooms = await Room.find({ roomTypeId })
+
+    const responseDetails = {
+      ...roomType,
+      rooms: roomTypeRooms
+    }
+    return res.json(success(responseDetails))
+  } catch (e) {
+    return res.json(failed('Error occured. Could not get room type details'))
   }
 }
