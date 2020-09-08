@@ -16,12 +16,12 @@ export const addRoomType = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, desc } = value
+  const { name, desc, price } = value
 
   // Todo: check if current user is admin
 
   try {
-    const roomTypeData = { name, desc, companyId: currentStaffCompanyId }
+    const roomTypeData = { name, desc, price, companyId: currentStaffCompanyId }
     const roomType = new RoomType(roomTypeData)
     const newRoomType = await roomType.save()
     return res.json(success(newRoomType))
@@ -38,11 +38,11 @@ export const updateRoomType = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, desc } = value
+  const { name, desc, price } = value
 
   try {
     const roomTypeId = req.params.roomTypeId
-    const updatedRoomType = await RoomType.findOneAndUpdate({ _id: roomTypeId }, { name, desc }, { new: true })
+    const updatedRoomType = await RoomType.findOneAndUpdate({ _id: roomTypeId }, { name, desc, price }, { new: true })
     return res.json(success(updatedRoomType))
   } catch (e) {
     return res.json(failed('Error Occured. Could not update room type.'))

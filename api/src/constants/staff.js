@@ -15,7 +15,9 @@ export const STAFF_ROLES = Object.freeze({
 })
 
 export const STAFF_STATUS = Object.freeze({
-  ON_LEAVE: 'ON_LEAVE',
-  RESIGNED: 'RESIGNED',
-  LEFT: 'LEFT'
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  PENDING: 'PENDING',
+  INACTIVE: 'INACTIVE',
+  ON_LEAVE: 'ON_LEAVE'
 })

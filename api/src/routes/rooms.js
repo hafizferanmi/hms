@@ -1,5 +1,13 @@
 import { Router } from 'express'
-import { addRoom, updateRoom, deleteRoom, fetchRoom, fetchRoomsInRoomTypes } from '../businesslogic/room'
+import {
+  addRoom,
+  updateRoom,
+  deleteRoom,
+  fetchRoom,
+  fetchRoomsInRoomTypes,
+  checkIn,
+  checkOut
+} from '../businesslogic/room'
 import currentStaff from '../middlewares/currentStaff'
 
 const router = Router()
@@ -10,5 +18,7 @@ router.put('/update/:roomId', currentStaff, updateRoom)
 router.delete('/delete/:roomId', currentStaff, deleteRoom)
 router.get('/:roomId', currentStaff, fetchRoom)
 router.get('/roomType/:roomTypeId', currentStaff, fetchRoomsInRoomTypes)
+router.post('/checkIn/:roomId', currentStaff, checkIn)
+router.post('/checkOut/:roomId', currentStaff, checkOut)
 
 export default router

@@ -8,6 +8,11 @@ const schema = Joi.object()
       .label('Type name')
       .required(),
 
+    price: Joi.number()
+      .label('Price')
+      .integer()
+      .required(),
+
     desc: stringSchema()
       .label('Staff email')
       .email()

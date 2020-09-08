@@ -7,7 +7,7 @@ const schema = new Schema({
   },
   subdomain: {
     type: String,
-    required: [true],
+    required: true,
     match: /[0-9A-Za-z-]+/,
     unique: true
   }
