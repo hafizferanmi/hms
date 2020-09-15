@@ -19,7 +19,9 @@ const schema = new Schema({
   roomTypeId: {
     type: Schema.Types.ObjectId,
     required: true
-  }
+  },
+  createdBy: { type: Schema.Types.ObjectId },
+  updatedBy: { type: Schema.Types.ObjectId }
 }, {
   timestamps: true
 })

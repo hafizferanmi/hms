@@ -17,9 +17,11 @@ const StaffSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'company'
   },
-  role: [
-    { type: String, required: true, enum: R.values(STAFF_ROLES) }
-  ],
+  role: {
+    type: String,
+    required: true,
+    enum: R.values(STAFF_ROLES)
+  },
   disabled: {
     type: Boolean,
     default: false
@@ -27,7 +29,9 @@ const StaffSchema = new Schema({
   status: {
     type: String,
     enum: R.values(STAFF_STATUS)
-  }
+  },
+  createdBy: { type: Schema.Types.ObjectId },
+  updatedBy: { type: Schema.Types.ObjectId }
 }, { timestamps: true })
 
 export default mongoose.model('staff', StaffSchema)

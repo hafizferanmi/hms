@@ -8,7 +8,7 @@ const LoggedOutRouteContainer = () => {
 
   useEffect(() => {
     const token = getAuthToken()
-    if (token) { navigateTo('/dashboard') }
+    if (token) { navigateTo('/secure') }
     // eslint-disable-next-line
   }, [])
 

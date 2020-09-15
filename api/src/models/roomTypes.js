@@ -16,7 +16,9 @@ const schema = new Schema({
   companyId: {
     type: Schema.Types.ObjectId,
     required: true
-  }
+  },
+  createdBy: { type: Schema.Types.ObjectId },
+  updatedBy: { type: Schema.Types.ObjectId }
 }, {
   timestamps: true
 })

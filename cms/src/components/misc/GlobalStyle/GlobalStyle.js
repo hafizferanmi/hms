@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
     src: url(${FontMedium});
   }
   body {
-    background: #f4f7fa;
+    background: #f5f9fe;
     font-family: font-regular;
   }
 `

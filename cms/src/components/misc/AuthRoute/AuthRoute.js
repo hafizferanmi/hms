@@ -1,23 +1,21 @@
 import React, { useEffect } from 'react'
-// import { getAuthToken } from '../../../helpers/auth'
-import { Router } from '@reach/router'
-import FrontDeskPage from '../../FrontDeskPage'
-import Header from '../Header'
+import { getAuthToken } from '../../../helpers/auth'
+import { Router, useNavigate } from '@reach/router'
+import ManagersPage from '../../ManagersPage'
 
 const AuthRoute = () => {
-  // const navigateTo = useNavigate()
+  const navigateTo = useNavigate()
   useEffect(() => {
-    // const token = getAuthToken()
-    // if (!token) { navigateTo('/') }
+    const token = getAuthToken()
+    if (!token) { navigateTo('/') }
 
     // eslint-disable-next-line
   }, [])
 
   return (
     <>
-      <Header />
       <Router>
-        <FrontDeskPage path='/' />
+        <ManagersPage path='/' />
       </Router>
     </>
   )
