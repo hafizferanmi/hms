@@ -10,6 +10,10 @@ const { failed, success } = helpers.response
 const { validateRequestBody, checkIfIdsAreEqual } = helpers.misc
 const { StaffSchema } = ValidationSchemas
 
+export const currentStaff = async (req, res) => {
+  // Todo: make method to retrieve current staff.
+}
+
 export const addStaff = async (req, res) => {
   const currentCompanyId = req.staff.company
   const { value, errorMsg } = validateRequestBody(StaffSchema, req.body)

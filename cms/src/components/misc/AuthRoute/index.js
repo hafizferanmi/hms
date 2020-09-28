@@ -1,3 +1,3 @@
-import AuthRoute from './AuthRoute'
+import AuthRoute from './AuthRouteContainer'
 
 export default AuthRoute

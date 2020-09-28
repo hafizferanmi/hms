@@ -12,13 +12,20 @@ const ContentWrapper = styled.div`
   width: 100%;
 `
 
-const ManagersPage = () => {
+const ContentBody = styled.div`
+  padding: 20px 20px;
+`
+
+const ManagersPage = ({ children }) => {
   return (
     <ManagersPageWrapper>
       <SectionIconMenu />
       <SectionMenu />
       <ContentWrapper>
         <Header />
+        <ContentBody>
+          {children}
+        </ContentBody>
       </ContentWrapper>
     </ManagersPageWrapper>
   )

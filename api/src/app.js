@@ -13,6 +13,7 @@ const { adminRoutes, companyRoutes, staffRoutes, roomsRoute, roomTypesRoute } = 
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
 app.use('/admin', adminRoutes)
 app.use('/company', companyRoutes)
 app.use('/staff', staffRoutes)
