@@ -10,23 +10,26 @@ const debug = Debug('API: Middleware')
 const currentStaff = async (req, res, next) => {
   debug('Current Staff')
   const authToken = req.get('Authorization')
-  if (authToken) {
+  if (!authToken) return res.json(failed('Unauthorized'))
+
+  let decodedToken
+  try {
     const token = getTokenFromHeader(authToken)
-    const decodedToken = verifyAuthToken(token)
+    decodedToken = verifyAuthToken(token)
+  } catch (e) {
+    return res.status(403).json(failed('Unauthorized error!'))
+  }
 
-    if (!decodedToken) {
-      return res.json(failed('Unauthorized'))
-    }
+  if (!decodedToken || !decodedToken.id) return res.json(failed('Unauthorized'))
 
-    const staff = await Staff.find(decodedToken.id)
-    if (!staff) {
-      return res.json(failed('Unauthorized'))
-    }
+  try {
+    const staff = await Staff.findById(decodedToken.id)
+    if (!staff) return res.json(failed('Unauthorized'))
 
-    req.state.staff = staff
+    req.staff = staff
     next()
-  } else {
-    return res.json(failed('Unauthorized'))
+  } catch (e) {
+    return res.json(failed('Big problem ooo, but we looking to find a fix soon.'))
   }
 }
 

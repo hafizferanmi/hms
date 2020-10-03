@@ -1,17 +1,13 @@
 import LoggedOutRoute from './LoggedOutRoute'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from '@reach/router'
-import { getAuthToken } from '../../../helpers/auth'
+import { useSelector } from 'react-redux'
 
 const LoggedOutRouteContainer = () => {
   const navigateTo = useNavigate()
+  const currentStaff = useSelector(state => state.currentStaff)
 
-  useEffect(() => {
-    const token = getAuthToken()
-    if (token) { navigateTo('/secure') }
-    // eslint-disable-next-line
-  }, [])
-
+  if (currentStaff && currentStaff.data && currentStaff.data.tolani) navigateTo('/secure')
   return (
     <LoggedOutRoute />
   )

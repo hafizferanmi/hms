@@ -7,25 +7,33 @@ import useAsyncFn from '../../hooks/useAsyncFn'
 
 const LoginFormCantainer = () => {
   const navigateTo = useNavigate()
-  const { error, loading, data, executeFn: submitForm } = useAsyncFn(staffLogin)
+
+  const {
+    error: serverError,
+    loading: submitting,
+    response,
+    executeFn: submitForm
+  } = useAsyncFn(staffLogin)
+
   const submitLoginForm = data => {
     submitForm(data)
   }
 
   useEffect(() => {
-    if (data && data.success) {
-      setAuthToken(data.token)
+    if (response && response.success) {
+      const token = response.result
+      setAuthToken(token)
       navigateTo('/secure')
     }
     // eslint-disable-next-line
-  }, [data])
+  }, [response])
 
   return (
     <Loginform
-      error={error}
-      loading={loading}
+      serverError={serverError}
+      submitting={submitting}
       submitForm={submitLoginForm}
-      message={data && data.message}
+      message={response && response.message}
     />
   )
 }

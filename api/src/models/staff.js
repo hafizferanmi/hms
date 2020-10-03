@@ -10,7 +10,7 @@ const StaffSchema = new Schema({
     type: String,
     required: true
   },
-  phoneNo: {
+  phone: {
     type: String
   },
   companyId: {

@@ -12,6 +12,7 @@ const { failed, success } = helpers.response
 const { getSubdomain } = helpers.domain
 
 export const staffLogin = async (req, res) => {
+  debug('staffLogin')
   const subdomain = getSubdomain(req)
   if (!subdomain) {
     return res.json(failed('Invalid company!'))
@@ -26,20 +27,20 @@ export const staffLogin = async (req, res) => {
     const company = await Company.findOne({ subdomain })
     if (!company) {
       return res.json(failed('Staff does not belong to this company'))
-    } else {
-      const companyId = company._id
-      const staff = await Staff.findOne({ email, company: companyId })
-      if (!staff) {
-        return res.json(failed('Error occured, try in a moment'))
-      }
+    }
 
-      if (await isCorrectPassword(password, staff.password)) {
-        const staffId = staff._id
-        const token = generateAuthToken(staffId)
-        return res.json(success({ token }))
-      } else {
-        return res.json(failed('Invalid credentials'))
-      }
+    const companyId = company._id
+    const staff = await Staff.findOne({ email, companyId })
+    if (!staff) {
+      return res.json(failed('Error occured, try in a moment'))
+    }
+
+    if (await isCorrectPassword(password, staff.password)) {
+      const staffId = staff._id
+      const token = generateAuthToken(staffId)
+      return res.json(success(token))
+    } else {
+      return res.json(failed('Invalid credentials'))
     }
   } catch (e) {
     return res.json(failed('Error occured, try in a moment'))

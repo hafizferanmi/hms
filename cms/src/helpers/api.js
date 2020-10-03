@@ -15,7 +15,7 @@ const request = axios.create({
 
 export const fetchData = async (path) => {
   const res = await request.get(path)
-  return res.data.data
+  return res.data
 }
 
 const sendData = async (path, body = {}) => {
@@ -23,14 +23,19 @@ const sendData = async (path, body = {}) => {
   return res.data
 }
 
-export const deleteResource = async (path, body) => {
-  const res = await request.delete(path, body)
-  return res.data.data
+export const deleteResource = async (path) => {
+  const res = await request.delete(path)
+  return res.data
 }
 
 export const modifyResource = async (path, body) => {
   const res = await request.put(path, body)
-  return res.data.data
+  return res.data
 }
 
 export const staffLogin = (body) => sendData('/staff/login', body)
+export const getCurrentStaff = () => fetchData('staff/currentStaff')
+export const addStaff = (body) => sendData('/staff/add', body)
+export const updateStaff = (staffId, body) => modifyResource(`staff/update/${staffId}`, body)
+export const deleteStaff = (staffId, body) => deleteResource(`staff/delete/${staffId}`)
+export const getStaffs = () => fetchData('/staff/all')

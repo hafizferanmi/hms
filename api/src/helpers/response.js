@@ -1,10 +1,10 @@
-const JsonResponse = (success, data = [], message = 'Successful') => {
-  return { success, data, message }
+const JsonResponse = (success, result = [], message = 'Successful') => {
+  return { success, result, message }
 }
 
-const failed = message => ({ success: false, data: null, message })
+const failed = message => ({ success: false, result: null, message })
 
-const success = data => ({ data, success: true, message: 'Successful' })
+const success = result => ({ result, success: true, message: 'Successful' })
 
 export default {
   JsonResponse,

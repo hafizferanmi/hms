@@ -4,11 +4,9 @@ import StaffsPage from '../../StaffsPage'
 
 const AuthRoute = () => {
   return (
-    <>
-      <Router>
-        <StaffsPage path='/' />
-      </Router>
-    </>
+    <Router>
+      <StaffsPage path='/' />
+    </Router>
   )
 }
 
