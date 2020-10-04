@@ -9,11 +9,12 @@ const debug = Debug('API:BusinessLogic - Staff')
 const { hashPassword } = helpers.password
 const { normalizePhoneNumber } = helpers.user
 const { failed, success } = helpers.response
-const { validateRequestBody, checkIfIdsAreEqual } = helpers.misc
+const { validateRequestBody } = helpers.misc
 const { StaffSchema } = ValidationSchemas
 
 export const addStaff = async (req, res) => {
   const currentCompanyId = req.staff.companyId
+  const currentStaffId = req.staff._id
   const { value, errorMsg } = validateRequestBody(StaffSchema, req.body)
 
   if (errorMsg) {
@@ -44,7 +45,9 @@ export const addStaff = async (req, res) => {
     email,
     password: hashedPassword,
     role,
-    companyId: currentCompanyId
+    companyId: currentCompanyId,
+    createdAt: currentStaffId,
+    updatedBy: currentStaffId
   }
 
   try {
@@ -83,7 +86,12 @@ export const updateStaff = async (req, res) => {
   debug(staff)
 
   const staffData = {
-    name, password: staff.password, email, role, phone
+    name,
+    password: staff.password,
+    email,
+    role,
+    phone,
+    updatedBy: staffId
   }
   debug(staffData)
 
@@ -110,23 +118,18 @@ export const getAllStaffs = async (req, res) => {
 }
 
 export const getStaff = async (req, res) => {
-  const currentCompanyId = req.staff.company
+  debug('getStaff()')
+  const currentCompanyId = req.staff.companyId
   const staffId = req.params.staffId
 
-  // Todo: check if staff is Manager
   let staff
   try {
-    staff = Staff.find({ _id: staffId })
-    if (!staff) {
-      return res.json(failed('Unauthorized, staff does not exist.'))
-    }
-
-    if (!checkIfIdsAreEqual(staff.company, currentCompanyId)) {
-      return res.json(failed('Unauthorized, staff does not belong to company'))
-    }
+    staff = await Staff.findOne({ _id: staffId, companyId: currentCompanyId })
   } catch (e) {
     return res.json(failed('Unauthorized to perform operation.'))
   }
+
+  if (!staff) return res.json(failed('Unauthorized, staff does not exist.'))
 
   return res.json(success(staff))
 }

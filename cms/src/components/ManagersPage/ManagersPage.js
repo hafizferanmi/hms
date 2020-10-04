@@ -1,5 +1,4 @@
 import React from 'react'
-import SectionIconMenu from '../SectionIconMenu'
 import SectionMenu from '../SectionMenu'
 import Header from '../misc/Header'
 import styled from 'styled-components'
@@ -19,7 +18,6 @@ const ContentBody = styled.div`
 const ManagersPage = ({ children }) => {
   return (
     <ManagersPageWrapper>
-      <SectionIconMenu />
       <SectionMenu />
       <ContentWrapper>
         <Header />

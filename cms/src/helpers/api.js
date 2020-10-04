@@ -32,10 +32,21 @@ export const modifyResource = async (path, body) => {
   const res = await request.put(path, body)
   return res.data
 }
-
+// AUTH API
 export const staffLogin = (body) => sendData('/staff/login', body)
+
+// STAFF API
 export const getCurrentStaff = () => fetchData('staff/currentStaff')
 export const addStaff = (body) => sendData('/staff/add', body)
 export const updateStaff = (staffId, body) => modifyResource(`staff/update/${staffId}`, body)
-export const deleteStaff = (staffId, body) => deleteResource(`staff/delete/${staffId}`)
+export const deleteStaff = (staffId) => deleteResource(`staff/delete/${staffId}`)
 export const getStaffs = () => fetchData('/staff/all')
+
+// ROOMTYPE API
+export const getAllRoomTypes = () => fetchData('/roomTypes/all')
+export const addRoomType = (body) => sendData('/roomTypes/add', body)
+export const updateRoomType = (roomTypeId, body) => modifyResource(`roomTypes/update/${roomTypeId}`, body)
+export const deleteRoomType = (roomTypeId) => deleteResource(`roomTypes/delete/${roomTypeId}`)
+export const getRoomType = (roomTypeId) => fetchData(`roomTypes/${roomTypeId}`)
+
+// ROOMS API

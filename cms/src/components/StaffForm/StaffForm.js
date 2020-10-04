@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
 
-import Form from '../Form'
+import Input from '../Inputs'
 import Button from '../misc/Button'
 import StaffFormSchema from './StaffSchema'
 
@@ -24,7 +24,7 @@ const DeleteButton = styled.span`
   cursor: pointer;
 `
 
-const StaffForm = ({ serverFormState, submitForm, staff, deleteStaffProps }) => {
+const StaffForm = ({ serverFormState, handleFormSubmit, staff, deleteStaffProps }) => {
   const { register, handleSubmit, errors, formState } = useForm({
     resolver: yupResolver(StaffFormSchema),
     defaultValues: staff
@@ -33,18 +33,18 @@ const StaffForm = ({ serverFormState, submitForm, staff, deleteStaffProps }) => 
   const { handleDeleteStaff } = deleteStaffProps
   const { error, message } = serverFormState
   return (
-    <StaffFormWrapper onSubmit={handleSubmit(submitForm)}>
+    <StaffFormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
       <div>
         {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
         {message && <ErrorMessage>{message}</ErrorMessage>}
-        <Form.TextInput
+        <Input.TextInput
           name='name'
           register={register}
           error={errors.name}
           placeholder='Name'
           label='Fullname'
         />
-        <Form.TextInput
+        <Input.TextInput
           name='email'
           type='email'
           label='Email'
@@ -52,7 +52,7 @@ const StaffForm = ({ serverFormState, submitForm, staff, deleteStaffProps }) => 
           error={errors.email}
           placeholder='Enter email'
         />
-        <Form.TextInput
+        <Input.TextInput
           register={register}
           name='password'
           label='Password'
@@ -60,14 +60,14 @@ const StaffForm = ({ serverFormState, submitForm, staff, deleteStaffProps }) => 
           error={errors.password}
           placeholder='Enter password'
         />
-        <Form.TextInput
+        <Input.TextInput
           register={register}
           name='phone'
           label='Phone No.'
           error={errors.phone}
           placeholder='Enter phone No.'
         />
-        <Form.SelectInput
+        <Input.SelectInput
           register={register}
           name='role'
           label='role'

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
 import Button from '../misc/Button'
 
-import Form from '../Form'
+import Inputs from '../Inputs'
 import LoginFormSchema from './LoginFormSchema'
 
 const LoginFormWrapper = styled.form`
@@ -62,14 +62,14 @@ const Loginform = ({ error, submitForm, message }) => {
       <div>
         {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
         {message && <ErrorMessage>{message}</ErrorMessage>}
-        <Form.TextInput
+        <Inputs.TextInput
           name='email'
           type='email'
           register={register}
           error={errors.email}
           placeholder='Enter email'
         />
-        <Form.TextInput
+        <Inputs.TextInput
           register={register}
           name='password'
           type='password'

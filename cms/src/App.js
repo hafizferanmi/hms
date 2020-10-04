@@ -9,8 +9,8 @@ const NotfoundPage = () => <div>Page not found</div>
 const App = () => {
   return (
     <Router>
-      <LoggedOutRoute path='/' />
-      <AuthRoute path='/secure' />
+      <LoggedOutRoute path='/api' />
+      <AuthRoute path='/secure/*' />
       <NotfoundPage default />
     </Router>
   )

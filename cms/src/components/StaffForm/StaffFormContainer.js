@@ -14,7 +14,7 @@ import {
 } from '../../redux/actions/staff'
 
 const StaffFormContainer = ({ closeModal, staff }) => {
-  const serverAction = staff ? updateStaffAPI : addStaffAPI
+  const API = staff ? updateStaffAPI : addStaffAPI
 
   const dispatch = useDispatch()
   const {
@@ -22,11 +22,11 @@ const StaffFormContainer = ({ closeModal, staff }) => {
     loading: submitting,
     response,
     executeFn: submitForm
-  } = useAsyncFn(serverAction)
+  } = useAsyncFn(API)
 
-  const staffId = staff._id
+  const staffId = staff && staff._id
 
-  const submitStaffForm = data => {
+  const handleFormSubmit = data => {
     staff ? submitForm(staffId, data) : submitForm(data)
   }
 
@@ -75,7 +75,7 @@ const StaffFormContainer = ({ closeModal, staff }) => {
       <StaffForm
         staff={staff}
         serverFormState={serverFormState}
-        submitForm={submitStaffForm}
+        handleFormSubmit={handleFormSubmit}
         deleteStaffProps={deleteStaffProps}
       />
     </div>
