@@ -3,20 +3,24 @@ import { ROOM_STATUS } from '../constants/room'
 import R from 'ramda'
 
 const schema = new Schema({
-  name: {
+  roomNumber: {
     type: String,
     required: true
   },
   desc: {
-    type: String,
-    required: true
+    type: String
   },
   status: {
     type: String,
     required: true,
+    default: ROOM_STATUS.EMPTY,
     enum: R.values(ROOM_STATUS)
   },
   roomTypeId: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
+  companyId: {
     type: Schema.Types.ObjectId,
     required: true
   },

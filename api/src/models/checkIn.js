@@ -3,6 +3,10 @@ import { PAYMENT_METHOD } from '../constants/misc'
 import R from 'ramda'
 
 const schema = new Schema({
+  companyId: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
   roomId: {
     type: Schema.Types.ObjectId,
     required: true
@@ -21,25 +25,31 @@ const schema = new Schema({
     type: String
   },
   from: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true
   },
   to: {
-    type: Date,
+    type: String,
     required: true
   },
   paymentMethod: {
     type: String,
     required: true,
+    default: PAYMENT_METHOD.CASH,
     enum: R.values(PAYMENT_METHOD)
   },
-  createdBy: {
+  checkedInBy: {
     type: Schema.Types.ObjectId,
     required: true
   },
-  updatedBy: {
-    type: Schema.Types.ObjectId
-  }
+  checkedOut: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  checkedOutBy: { type: Schema.Types.ObjectId },
+  createdBy: { type: Schema.Types.ObjectId },
+  updatedBy: { type: Schema.Types.ObjectId }
 }, {
   timestamps: true
 })

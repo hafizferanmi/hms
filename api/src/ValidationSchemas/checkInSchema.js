@@ -5,6 +5,10 @@ import { PAYMENT_METHOD } from '../constants/misc'
 
 const schema = Joi.object()
   .keys({
+    roomId: stringSchema()
+      .label('Room')
+      .required(),
+
     title: stringSchema()
       .label('Title')
       .required(),
@@ -30,6 +34,7 @@ const schema = Joi.object()
 
     paymentMethod: stringSchema()
       .label('Payment method')
+      .default(PAYMENT_METHOD.CASH)
       .valid(...R.values(PAYMENT_METHOD))
       .required()
   })

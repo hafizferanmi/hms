@@ -17,10 +17,6 @@ export const staffBelongsToCompany = (staff, subdomain) => {
   }
 }
 
-export const staffCanPerformOperation = (staff, operation) => {
-  return true
-}
-
 export const authorizeBeforeOperation = async (req, res) => {
   const subdomain = getSubdomain(req)
   const roomTypeId = req.params.roomTypeId

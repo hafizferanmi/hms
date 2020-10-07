@@ -11,6 +11,7 @@ const { validateRequestBody } = helpers.misc
 const { RoomTypeSchema } = ValidationSchemas
 
 export const addRoomType = async (req, res) => {
+  debug('addRoomType()')
   const currentStaffCompanyId = req.staff.companyId
   const currentStaffId = req.staff._id
   const { value, errorMsg } = validateRequestBody(RoomTypeSchema, req.body)
@@ -39,6 +40,7 @@ export const addRoomType = async (req, res) => {
 }
 
 export const updateRoomType = async (req, res) => {
+  debug('updateRoomType()')
   const currentStaffCompanyId = req.staff.companyId
   const currentStaffId = req.staff._id
   const roomTypeId = req.params.roomTypeId
@@ -54,7 +56,6 @@ export const updateRoomType = async (req, res) => {
     name,
     desc,
     price,
-    companyId: currentStaffCompanyId,
     updatedBy: currentStaffId
   }
 
@@ -67,11 +68,12 @@ export const updateRoomType = async (req, res) => {
 }
 
 export const deleteRoomType = async (req, res) => {
+  debug('deleteRoomType()')
   const roomTypeId = req.params.roomTypeId
   const currentStaffCompanyId = req.staff.companyId
 
   try {
-    const deletedRoomType = await RoomType.deleteOne({ _id: roomTypeId, companyId: currentStaffCompanyId })
+    const deletedRoomType = await RoomType.findOneAndDelete({ _id: roomTypeId, companyId: currentStaffCompanyId })
     return res.json(success(deletedRoomType))
   } catch (e) {
     return res.json(failed('Error occured. Could not delete room type'))

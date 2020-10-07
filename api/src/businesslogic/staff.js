@@ -4,7 +4,7 @@ import Company from '../models/company'
 import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
 
-const debug = Debug('API:BusinessLogic - Staff')
+const debug = Debug('API:businesslogic/staff.js')
 
 const { hashPassword } = helpers.password
 const { normalizePhoneNumber } = helpers.user
@@ -13,6 +13,7 @@ const { validateRequestBody } = helpers.misc
 const { StaffSchema } = ValidationSchemas
 
 export const addStaff = async (req, res) => {
+  debug('addStaff()')
   const currentCompanyId = req.staff.companyId
   const currentStaffId = req.staff._id
   const { value, errorMsg } = validateRequestBody(StaffSchema, req.body)
@@ -60,10 +61,9 @@ export const addStaff = async (req, res) => {
 }
 
 export const updateStaff = async (req, res) => {
-  debug('updateStaff')
+  debug('updateStaff()')
   const currentCompanyId = req.staff.companyId
   const staffId = req.params.staffId
-  debug(`staffId = ${staffId}`)
   const { value, errorMsg } = validateRequestBody(StaffSchema, req.body)
 
   if (errorMsg) {
@@ -72,9 +72,6 @@ export const updateStaff = async (req, res) => {
 
   const { name, email, role, phone } = value
 
-  // Todo: check if admin is admin (Authorized)
-
-  // check if staff belongs to company
   let staff
   try {
     staff = await Staff.findOne({ _id: staffId, companyId: currentCompanyId })
@@ -82,8 +79,6 @@ export const updateStaff = async (req, res) => {
   } catch (e) {
     return res.json(failed('Error occured. Try again!'))
   }
-
-  debug(staff)
 
   const staffData = {
     name,
@@ -93,7 +88,6 @@ export const updateStaff = async (req, res) => {
     phone,
     updatedBy: staffId
   }
-  debug(staffData)
 
   try {
     const updatedStaff = await Staff.findOneAndUpdate({ _id: staffId }, staffData, { new: true })
@@ -104,10 +98,8 @@ export const updateStaff = async (req, res) => {
 }
 
 export const getAllStaffs = async (req, res) => {
-  debug('getAllStaffs')
+  debug('getAllStaffs()')
   const currentCompanyId = req.staff.companyId
-
-  // Todo: check if staff is Manager
 
   try {
     const staffs = await Staff.find({ companyId: currentCompanyId })
@@ -151,7 +143,7 @@ export const deleteStaff = async (req, res) => {
   }
 
   try {
-    const deletedStaff = await Staff.deleteOne({ _id: staffId })
+    const deletedStaff = await Staff.findOneAndDelete({ _id: staffId })
     return res.json(success(deletedStaff))
   } catch (e) {
     return res.json(failed('Error occured. Could not delete staff.'))
@@ -159,5 +151,6 @@ export const deleteStaff = async (req, res) => {
 }
 
 export const currentStaff = async (req, res) => {
+  debug('currentStaff()')
   return res.json(success(req.staff))
 }

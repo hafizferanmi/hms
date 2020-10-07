@@ -4,14 +4,12 @@ import { stringSchema } from './helpers'
 
 const schema = Joi.object()
   .keys({
-    name: stringSchema()
-      .label('Type name')
+    roomNumber: stringSchema()
+      .label('Room number')
       .required(),
 
     desc: stringSchema()
-      .label('Staff email')
-      .email()
-      .required(),
+      .label('Room description'),
 
     roomType: stringSchema()
       .label('Room type')

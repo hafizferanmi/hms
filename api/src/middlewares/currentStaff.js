@@ -8,7 +8,8 @@ const { failed } = helpers.response
 const debug = Debug('API: Middleware')
 
 const currentStaff = async (req, res, next) => {
-  debug('Current Staff')
+  debug('currentStaff()')
+
   const authToken = req.get('Authorization')
   if (!authToken) return res.json(failed('Unauthorized'))
 
