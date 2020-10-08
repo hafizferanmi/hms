@@ -19,11 +19,12 @@ export const addHall = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, desc, price } = value
+  const { name, desc, price, capacity } = value
   const hallData = {
     name,
     desc,
     price,
+    capacity,
     companyId: currentStaffCompanyId,
     createdBy: currentStaffId,
     updatedBy: currentStaffId
@@ -49,7 +50,7 @@ export const updateHall = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, desc, price } = value
+  const { name, desc, price, capacity } = value
 
   const conditions = { _id: hallId, companyId: currentStaffCompanyId }
 
@@ -57,6 +58,7 @@ export const updateHall = async (req, res) => {
     name,
     desc,
     price,
+    capacity,
     updatedBy: currentStaffId
   }
 
