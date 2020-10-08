@@ -56,4 +56,17 @@ export const addRoom = (body) => sendData('/room/add', body)
 export const updateRoom = (roomId, body) => modifyResource(`/room/update/${roomId}`, body)
 export const deleteRoom = (roomId) => deleteResource(`/room/delete/${roomId}`)
 
-// BOOK ROOM API
+// CHECKIN API
+export const checkIn = (body) => sendData('/checkIn/add', body)
+export const checkOut = (checkInId) => sendData(`/checkIn/${checkInId}`)
+export const deleteCheckIn = (checkInId) => deleteResource(`/checkIn/delete/${checkInId}`)
+export const updateCheckIn = (checkInId) => modifyResource(`/checkIn/update/${checkInId}`)
+export const getCheckIns = () => fetchData('/checkIn/all')
+export const getCheckIn = (checkInId) => fetchData(`/hall/${checkInId}`)
+
+// HALL API
+export const getHalls = () => fetchData('/hall/all')
+export const getHall = (hallId) => fetchData(`/hall/${hallId}`)
+export const addHall = (body) => sendData('/hall/add', body)
+export const updateHall = (hallId, body) => modifyResource(`/hall/update/${hallId}`, body)
+export const deleteHall = (hallId) => deleteResource(`/hall/delete/${hallId}`)

@@ -19,6 +19,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: true
       }
+
     case FETCH_CURRENT_STAFF_SUCCESS:
       return {
         ...state,
@@ -26,12 +27,14 @@ export default (state = initialState, action) => {
         loading: false,
         data: payload
       }
+
     case FETCH_CURRENT_STAFF_ERROR:
       return {
         ...state,
         loading: false,
         error: 'Error Occured, could not fetch current staff.'
       }
+
     default:
       return state
   }

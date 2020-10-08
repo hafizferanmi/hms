@@ -1,0 +1,7 @@
+export const FETCH_ROOM_LOADING = 'FETCH_ROOM_LOADING'
+export const FETCH_ROOM_ERROR = 'FETCH_ROOM_ERROR'
+export const FETCH_ROOM_SUCCESS = 'FETCH_ROOM_SUCCESS'
+
+export const ADD_ROOM = 'ADD_NEW_ROOM'
+export const UPDATE_ROOM = 'UPDATE_ROOM'
+export const DELETE_ROOM = 'DELETE_ROOM'
