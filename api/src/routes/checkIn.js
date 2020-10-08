@@ -18,3 +18,5 @@ router.post('/add', currentStaff, allow(allowedStaff), checkIn)
 router.post('/checkOut/:checkInId', currentStaff, allow(allowedStaff), checkOut)
 router.put('/update/:checkInId', currentStaff, allow(allowedStaff), updateCheckIn)
 router.delete('/delete/:checkInId', currentStaff, allow(), deleteCheckIn)
+
+export default router

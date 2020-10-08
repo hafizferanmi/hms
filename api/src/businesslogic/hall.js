@@ -1,5 +1,5 @@
 import Debug from 'debug'
-import Hall from '../model/hall'
+import Hall from '../models/hall'
 import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
 
