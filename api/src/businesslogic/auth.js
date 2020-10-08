@@ -4,7 +4,7 @@ import Admin from '../models/admin'
 import helpers from '../helpers'
 import Debug from 'debug'
 
-const debug = Debug('API: auth')
+const debug = Debug('API: businesslogic/auth.js')
 
 const { isCorrectPassword } = helpers.password
 const { generateAuthToken } = helpers.jwt

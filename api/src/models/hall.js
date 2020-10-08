@@ -12,6 +12,10 @@ const schema = new Schema({
     type: Number,
     required: true
   },
+  capacity: {
+    type: String,
+    required: true
+  },
   companyId: {
     type: Schema.Types.ObjectId,
     required: true
@@ -22,4 +26,4 @@ const schema = new Schema({
   timestamps: true
 })
 
-export default mongoose.model('roomType', schema)
+export default mongoose.model('hallType', schema)

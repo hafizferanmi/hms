@@ -4,7 +4,7 @@ import Room from '../models/room'
 import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
 
-const debug = Debug('API:BusinessLogic - RoomTypes')
+const debug = Debug('API:businesslogin/roomType.js')
 
 const { failed, success } = helpers.response
 const { validateRequestBody } = helpers.misc

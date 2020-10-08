@@ -45,6 +45,8 @@ export const checkIn = async (req, res) => {
     status: ROOM_STATUS.BOOKED
   }
 
+  // Todo: cannot checkIn a deleted room.
+
   try {
     // checking if room is already checked in
     const checkIn = await CheckIn.find({ roomId, companyId: currentStaffCompanyId, checkedOut: false })
