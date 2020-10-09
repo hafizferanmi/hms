@@ -88,6 +88,8 @@ export const deleteRoom = async (req, res) => {
   debug('deleteRoom()')
   const currentStaffCompanyId = req.staff.companyId
   const roomId = req.params.roomId
+
+  // Todo: cannot delete an already checkedIn room
   try {
     const deletedRoom = await Room.findOneAndDelete({ _id: roomId, companyId: currentStaffCompanyId })
     return res.json(success(deletedRoom))

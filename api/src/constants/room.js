@@ -1,5 +1,6 @@
 export const ROOM_STATUS = Object.freeze({
   EMPTY: 'EMPTY',
   RESERVED: 'RESERVED',
+  NOT_AVAILABLE: 'NOT_AVAILABLE',
   BOOKED: 'BOOKED'
 })

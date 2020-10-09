@@ -22,7 +22,12 @@ const schema = Joi.object()
       .email(),
 
     phone: stringSchema()
-      .label('Client phone no'),
+      .label('Client phone no')
+      .min(11),
+
+    occupation: stringSchema()
+      .label('Occupation')
+      .required(),
 
     from: stringSchema()
       .label('Arrival date')

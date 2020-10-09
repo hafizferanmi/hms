@@ -24,6 +24,10 @@ const schema = new Schema({
   phone: {
     type: String
   },
+  occupation: {
+    type: String,
+    required: true
+  },
   from: {
     type: String,
     required: true

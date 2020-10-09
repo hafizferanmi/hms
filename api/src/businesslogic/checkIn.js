@@ -20,13 +20,25 @@ export const checkIn = async (req, res) => {
 
   if (errorMsg) return res.json(failed(errorMsg))
 
-  const { title, name, email, phone, from, to, paymentMethod, roomId } = value
+  const {
+    title,
+    name,
+    email,
+    phone,
+    occupation,
+    from,
+    to,
+    paymentMethod,
+    room: roomId
+  } = value
+
   const checkInDetails = {
     roomId,
     title,
     name,
     email,
     phone,
+    occupation,
     from,
     to,
     paymentMethod,
@@ -41,18 +53,27 @@ export const checkIn = async (req, res) => {
     companyId: currentStaffCompanyId
   }
 
-  const set = {
-    status: ROOM_STATUS.BOOKED
+  let room
+  try {
+    room = await Room.findOne(conditions)
+  } catch (e) {
+    return res.json(failed('Error occured. Cound not book room'))
   }
 
-  // Todo: cannot checkIn a deleted room.
+  if (!room) return res.json(failed('Cannot book a non-existent room'))
+  if (room.status === ROOM_STATUS.RESERVED) return res.json(failed('Room is reserved. Cannot be booked'))
+  if (room.status === ROOM_STATUS.NOT_AVAILABLE) return res.json(failed('Room is currently not available for booking.'))
 
   try {
     // checking if room is already checked in
-    const checkIn = await CheckIn.find({ roomId, companyId: currentStaffCompanyId, checkedOut: false })
-    if (checkIn) return res.json(failed('Room already checkedIn'))
+    const roomCheckedIn = await CheckIn.find({ roomId, companyId: currentStaffCompanyId, checkedOut: false })
+    if (roomCheckedIn) return res.json(failed('Room already checkedIn'))
   } catch (e) {
     return res.json(failed('Error Occured. Could not update checkIn'))
+  }
+
+  const set = {
+    status: ROOM_STATUS.BOOKED
   }
 
   try {
@@ -76,13 +97,14 @@ export const updateCheckIn = async (req, res) => {
 
   if (errorMsg) return res.json(failed(errorMsg))
 
-  const { title, name, email, phone, from, to, paymentMethod, roomId } = value
+  const { title, name, email, phone, from, to, paymentMethod, room: roomId, occupation } = value
   const checkInDetails = {
     roomId,
     title,
     name,
     email,
     phone,
+    occupation,
     from,
     to,
     paymentMethod,
@@ -90,16 +112,21 @@ export const updateCheckIn = async (req, res) => {
   }
   // Todo: check if its the same room that was updated.
 
+  let roomCheckIn
   try {
     // checking if not already checked out: cannot update checkIn when already checkedout
-    const checkIn = await CheckIn.find({ _id: checkInId, companyId: currentStaffCompanyId, checkedOut: false })
-    if (!checkIn) return res.json(failed('Room already checkedout'))
+    roomCheckIn = await CheckIn.find({ _id: checkInId, companyId: currentStaffCompanyId })
   } catch (e) {
     return res.json(failed('Error Occured. Could not update checkIn'))
   }
 
+  if (!roomCheckIn) return res.json(failed('CheckIn not found.'))
+  if (roomCheckIn.checkedOut) return res.json(failed('Room is already checkedout. Can no longer update'))
+
+  const checkInConditions = { _id: checkInId, companyId: currentStaffCompanyId }
+
   try {
-    const updatedCheckIn = await CheckIn.findOneAndUpdate({ _id: checkInId, companyId: currentStaffCompanyId }, checkInDetails, { new: true })
+    const updatedCheckIn = await CheckIn.findOneAndUpdate(checkInConditions, checkInDetails, { new: true })
     return res.json(success(updatedCheckIn))
   } catch (e) {
     return res.json(failed('Error occured. Could not update checkIn. Try again'))
@@ -115,12 +142,12 @@ export const checkOut = async (req, res) => {
   let checkIn
   try {
     checkIn = await CheckIn.find({ _id: checkInId, companyId: currentStaffCompanyId })
-    if (!checkIn) return res.json(failed('CheckIn not found.'))
   } catch (e) {
     return res.json(failed('Error occured. CheckIn not found.'))
   }
 
-  // Todo: cannot checkout if already checked out
+  if (!checkIn) return res.json(failed('CheckIn not found.'))
+  if (checkIn.checkedOut) return res.json(failed('Already checkedout cannot proceed.'))
 
   const roomConditions = {
     _id: checkIn.roomId,
@@ -196,14 +223,15 @@ export const deleteCheckIn = async (req, res) => {
   const currentStaffCompanyId = req.staff.companyId
   const checkInId = req.params.checkInId
 
+  let checkIn
   try {
-    // cannot delete if already checked out
-    const checkIn = await CheckIn.find({ _id: checkInId, companyId: currentStaffCompanyId })
-    if (!checkIn) return res.json(failed('CheckIn not found.'))
-    if (checkIn.checkedOut) return res.json(failed('Cannot delete. Already checked out'))
+    checkIn = await CheckIn.find({ _id: checkInId, companyId: currentStaffCompanyId })
   } catch (e) {
     return res.json(failed('Error occured. Cannot delete checkIn.'))
   }
+
+  if (!checkIn) return res.json(failed('CheckIn not found.'))
+  if (checkIn.checkedOut) return res.json(failed('Cannot delete. Already checked out'))
 
   try {
     const deletedCheckIn = await CheckIn.findOneAndDelete({ _id: checkInId, companyId: currentStaffCompanyId })
