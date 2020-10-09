@@ -4,7 +4,7 @@ import ManagersPage from '../ManagersPage'
 import CreateStaffButton from './CreateStaffButton'
 import useModal from '../../hooks/useModal'
 import Modal from '../misc/Modal'
-import StaffForm from '../StaffForm'
+import StaffForm from '../Forms/StaffForm'
 
 const PageTopWrapper = styled.div`
   display: flex;

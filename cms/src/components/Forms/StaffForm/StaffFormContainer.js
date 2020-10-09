@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
-import useAsyncFn from '../../hooks/useAsyncFn'
+import useAsyncFn from '../../../hooks/useAsyncFn'
 import { useDispatch } from 'react-redux'
 import StaffForm from './StaffForm'
 import {
   addStaff as addStaffAPI,
   updateStaff as updateStaffAPI,
   deleteStaff as deleteStaffAPI
-} from '../../helpers/api'
+} from '../../../helpers/api'
 import {
   addNewStaff,
   updateStaffDetails,
   deleteStaff as deleteStaffAction
-} from '../../redux/actions/staff'
+} from '../../../redux/actions/staff'
 
 const StaffFormContainer = ({ closeModal, staff }) => {
   const API = staff ? updateStaffAPI : addStaffAPI

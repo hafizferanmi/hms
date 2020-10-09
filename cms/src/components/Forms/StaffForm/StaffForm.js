@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
 
-import Input from '../Inputs'
-import Button from '../misc/Button'
+import Input from '../../Inputs'
+import Button from '../../misc/Button'
 import StaffFormSchema from './StaffSchema'
 
 const StaffFormWrapper = styled.form`

@@ -1,14 +1,13 @@
 import Debug from 'debug'
 import Room from '../models/room'
 import RoomType from '../models/roomTypes'
-import CheckIn from '../models/checkIn'
 import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
 import { ROOM_STATUS } from '../constants/room'
 
 const debug = Debug('API:businessLogin/room.js')
 
-const { RoomSchema, CheckInSchema } = ValidationSchemas
+const { RoomSchema } = ValidationSchemas
 const { success, failed } = helpers.response
 const { validateRequestBody } = helpers.misc
 
@@ -89,7 +88,16 @@ export const deleteRoom = async (req, res) => {
   const currentStaffCompanyId = req.staff.companyId
   const roomId = req.params.roomId
 
-  // Todo: cannot delete an already checkedIn room
+  let room
+  try {
+    room = await Room.findOne({ _id: roomId, companyId: currentStaffCompanyId })
+  } catch (e) {
+    return res.json(failed('Error occured. Try again'))
+  }
+
+  if (!room) return res.json(failed('Room not found'))
+  if (room.status === ROOM_STATUS.BOOKED) return res.json(failed('Room is booked. Cannot delete room.'))
+
   try {
     const deletedRoom = await Room.findOneAndDelete({ _id: roomId, companyId: currentStaffCompanyId })
     return res.json(success(deletedRoom))

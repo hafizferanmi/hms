@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../misc/Button'
 import Modal from '../misc/Modal'
-import StaffForm from '../StaffForm'
+import StaffForm from '../Forms/StaffForm'
 import useModal from '../../hooks/useModal'
 
 const CreateStaffButton = () => {
