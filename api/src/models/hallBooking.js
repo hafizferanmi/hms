@@ -1,16 +1,35 @@
 import mongoose, { Schema } from 'mongoose'
+import { PAYMENT_METHOD } from '../constants/misc'
+import R from 'ramda'
 
 const schema = new Schema({
-  name: {
+  hallId: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
+  by: {
     type: String,
     required: true
   },
-  desc: {
+  phone: {
     type: String
   },
-  price: {
-    type: Number,
+  email: {
+    type: String
+  },
+  from: {
+    type: String,
     required: true
+  },
+  to: {
+    type: String,
+    required: true
+  },
+  paymentMethod: {
+    type: String,
+    required: true,
+    default: PAYMENT_METHOD.CASH,
+    enum: R.values(PAYMENT_METHOD)
   },
   companyId: {
     type: Schema.Types.ObjectId,

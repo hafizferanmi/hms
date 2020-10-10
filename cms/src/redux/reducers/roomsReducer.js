@@ -46,8 +46,8 @@ export default (state = initialState, action) => {
 
     case UPDATE_ROOM: {
       const rooms = state.data
-      const currentStaffIndex = state.data.findIndex(room => room._id === payload._id)
-      rooms.splice(currentStaffIndex, 1, payload)
+      const roomIndex = state.data.findIndex(room => room._id === payload._id)
+      rooms.splice(roomIndex, 1, payload)
       return {
         ...state,
         data: rooms

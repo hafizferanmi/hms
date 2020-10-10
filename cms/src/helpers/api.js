@@ -70,3 +70,10 @@ export const getHall = (hallId) => fetchData(`/hall/${hallId}`)
 export const addHall = (body) => sendData('/hall/add', body)
 export const updateHall = (hallId, body) => modifyResource(`/hall/update/${hallId}`, body)
 export const deleteHall = (hallId) => deleteResource(`/hall/delete/${hallId}`)
+
+// HALL BOOKING API
+export const getBookings = () => fetchData('/booking/all')
+export const getBooking = (bookingId) => fetchData(`/booking/${bookingId}`)
+export const addBooking = (body) => sendData('/booking/add', body)
+export const updateBooking = (bookingId, body) => modifyResource(`/booking/update/${bookingId}`, body)
+export const deleteBooking = (bookingId) => deleteResource(`/booking/delete/${bookingId}`)

@@ -35,7 +35,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: 'Error Occured, could not fetch current checkIn type.'
+        error: 'Error Occured, could not fetch current checkIn.'
       }
 
     case ADD_CHECKIN:
@@ -46,8 +46,8 @@ export default (state = initialState, action) => {
 
     case UPDATE_CHECKIN: {
       const checkIns = state.data
-      const currentStaffIndex = state.data.findIndex(checkIn => checkIn._id === payload._id)
-      checkIns.splice(currentStaffIndex, 1, payload)
+      const bookingIndex = state.data.findIndex(checkIn => checkIn._id === payload._id)
+      checkIns.splice(bookingIndex, 1, payload)
       return {
         ...state,
         data: checkIns

@@ -16,7 +16,8 @@ const {
   roomsRoute,
   roomTypesRoute,
   checkInroute,
-  hallsRoute
+  hallsRoute,
+  hallBookingRoute
 } = routes
 
 app.use(bodyParser.json())
@@ -29,6 +30,7 @@ app.use('/room', roomsRoute)
 app.use('/roomTypes', roomTypesRoute)
 app.use('/checkIn', checkInroute)
 app.use('/hall', hallsRoute)
+app.use('/booking', hallBookingRoute)
 
 app.get('/', (req, res) => res.json({ message: 'Welcome!' }))
 

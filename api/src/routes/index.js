@@ -5,6 +5,7 @@ import roomsRoute from './rooms'
 import roomTypesRoute from './roomTypes'
 import checkInroute from './checkIn'
 import hallsRoute from './hall'
+import hallBookingRoute from './hallBooking'
 
 export default {
   adminRoutes,
@@ -13,5 +14,6 @@ export default {
   roomsRoute,
   roomTypesRoute,
   checkInroute,
-  hallsRoute
+  hallsRoute,
+  hallBookingRoute
 }
