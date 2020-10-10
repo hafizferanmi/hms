@@ -1,4 +1,3 @@
-import Company from '../models/company'
 import Staff from '../models/staff'
 import Admin from '../models/admin'
 import helpers from '../helpers'
@@ -9,14 +8,9 @@ const debug = Debug('API: businesslogic/auth.js')
 const { isCorrectPassword } = helpers.password
 const { generateAuthToken } = helpers.jwt
 const { failed, success } = helpers.response
-const { getSubdomain } = helpers.domain
 
 export const staffLogin = async (req, res) => {
-  debug('staffLogin')
-  const subdomain = getSubdomain(req)
-  if (!subdomain) {
-    return res.json(failed('Invalid company!'))
-  }
+  debug('staffLogin()')
 
   const { email, password } = req.body
   if (!email || !password) {
@@ -24,16 +18,9 @@ export const staffLogin = async (req, res) => {
   }
 
   try {
-    const company = await Company.findOne({ subdomain })
-    if (!company) {
-      return res.json(failed('Staff does not belong to this company'))
-    }
-
-    const companyId = company._id
-    const staff = await Staff.findOne({ email, companyId })
-    if (!staff) {
-      return res.json(failed('Error occured, try in a moment'))
-    }
+    const staff = await Staff.findOne({ email })
+    if (!staff) return res.json(failed('Login credentials failed.'))
+    if (staff.disabled) return res.json(failed('Account disabled. Contact your adminstrator.'))
 
     if (await isCorrectPassword(password, staff.password)) {
       const staffId = staff._id
