@@ -14,7 +14,7 @@ const { StaffSchema } = ValidationSchemas
 
 export const addStaff = async (req, res) => {
   debug('addStaff()')
-  const currentCompanyId = req.staff.companyId
+  const companyId = req.staff.companyId
   const currentStaffId = req.staff._id
   const { value, errorMsg } = validateRequestBody(StaffSchema, req.body)
 
@@ -26,7 +26,7 @@ export const addStaff = async (req, res) => {
 
   // check for company
   try {
-    const dbCompany = await Company.findById(currentCompanyId)
+    const dbCompany = await Company.findById(companyId)
     if (!dbCompany) {
       return res.json(failed('Company does not exist!'))
     }
@@ -37,7 +37,7 @@ export const addStaff = async (req, res) => {
   // hash password
   const hashedPassword = await hashPassword(password)
   const normalizedPhoneNumber = normalizePhoneNumber(phone)
-  const staff = await Staff.find({ email, companyId: currentCompanyId })
+  const staff = await Staff.find({ email, companyId })
   if (!staff) return res.json(failed('Staff with email already exist!.'))
 
   const staffData = {
@@ -46,15 +46,15 @@ export const addStaff = async (req, res) => {
     email,
     password: hashedPassword,
     role,
-    companyId: currentCompanyId,
-    createdAt: currentStaffId,
+    companyId,
+    createdBy: currentStaffId,
     updatedBy: currentStaffId
   }
 
   try {
-    const staff = new Staff(staffData)
-    const savedStaff = await staff.save()
-    return res.json(success(savedStaff))
+    let staff = new Staff(staffData)
+    staff = await staff.save()
+    return res.json(success(staff))
   } catch (e) {
     return res.json(failed('Fatal error occured. Try again soon.'))
   }

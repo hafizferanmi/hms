@@ -34,7 +34,7 @@ const SelectInput = ({ label, register, name, error, options, ...props }) => {
         name={name}
         {...props}
       >
-        {options.map(option => <option value={option} key={option}>{option}</option>)}
+        {options.map(option => <option value={option.value} key={option.value}>{option.label}</option>)}
       </Select>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
     </InputWrapper>

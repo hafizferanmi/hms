@@ -6,6 +6,8 @@ import { yupResolver } from '@hookform/resolvers'
 import Input from '../../Inputs'
 import Button from '../../misc/Button'
 import StaffFormSchema from './StaffSchema'
+import { STAFF_ROLES_LABEL, STAFF_ROLES } from '../../../constants/staff'
+import { buildSelectOptions } from '../../../helpers/misc'
 
 const StaffFormWrapper = styled.form`
   display: flex;
@@ -32,6 +34,7 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff, deleteStaffProps 
   const { isSubmitting } = formState
   const { handleDeleteStaff } = deleteStaffProps
   const { error, message } = serverFormState
+  const staffRoleOptions = buildSelectOptions(STAFF_ROLES, STAFF_ROLES_LABEL)
   return (
     <StaffFormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
       <div>
@@ -71,7 +74,7 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff, deleteStaffProps 
           register={register}
           name='role'
           label='role'
-          options={['GENERAL_MANAGER', 'FRONT_DESK_OFFICER']}
+          options={staffRoleOptions}
           error={errors.role}
         />
         <Button

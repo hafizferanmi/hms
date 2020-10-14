@@ -21,6 +21,7 @@ const schema = yup.object().shape({
     .trim()
     .label('Password')
     .required()
+    .max(13)
     .min(11),
 
   role: yup.string()
