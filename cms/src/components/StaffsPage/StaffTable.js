@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import useModal from '../../hooks/useModal'
 import Modal from '../misc/Modal'
-import DeleteModal from '../misc/DeleteModal.js'
+import ConfirmModal from '../misc/ConfirmModal'
 import StaffForm from '../Forms/StaffForm'
 import { STAFF_ROLES_LABEL, STAFF_STATUS_LABEL } from '../../constants/staff'
 import staffImg from '../../assets/images/logo-sm.png'
@@ -152,7 +152,7 @@ const StaffsTable = ({ staffs }) => {
             staff={data}
           />
         </Modal>
-        <DeleteModal
+        <ConfirmModal
           isOpen={deleteModalOpen}
           title='Delete staff'
           closeModal={closeDeleteModal}

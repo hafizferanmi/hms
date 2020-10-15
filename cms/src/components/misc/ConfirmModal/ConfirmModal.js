@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Modal from '../Modal'
 import Button from '../Button'
 
-const DeleteModalWrapper = styled.div`
+const ConfirmModalWrapper = styled.div`
   text-align: center;
   padding: 50px;
 `
@@ -17,7 +17,7 @@ const ButtonWrapper = styled.div`
   }
 `
 
-const DeleteModal = ({ isOpen, title, closeModal, message, confirmAction }) => {
+const ConfirmModal = ({ isOpen, title, closeModal, message, confirmAction }) => {
   const handleConfirmAction = () => {
     confirmAction()
     closeModal()
@@ -28,7 +28,7 @@ const DeleteModal = ({ isOpen, title, closeModal, message, confirmAction }) => {
       handleClose={closeModal}
       size='lg'
     >
-      <DeleteModalWrapper>
+      <ConfirmModalWrapper>
         <h2>{title}</h2>
         <div>{message}</div>
         <ButtonWrapper>
@@ -41,9 +41,9 @@ const DeleteModal = ({ isOpen, title, closeModal, message, confirmAction }) => {
             onClick={() => closeModal()}
           />
         </ButtonWrapper>
-      </DeleteModalWrapper>
+      </ConfirmModalWrapper>
     </Modal>
   )
 }
 
-export default DeleteModal
+export default ConfirmModal

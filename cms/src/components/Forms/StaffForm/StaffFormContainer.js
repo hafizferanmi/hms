@@ -7,7 +7,7 @@ import {
   addStaff as addStaffAPI,
   updateStaff as updateStaffAPI
 } from '../../../helpers/api'
-import { success } from '../../../helpers/notification'
+import { failed, success } from '../../../helpers/notification'
 import {
   addNewStaff,
   updateStaffDetails
@@ -33,9 +33,13 @@ const StaffFormContainer = ({ closeModal, staff }) => {
   useEffect(() => {
     if (response && response.success) {
       staff ? dispatch(updateStaffDetails(response.result)) : dispatch(addNewStaff(response.result))
-      const notificationMessage = staff ? 'Staff details updated successfully.' : 'Staff adeed successfully.'
+      const notificationMessage = staff ? 'Staff details updated successfully.' : 'Staff added successfully.'
       notification.addNotification(success(notificationMessage))
       closeModal()
+    }
+
+    if (response && !response.success) {
+      notification.addNotification(failed(response.message))
     }
     // eslint-disable-next-line
   }, [response])
