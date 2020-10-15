@@ -19,7 +19,7 @@ const schema = yup.object().shape({
 
   phone: yup.string()
     .trim()
-    .label('Password')
+    .label('Phone number')
     .required()
     .max(13)
     .min(11),

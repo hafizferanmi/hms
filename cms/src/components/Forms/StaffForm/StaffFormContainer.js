@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import useAsyncFn from '../../../hooks/useAsyncFn'
 import { useDispatch } from 'react-redux'
+import { store as notification } from 'react-notifications-component'
 import StaffForm from './StaffForm'
 import {
   addStaff as addStaffAPI,
-  updateStaff as updateStaffAPI,
-  deleteStaff as deleteStaffAPI
+  updateStaff as updateStaffAPI
 } from '../../../helpers/api'
+import { success } from '../../../helpers/notification'
 import {
   addNewStaff,
-  updateStaffDetails,
-  deleteStaff as deleteStaffAction
+  updateStaffDetails
 } from '../../../redux/actions/staff'
 
 const StaffFormContainer = ({ closeModal, staff }) => {
@@ -33,6 +33,8 @@ const StaffFormContainer = ({ closeModal, staff }) => {
   useEffect(() => {
     if (response && response.success) {
       staff ? dispatch(updateStaffDetails(response.result)) : dispatch(addNewStaff(response.result))
+      const notificationMessage = staff ? 'Staff details updated successfully.' : 'Staff adeed successfully.'
+      notification.addNotification(success(notificationMessage))
       closeModal()
     }
     // eslint-disable-next-line
@@ -44,39 +46,12 @@ const StaffFormContainer = ({ closeModal, staff }) => {
     message: response && response.message
   }
 
-  const {
-    error: deleteStaffServerError,
-    loading: deleteStaffProcessing,
-    response: deleteStaffResponse,
-    executeFn: deleteStaff
-  } = useAsyncFn(deleteStaffAPI)
-
-  const handleDeleteStaff = () => {
-    deleteStaff(staffId)
-  }
-
-  const deleteStaffProps = {
-    deleteStaffServerError,
-    deleteStaffResponse,
-    deleteStaffProcessing,
-    handleDeleteStaff
-  }
-
-  useEffect(() => {
-    if (deleteStaffResponse && deleteStaffResponse.success) {
-      dispatch(deleteStaffAction(staff))
-      closeModal()
-    }
-    // eslint-disable-next-line
-  }, [deleteStaffResponse])
-
   return (
     <div>
       <StaffForm
         staff={staff}
         serverFormState={serverFormState}
         handleFormSubmit={handleFormSubmit}
-        deleteStaffProps={deleteStaffProps}
       />
     </div>
   )
