@@ -1,8 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { removeToken } from '../../../helpers/auth'
-import { useNavigate } from '@reach/router'
-import PageContent from '../GlobalStyle/PageContent'
 
 const StyledHeader = styled.header`
   background-color: #fff;

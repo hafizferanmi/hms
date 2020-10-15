@@ -103,9 +103,6 @@ const tableHeaders = ['', 'Name', 'Email', 'Phone No', 'Job title', 'Status', ''
 
 const StaffsTable = ({ staffs }) => {
   const {
-    deleteStaffServerError,
-    deleteStaffResponse,
-    deleteStaffProcessing,
     handleDeleteStaff
   } = useContext(StaffPageAPIMethods)
   const { isOpen, openModal, closeModal, data } = useModal()
