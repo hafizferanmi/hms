@@ -18,21 +18,12 @@ const ErrorMessage = styled.div`
   color: #DC3545;
 `
 
-const DeleteButton = styled.span`
-  border: 2px solid whitesmoke;
-  padding: 10px 10px;
-  border-radius: 20px;
-  margin-left: 10px;
-  cursor: pointer;
-`
-
-const StaffForm = ({ serverFormState, handleFormSubmit, staff, deleteStaffProps }) => {
+const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
   const { register, handleSubmit, errors, formState } = useForm({
     resolver: yupResolver(StaffFormSchema),
     defaultValues: staff
   })
   const { isSubmitting } = formState
-  const { handleDeleteStaff } = deleteStaffProps
   const { error, message } = serverFormState
   const staffRoleOptions = buildSelectOptions(STAFF_ROLES, STAFF_ROLES_LABEL)
   return (
@@ -82,11 +73,6 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff, deleteStaffProps 
           type='submit'
           disabled={isSubmitting}
         />
-        {staff &&
-          <DeleteButton onClick={handleDeleteStaff}>
-            Delete staff
-          </DeleteButton>}
-
       </div>
     </StaffFormWrapper>
   )
