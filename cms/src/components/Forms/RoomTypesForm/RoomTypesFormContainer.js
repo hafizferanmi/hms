@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import useAsyncFn from '../../../hooks/useAsyncFn'
 import { useDispatch } from 'react-redux'
+import { store as notification } from 'react-notifications-component'
+import { success, failed } from '../../../helpers/notification'
 import {
   addRoomType as addRoomTypeAPI,
   updateRoomType as updateRoomTypeAPI,
@@ -32,7 +34,13 @@ const RoomTypesFormContainer = ({ roomType, closeModal }) => {
   useEffect(() => {
     if (response && response.success) {
       roomType ? dispatch(updateRoomTypeAction(response.result)) : dispatch(addRoomTypeAction(response.result))
+      const notificationMessage = roomType ? 'Room type updated successfully' : 'Room type added successfully'
+      notification.addNotification(success(notificationMessage))
       closeModal()
+    }
+
+    if (response && !response.success) {
+      notification.addNotification(failed(response.message))
     }
     // eslint-disable-next-line
   }, [response])
@@ -64,7 +72,12 @@ const RoomTypesFormContainer = ({ roomType, closeModal }) => {
   useEffect(() => {
     if (deleteRoomTypeResponse && deleteRoomTypeResponse.success) {
       dispatch(deleteRoomTypeAction(roomType))
+      notification.addNotification(success('Room type deleted successfully.'))
       closeModal()
+    }
+
+    if (deleteRoomTypeResponse && !deleteRoomTypeResponse.success) {
+      notification.addNotification(failed(deleteRoomTypeResponse.message))
     }
     // eslint-disable-next-line
   }, [deleteRoomTypeResponse])

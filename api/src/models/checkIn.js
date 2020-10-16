@@ -28,11 +28,27 @@ const schema = new Schema({
     type: String,
     required: true
   },
-  from: {
+  arrivingFrom: {
+    type: String
+  },
+  purpose: {
+    type: String,
+    trim: true
+  },
+  meansOfTravel: {
+    type: String
+  },
+  nextOfKin: {
+    type: String
+  },
+  nextOfKinPhoneNo: {
+    type: String
+  },
+  dateOfArrival: {
     type: String,
     required: true
   },
-  to: {
+  dateOfDeparture: {
     type: String,
     required: true
   },

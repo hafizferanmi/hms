@@ -10,7 +10,7 @@ import {
 const initialState = {
   loading: false,
   error: null,
-  data: null
+  data: []
 }
 
 export default (state = initialState, action) => {
@@ -46,8 +46,8 @@ export default (state = initialState, action) => {
 
     case UPDATE_CHECKIN: {
       const checkIns = state.data
-      const bookingIndex = state.data.findIndex(checkIn => checkIn._id === payload._id)
-      checkIns.splice(bookingIndex, 1, payload)
+      const checkInIndex = state.data.findIndex(checkIn => checkIn._id === payload._id)
+      checkIns.splice(checkInIndex, 1, payload)
       return {
         ...state,
         data: checkIns

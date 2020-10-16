@@ -5,7 +5,7 @@ import { PAYMENT_METHOD } from '../constants/misc'
 
 const schema = Joi.object()
   .keys({
-    roomId: stringSchema()
+    room: stringSchema()
       .label('Room')
       .required(),
 
@@ -29,11 +29,31 @@ const schema = Joi.object()
       .label('Occupation')
       .required(),
 
-    from: stringSchema()
+    arrivingFrom: stringSchema()
+      .label('Arriving from')
+      .required(),
+
+    purpose: stringSchema()
+      .label('Purpose of visit')
+      .required(),
+
+    meansOfTravel: stringSchema()
+      .label('Means of travel')
+      .required(),
+
+    nextOfKin: stringSchema()
+      .label('Next of kin')
+      .required(),
+
+    nextOfKinPhoneNo: stringSchema()
+      .label('Next of kin phone number')
+      .required(),
+
+    dateOfArrival: stringSchema()
       .label('Arrival date')
       .required(),
 
-    to: stringSchema()
+    dateOfDeparture: stringSchema()
       .label('Departure date')
       .required(),
 

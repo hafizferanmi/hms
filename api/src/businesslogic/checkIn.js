@@ -26,8 +26,13 @@ export const checkIn = async (req, res) => {
     email,
     phone,
     occupation,
-    from,
-    to,
+    arrivingFrom,
+    purpose,
+    meansOfTravel,
+    nextOfKin,
+    nextOfKinPhoneNo,
+    dateOfArrival,
+    dateOfDeparture,
     paymentMethod,
     room: roomId
   } = value
@@ -39,8 +44,13 @@ export const checkIn = async (req, res) => {
     email,
     phone,
     occupation,
-    from,
-    to,
+    arrivingFrom,
+    purpose,
+    meansOfTravel,
+    nextOfKin,
+    nextOfKinPhoneNo,
+    dateOfArrival,
+    dateOfDeparture,
     paymentMethod,
     createdBy: currentStaffId,
     updatedBy: currentStaffId,
@@ -208,7 +218,9 @@ export const getAllCheckIn = async (req, res) => {
     companyId: currentStaffCompanyId
   }
 
-  type === 'CHECKEDOUT' ? conditions.checkedOut = true : conditions.checkedOut = false
+  if (type === 'CHECKEDOUT') {
+    conditions.checkedOut = true
+  }
 
   try {
     const checkIns = await CheckIn.find(conditions)

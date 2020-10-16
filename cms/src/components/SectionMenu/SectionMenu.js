@@ -25,6 +25,7 @@ const SectionMenu = () => {
         <Link to='/secure/roomtypes'>Room Types</Link>
         <Link to='/secure/rooms'>Rooms</Link>
         <Link to='/secure/staffs'>Staffs</Link>
+        <Link to='/secure/checkin'>Check In</Link>
       </LinkWrapper>
     </SectionMenuWrapper>
   )
