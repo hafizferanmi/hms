@@ -35,8 +35,9 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
           name='name'
           register={register}
           error={errors.name}
-          placeholder='Name'
-          label='Fullname'
+          label='Name'
+          autoFocus
+          required
         />
         <Input.TextInput
           name='email'
@@ -44,7 +45,7 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
           label='Email'
           register={register}
           error={errors.email}
-          placeholder='Enter email'
+          required
         />
         <Input.TextInput
           register={register}
@@ -52,19 +53,19 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
           label='Password'
           type='password'
           error={errors.password}
-          placeholder='Enter password'
+          required
         />
         <Input.TextInput
           register={register}
           name='phone'
           label='Phone No.'
           error={errors.phone}
-          placeholder='Enter phone No.'
+          required
         />
         <Input.SelectInput
           register={register}
           name='role'
-          label='role'
+          label='Staff Role'
           options={staffRoleOptions}
           error={errors.role}
         />

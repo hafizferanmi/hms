@@ -45,7 +45,6 @@ const RoomTypeForm = ({ serverFormState, handleFormSubmit, roomType, deleteRoomT
           name='name'
           register={register}
           error={errors.name}
-          placeholder='Name'
           label='Type name'
         />
         <Input.TextInput
@@ -53,12 +52,13 @@ const RoomTypeForm = ({ serverFormState, handleFormSubmit, roomType, deleteRoomT
           label='Price'
           register={register}
           error={errors.price}
-          placeholder='Price'
         />
-        <Input.TextArea
+        <Input.TextInput
           name='desc'
           label='Description'
           register={register}
+          multiline
+          rows={4}
           error={errors.desc}
         />
         <Button

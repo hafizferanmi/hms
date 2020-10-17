@@ -1,40 +1,18 @@
 import React from 'react'
-import styled from 'styled-components'
+import TextField from '@material-ui/core/TextField'
 
-const InputWrapper = styled.div`
-  margin-bottom: 10px;
-`
-const StyledInput = styled.input`
-  border: none;
-  outline: none;
-  padding: 10px;
-  display: block;
-  background: #edf2f7;
-  border-radius: 0.25rem;
-  width: 100%;
-`
-
-const InputLabel = styled.label`
-  font-size: 12px;
-  margin: 0;
-`
-const ErrorMessage = styled.div`
-  font-size: 12px;
-  color: red;
-`
-
-const TextInput = ({ label, register, name, error, type = 'text', ...props }) => {
+const TextInput = ({ register, error, ...props }) => {
   return (
-    <InputWrapper>
-      {label && <InputLabel>{label}</InputLabel>}
-      <StyledInput
-        type={type}
-        ref={register}
-        name={name}
-        {...props}
-      />
-      {error && <ErrorMessage>{error.message}</ErrorMessage>}
-    </InputWrapper>
+    <TextField
+      variant='outlined'
+      margin='normal'
+      inputRef={register}
+      fullWidth
+      size='small'
+      error={error}
+      helperText={error && error.message}
+      {...props}
+    />
   )
 }
 
