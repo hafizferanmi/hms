@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
 
 import Input from '../../Inputs'
@@ -19,7 +19,7 @@ const ErrorMessage = styled.div`
 `
 
 const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, errors, formState, control } = useForm({
     resolver: yupResolver(StaffFormSchema),
     defaultValues: staff
   })
@@ -62,12 +62,17 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
           error={errors.phone}
           required
         />
-        <Input.SelectInput
-          register={register}
+        <Controller
+          as={
+            <Input.SelectInput
+              register={register}
+              label='Staff Role'
+              options={staffRoleOptions}
+              error={errors.role}
+            />
+          }
           name='role'
-          label='Staff Role'
-          options={staffRoleOptions}
-          error={errors.role}
+          control={control}
         />
         <Button
           label={`${staff ? 'Edit' : 'Add'} staff`}

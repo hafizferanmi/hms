@@ -44,6 +44,10 @@ const schema = yup.object().shape({
     .label('Next of kin')
     .required(),
 
+  nextOfKinPhoneNo: yup.string()
+    .label('Next of kin')
+    .required(),
+
   dateOfArrival: yup.string()
     .label('Date of arrival')
     .required(),

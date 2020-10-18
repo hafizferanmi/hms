@@ -16,7 +16,7 @@ const CheckInButton = () => {
       />
       <Modal
         open={isOpen}
-        title='Checkin guest'
+        // title='Checkin guest'
         handleClose={handleClose}
         size='lg'
       >

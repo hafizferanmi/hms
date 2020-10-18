@@ -10,7 +10,7 @@ const PageTopWrapper = styled.div`
   align-items: center;
 `
 
-const CheckInPage = ({ checkIns = [] }) => {
+const CheckInPage = ({ checkIns }) => {
   return (
     <ManagersPage>
       <PageTopWrapper>

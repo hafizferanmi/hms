@@ -28,12 +28,15 @@ const CheckInFormContainer = ({ checkIn, closeModal }) => {
   } = useAsyncFn(API)
 
   const handleFormSubmit = data => {
+    console.log(data)
     checkInId ? submitForm(checkInId, data) : submitForm(data)
   }
 
   useEffect(() => {
     if (response && response.success) {
-      checkIn ? dispatch(updateCheckInAction(response.result)) : dispatch(addCheckInAction(response.result))
+      const bookedRoom = response.result.bookedRoom
+      const newCheckIn = response.result.checkIn
+      checkIn ? dispatch(updateCheckInAction(newCheckIn)) : dispatch(addCheckInAction(newCheckIn))
       const notificationMessage = checkIn ? 'CheckIn updated successfully' : 'CheckIn added successfully'
       notification.addNotification(success(notificationMessage))
       closeModal()
@@ -62,7 +65,7 @@ const CheckInFormContainer = ({ checkIn, closeModal }) => {
     deleteAPI(checkInId)
   }
 
-  const deleteRoomTypeProps = {
+  const deleteProps = {
     deleteServerError,
     deleteProcessing,
     deleteResponse,
@@ -87,7 +90,7 @@ const CheckInFormContainer = ({ checkIn, closeModal }) => {
         checkIn={checkIn}
         serverFormState={serverFormState}
         handleFormSubmit={handleFormSubmit}
-        deleteRoomTypeProps={deleteRoomTypeProps}
+        deleteProps={deleteProps}
       />
     </div>
   )

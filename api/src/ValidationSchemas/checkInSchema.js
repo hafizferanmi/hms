@@ -61,7 +61,10 @@ const schema = Joi.object()
       .label('Payment method')
       .default(PAYMENT_METHOD.CASH)
       .valid(...R.values(PAYMENT_METHOD))
-      .required()
+      .required(),
+
+    note: stringSchema()
+      .label('Note')
   })
 
 export default schema

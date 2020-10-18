@@ -58,6 +58,9 @@ const schema = new Schema({
     default: PAYMENT_METHOD.CASH,
     enum: R.values(PAYMENT_METHOD)
   },
+  note: {
+    type: String,
+  },
   checkedInBy: {
     type: Schema.Types.ObjectId,
     required: true

@@ -4,7 +4,7 @@ const defaultNotificationConfig = Object.freeze({
   animationIn: ['animated', 'fadeIn'],
   animationOut: ['animated', 'fadeOut'],
   dismiss: {
-    duration: 5000,
+    duration: 4000,
     pauseOnHover: true
   },
   showIcon: true

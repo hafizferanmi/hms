@@ -34,6 +34,7 @@ export const checkIn = async (req, res) => {
     dateOfArrival,
     dateOfDeparture,
     paymentMethod,
+    note,
     room: roomId
   } = value
 
@@ -52,6 +53,7 @@ export const checkIn = async (req, res) => {
     dateOfArrival,
     dateOfDeparture,
     paymentMethod,
+    note,
     createdBy: currentStaffId,
     updatedBy: currentStaffId,
     checkedInBy: currentStaffId,
@@ -71,16 +73,9 @@ export const checkIn = async (req, res) => {
   }
 
   if (!room) return res.json(failed('Cannot book a non-existent room'))
+  if (room.status === ROOM_STATUS.BOOKED) return res.json(failed('Room is already checkedIn'))
   if (room.status === ROOM_STATUS.RESERVED) return res.json(failed('Room is reserved. Cannot be booked'))
   if (room.status === ROOM_STATUS.NOT_AVAILABLE) return res.json(failed('Room is currently not available for booking.'))
-
-  try {
-    // checking if room is already checked in
-    const roomCheckedIn = await CheckIn.find({ roomId, companyId: currentStaffCompanyId, checkedOut: false })
-    if (roomCheckedIn) return res.json(failed('Room already checkedIn'))
-  } catch (e) {
-    return res.json(failed('Error Occured. Could not update checkIn'))
-  }
 
   const set = {
     status: ROOM_STATUS.BOOKED
@@ -88,10 +83,10 @@ export const checkIn = async (req, res) => {
 
   try {
     const bookedRoom = await Room.findOneAndUpdate(conditions, set, { new: true })
-    const newCheckIn = new CheckIn(checkInDetails)
-    const checkedIn = await newCheckIn.save()
+    let checkIn = new CheckIn(checkInDetails)
+    checkIn = await checkIn.save()
 
-    return res.json(success({ bookedRoom, checkedIn }))
+    return res.json(success({ bookedRoom, checkIn }))
   } catch (e) {
     return res.json(failed('Error occured. Could not book room.'))
   }
@@ -107,7 +102,24 @@ export const updateCheckIn = async (req, res) => {
 
   if (errorMsg) return res.json(failed(errorMsg))
 
-  const { title, name, email, phone, from, to, paymentMethod, room: roomId, occupation } = value
+  const {
+    title,
+    name,
+    email,
+    phone,
+    occupation,
+    arrivingFrom,
+    purpose,
+    meansOfTravel,
+    nextOfKin,
+    nextOfKinPhoneNo,
+    dateOfArrival,
+    dateOfDeparture,
+    paymentMethod,
+    note,
+    room: roomId
+  } = value
+
   const checkInDetails = {
     roomId,
     title,
@@ -115,10 +127,17 @@ export const updateCheckIn = async (req, res) => {
     email,
     phone,
     occupation,
-    from,
-    to,
+    arrivingFrom,
+    purpose,
+    meansOfTravel,
+    nextOfKin,
+    nextOfKinPhoneNo,
+    dateOfArrival,
+    dateOfDeparture,
     paymentMethod,
-    updatedBy: currentStaffId
+    note,
+    updatedBy: currentStaffId,
+    companyId: currentStaffCompanyId
   }
   // Todo: check if its the same room that was updated.
 
