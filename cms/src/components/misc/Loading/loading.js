@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactLoading from 'react-loading'
 import styled from 'styled-components'
 
 const LoadingWrapper = styled.div`
@@ -12,7 +13,7 @@ const LoadingWrapper = styled.div`
 const Loading = () => {
   return (
     <LoadingWrapper>
-      Loading...
+      <ReactLoading type='cylon' color='white' width='400px' height='400px' />
     </LoadingWrapper>
   )
 }

@@ -28,13 +28,13 @@ const CheckInFormContainer = ({ checkIn, closeModal }) => {
   } = useAsyncFn(API)
 
   const handleFormSubmit = data => {
-    console.log(data)
     checkInId ? submitForm(checkInId, data) : submitForm(data)
   }
 
   useEffect(() => {
     if (response && response.success) {
       const bookedRoom = response.result.bookedRoom
+      console.log(bookedRoom)
       const newCheckIn = response.result.checkIn
       checkIn ? dispatch(updateCheckInAction(newCheckIn)) : dispatch(addCheckInAction(newCheckIn))
       const notificationMessage = checkIn ? 'CheckIn updated successfully' : 'CheckIn added successfully'

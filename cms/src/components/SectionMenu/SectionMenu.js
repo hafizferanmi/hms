@@ -22,10 +22,11 @@ const SectionMenu = () => {
   return (
     <SectionMenuWrapper>
       <LinkWrapper>
-        <Link to='/secure/roomtypes'>Room Types</Link>
-        <Link to='/secure/rooms'>Rooms</Link>
-        <Link to='/secure/staffs'>Staffs</Link>
-        <Link to='/secure/checkin'>Check In</Link>
+        <Link to='/secure/admin'>Dashboard</Link>
+        <Link to='/secure/admin/roomtypes'>Room Types</Link>
+        <Link to='/secure/admin/halls'>Halls</Link>
+        <Link to='/secure/admin/staffs'>Staffs</Link>
+        <Link to='/secure/admin/checkin'>Check In</Link>
       </LinkWrapper>
     </SectionMenuWrapper>
   )

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import ManagersPage from '../ManagersPage'
 import CreateRoomTypesButton from './CreateRoomTypesButton'
 import Modal from '../misc/Modal'
 import RoomTypesForm from '../Forms/RoomTypesForm'
@@ -61,7 +60,7 @@ const RoomTypesPage = ({ roomTypes, formModal }) => {
   }
 
   return (
-    <ManagersPage>
+    <>
       <PageTopWrapper>
         <h3>Room types</h3>
         <CreateRoomTypesButton
@@ -89,7 +88,7 @@ const RoomTypesPage = ({ roomTypes, formModal }) => {
           roomType={selectedRoomType}
         />
       </Modal>
-    </ManagersPage>
+    </>
   )
 }
 

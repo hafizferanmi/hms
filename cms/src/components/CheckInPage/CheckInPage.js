@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import ManagersPage from '../ManagersPage'
 import CheckInButton from './CheckInButton'
 import CheckInTable from './CheckInTable'
 
@@ -12,7 +11,7 @@ const PageTopWrapper = styled.div`
 
 const CheckInPage = ({ checkIns }) => {
   return (
-    <ManagersPage>
+    <>
       <PageTopWrapper>
         <h3>CheckIn's</h3>
         <CheckInButton />
@@ -20,7 +19,7 @@ const CheckInPage = ({ checkIns }) => {
       <div>
         {checkIns.length ? <CheckInTable checkIns={checkIns} /> : <div>You dont have a checkIn yet.</div>}
       </div>
-    </ManagersPage>
+    </>
   )
 }
 

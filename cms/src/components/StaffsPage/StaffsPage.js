@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import ManagersPage from '../ManagersPage'
 import CreateStaffButton from './CreateStaffButton'
 import StaffsTable from './StaffTable'
 
@@ -12,7 +11,7 @@ const PageTopWrapper = styled.div`
 
 const StaffsPage = ({ staffs }) => {
   return (
-    <ManagersPage>
+    <>
       <PageTopWrapper>
         <h3>Our company staffs</h3>
         <CreateStaffButton />
@@ -20,7 +19,7 @@ const StaffsPage = ({ staffs }) => {
       <div>
         {staffs.length ? <StaffsTable staffs={staffs} /> : <div>You have not added any staff yet.</div>}
       </div>
-    </ManagersPage>
+    </>
   )
 }
 

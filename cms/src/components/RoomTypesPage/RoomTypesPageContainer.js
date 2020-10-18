@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import RoomTypesPage from './RoomTypesPage'
 import { fetchRoomTypes } from '../../redux/actions/roomTypeAction'
 import useModal from '../../hooks/useModal'
+import Loading from '../misc/Loading'
 
 const RoomTypesPageContainer = () => {
   const { isOpen, closeModal, openModal, data: modalData } = useModal()
@@ -20,7 +21,7 @@ const RoomTypesPageContainer = () => {
     // eslint-disable-next-line
   }, [])
 
-  if (loading) return 'Fetching room types'
+  if (loading) return <Loading />
   if (error) return 'Could not fetch room types.'
   return (
     <div>

@@ -9094,6 +9094,11 @@ react-loading-skeleton@^2.1.1:
   dependencies:
     "@emotion/core" "^10.0.22"
 
+react-loading@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-loading/-/react-loading-2.0.3.tgz#e8138fb0c3e4674e481b320802ac7048ae14ffb9"
+  integrity sha512-Vdqy79zq+bpeWJqC+xjltUjuGApyoItPgL0vgVfcJHhqwU7bAMKzysfGW/ADu6i0z0JiOCRJjo+IkFNkRNbA3A==
+
 react-notifications-component@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/react-notifications-component/-/react-notifications-component-2.4.1.tgz#b59b043130bbf61458e7be0b909288ae72f4dbec"

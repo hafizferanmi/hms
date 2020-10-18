@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { store as notification } from 'react-notifications-component'
+import Loading from '../misc/Loading'
 import StaffsPage from './StaffsPage'
 import useAsyncFn from '../../hooks/useAsyncFn'
 import {
@@ -52,7 +53,7 @@ const StaffsPageContainer = () => {
     // eslint-disable-next-line
   }, [deleteStaffResponse])
 
-  if (loading) return 'Loading...'
+  if (loading) return <Loading />
   if (error) return 'Error occured, we are on this issue.'
 
   return (

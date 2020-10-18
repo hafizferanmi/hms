@@ -11,6 +11,7 @@ import {
   fetchCheckIns,
   deleteCheckIn as deleteCheckInAction
 } from '../../redux/actions/checkIn'
+import Loading from '../misc/Loading'
 
 export const ChekinPageAPIMethods = React.createContext(null)
 
@@ -52,7 +53,7 @@ const CheckInPageContainer = () => {
     // eslint-disable-next-line
   }, [deleteCheckInResponse])
 
-  if (loading) return 'Loading...'
+  if (loading) return <Loading />
   if (error) return 'Error occured, we are on this issue.'
 
   return (
