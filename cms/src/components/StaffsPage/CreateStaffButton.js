@@ -18,7 +18,7 @@ const CreateStaffButton = () => {
         open={isOpen}
         title='Add new staff'
         handleClose={handleClose}
-        size='lg'
+        size='md'
       >
         <StaffForm closeModal={handleClose} />
       </Modal>

@@ -145,7 +145,7 @@ const StaffsTable = ({ staffs }) => {
           open={isOpen}
           title='Edit staff'
           handleClose={closeModal}
-          size='lg'
+          size='md'
         >
           <StaffForm
             closeModal={closeModal}
