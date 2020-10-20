@@ -3,21 +3,16 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import RoomTypesPage from './RoomTypesPage'
 import { fetchRoomTypes } from '../../redux/actions/roomTypeAction'
-import useModal from '../../hooks/useModal'
 import Loading from '../misc/Loading'
 
 const RoomTypesPageContainer = () => {
-  const { isOpen, closeModal, openModal, data: modalData } = useModal()
-  const modalProps = {
-    isOpen, closeModal, modalData, openModal
-  }
   const dispatch = useDispatch()
   const {
     loading, error, data
   } = useSelector(state => state.roomTypes)
 
   useEffect(() => {
-    if (!data) dispatch(fetchRoomTypes())
+    if (!data.length) dispatch(fetchRoomTypes())
     // eslint-disable-next-line
   }, [])
 
@@ -27,7 +22,6 @@ const RoomTypesPageContainer = () => {
     <div>
       <RoomTypesPage
         roomTypes={data}
-        formModal={modalProps}
       />
     </div>
   )

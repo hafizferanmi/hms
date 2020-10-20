@@ -45,6 +45,7 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
             register={register}
             error={errors.title}
             label='Title'
+            autoFocus
           />
           <Input.TextInput
             name='name'

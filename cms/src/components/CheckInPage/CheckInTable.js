@@ -17,7 +17,9 @@ const CheckInTable = ({ checkIns }) => {
     <TableWrapper>
       <Table>
         <thead>
-          {CheckInTableHeader.map((header, i) => (<th key={i}> {header} </th>))}
+          <tr>
+            {CheckInTableHeader.map((header, i) => (<th key={i}>{header} </th>))}
+          </tr>
         </thead>
         <tbody>
           {checkIns.map((checkIn, i) =>

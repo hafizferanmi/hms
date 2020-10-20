@@ -46,6 +46,7 @@ const RoomTypeForm = ({ serverFormState, handleFormSubmit, roomType, deleteRoomT
           register={register}
           error={errors.name}
           label='Type name'
+          autoFocus
         />
         <Input.TextInput
           name='price'

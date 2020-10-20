@@ -47,6 +47,7 @@ const HallForm = ({ serverFormState, handleFormSubmit, hall, deleteProps }) => {
           register={register}
           error={errors.name}
           label='Hall name'
+          autoFocus
         />
         <Input.TextInput
           name='price'

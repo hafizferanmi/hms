@@ -10,7 +10,7 @@ import {
 const initialState = {
   loading: false,
   error: null,
-  data: null
+  data: []
 }
 
 export default (state = initialState, action) => {

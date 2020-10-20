@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import CreateRoomTypesButton from './CreateRoomTypesButton'
 import Modal from '../misc/Modal'
+import useModal from '../../hooks/useModal'
 import RoomTypesForm from '../Forms/RoomTypesForm'
 
 const PageTopWrapper = styled.div`
@@ -15,8 +16,53 @@ const StyledCardWrapper = styled.div`
   height: 100%;
   margin-top: 50px;
   display: flex;
-
 `
+
+const RoomTypesPage = ({ roomTypes }) => {
+  const { isOpen, closeModal, openModal, data: selectedRoomType } = useModal()
+  const handleOpenModal = (data) => openModal(data)
+  const handleCloseModal = () => closeModal()
+
+  return (
+    <>
+      <PageTopWrapper>
+        <h4>Room types</h4>
+        <CreateRoomTypesButton
+          handleClick={handleOpenModal}
+        />
+      </PageTopWrapper>
+      <div>
+        {roomTypes.length
+          ? (
+            <StyledCardWrapper>
+              {
+                roomTypes.map((type, i) =>
+                  (
+                    <RoomTypeCard
+                      key={i}
+                      type={type}
+                      handleOpenModal={handleOpenModal}
+                    />
+                  ))
+              }
+
+            </StyledCardWrapper>
+          )
+          : <div>You have not added any room types yet.</div>}
+      </div>
+      <Modal
+        open={isOpen}
+        handleClose={handleCloseModal}
+        size='sm'
+      >
+        <RoomTypesForm
+          closeModal={handleCloseModal}
+          roomType={selectedRoomType}
+        />
+      </Modal>
+    </>
+  )
+}
 
 const StyledRoomTypeCard = styled.div`
   padding: 10px;
@@ -32,61 +78,13 @@ const StyledRoomTypeCard = styled.div`
   }
 `
 
-const RoomTypeGridWrapper = ({ roomTypes, handleCardClick }) => {
+const RoomTypeCard = ({ type, handleOpenModal }) => {
   return (
-    <StyledCardWrapper>
-      {roomTypes.map((roomtype, i) =>
-        <StyledRoomTypeCard onClick={() => handleCardClick(roomtype)} key={i}>
-          <StyledCardWrapper>{roomtype.name}</StyledCardWrapper>
-        </StyledRoomTypeCard>
-      )}
-    </StyledCardWrapper>
-  )
-}
-
-const RoomTypesPage = ({ roomTypes, formModal }) => {
-  const { isOpen, closeModal, openModal } = formModal
-  const [selectedRoomType, setSelectedRoomType] = useState(null)
-
-  const handleOpenModal = (data) => {
-    setSelectedRoomType(data)
-    openModal()
-  }
-
-  const handleCloseModal = () => {
-    setSelectedRoomType(null)
-    closeModal()
-  }
-
-  return (
-    <>
-      <PageTopWrapper>
-        <h3>Room types</h3>
-        <CreateRoomTypesButton
-          handleClick={handleOpenModal}
-        />
-      </PageTopWrapper>
-      <div>
-        {roomTypes
-          ? (
-            <RoomTypeGridWrapper
-              roomTypes={roomTypes}
-              handleCardClick={handleOpenModal}
-            />
-          )
-          : <div>You have not added any room types yet.</div>}
-      </div>
-      <Modal
-        open={isOpen}
-        handleClose={handleCloseModal}
-        size='sm'
-      >
-        <RoomTypesForm
-          closeModal={handleCloseModal}
-          roomType={selectedRoomType}
-        />
-      </Modal>
-    </>
+    <StyledRoomTypeCard
+      onClick={() => handleOpenModal(type)}
+    >
+      {type.name}
+    </StyledRoomTypeCard>
   )
 }
 

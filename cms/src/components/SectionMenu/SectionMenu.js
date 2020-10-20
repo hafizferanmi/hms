@@ -23,7 +23,7 @@ const SectionMenu = () => {
     <SectionMenuWrapper>
       <LinkWrapper>
         <Link to='/secure/admin'>Dashboard</Link>
-        <Link to='/secure/admin/roomtypes'>Room Types</Link>
+        <Link to='/secure/admin/roomtypes'>Rooms</Link>
         <Link to='/secure/admin/halls'>Halls</Link>
         <Link to='/secure/admin/staffs'>Staffs</Link>
         <Link to='/secure/admin/checkin'>Check In</Link>
