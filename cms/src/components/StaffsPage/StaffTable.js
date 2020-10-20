@@ -1,9 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import useModal from '../../hooks/useModal'
-import Modal from '../misc/Modal'
 import ConfirmModal from '../misc/ConfirmModal'
-import StaffForm from '../Forms/StaffForm'
 import { STAFF_ROLES_LABEL, STAFF_STATUS_LABEL } from '../../constants/staff'
 import staffImg from '../../assets/images/logo-sm.png'
 import TrashIcon from '../icons/Trash'
@@ -101,11 +99,10 @@ object-fit: contain;
 
 const tableHeaders = ['', 'Name', 'Email', 'Phone No', 'Job title', 'Status', '']
 
-const StaffsTable = ({ staffs }) => {
+const StaffsTable = ({ staffs, handleOpen }) => {
   const {
     handleDeleteStaff
   } = useContext(StaffPageAPIMethods)
-  const { isOpen, openModal, closeModal, data } = useModal()
   const {
     isOpen: deleteModalOpen,
     openModal: openDeleteModal,
@@ -133,7 +130,7 @@ const StaffsTable = ({ staffs }) => {
               <td>{STAFF_STATUS_LABEL[staff.status] || 'Active'}</td>
               <td>
                 <div className='icon-wrapper'>
-                  <EditIcon onClick={() => openModal(staff)} />
+                  <EditIcon onClick={() => handleOpen(staff)} />
                   <TrashIcon onClick={() => openDeleteModal(staff)} />
                 </div>
               </td>
@@ -141,17 +138,6 @@ const StaffsTable = ({ staffs }) => {
           )}
 
         </tbody>
-        <Modal
-          open={isOpen}
-          title='Edit staff'
-          handleClose={closeModal}
-          size='md'
-        >
-          <StaffForm
-            closeModal={closeModal}
-            staff={data}
-          />
-        </Modal>
         <ConfirmModal
           isOpen={deleteModalOpen}
           title='Delete staff'

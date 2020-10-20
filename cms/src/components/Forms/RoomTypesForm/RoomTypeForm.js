@@ -36,11 +36,11 @@ const RoomTypeForm = ({ serverFormState, handleFormSubmit, roomType, deleteRoomT
   const { isSubmitting } = formState
   const { handleDeleteRoomType } = deleteRoomTypeProps
   const { error, message } = serverFormState
+  const title = roomType ? 'Edit room type' : 'Add room type'
   return (
     <RoomTypeFormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
       <div>
-        {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
-        {message && <ErrorMessage>{message}</ErrorMessage>}
+        <p>{title}</p>
         <Input.TextInput
           name='name'
           register={register}
@@ -61,6 +61,8 @@ const RoomTypeForm = ({ serverFormState, handleFormSubmit, roomType, deleteRoomT
           rows={4}
           error={errors.desc}
         />
+        {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
+        {message && <ErrorMessage>{message}</ErrorMessage>}
         <Button
           label={`${roomType ? 'Edit' : 'Add'} Room Type`}
           type='submit'

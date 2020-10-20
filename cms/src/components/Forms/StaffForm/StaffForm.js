@@ -14,7 +14,6 @@ const StaffFormWrapper = styled.form`
 `
 
 const ErrorMessage = styled.div`
-  text-align: center;
   color: #DC3545;
 `
 
@@ -26,11 +25,11 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
   const { isSubmitting } = formState
   const { error, message } = serverFormState
   const staffRoleOptions = buildSelectOptions(STAFF_ROLES, STAFF_ROLES_LABEL)
+  const title = staff ? 'Edit staff' : 'Add staff'
   return (
     <StaffFormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
       <div>
-        {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
-        {message && <ErrorMessage>{message}</ErrorMessage>}
+        <p>{title}</p>
         <Input.TextInput
           name='name'
           register={register}
@@ -74,6 +73,8 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
           name='role'
           control={control}
         />
+        {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
+        {message && <ErrorMessage>{message}</ErrorMessage>}
         <Button
           label={`${staff ? 'Edit' : 'Add'} staff`}
           type='submit'

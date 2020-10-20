@@ -1,27 +1,13 @@
 import React from 'react'
 import Button from '../misc/Button'
-import Modal from '../misc/Modal'
-import StaffForm from '../Forms/StaffForm'
-import useModal from '../../hooks/useModal'
 
-const CreateStaffButton = () => {
-  const { isOpen, openModal, closeModal } = useModal()
-  const handleOpen = () => openModal()
-  const handleClose = () => closeModal()
+const CreateStaffButton = ({ handleClick }) => {
   return (
     <>
       <Button
         label='Add staff'
-        onClick={handleOpen}
+        onClick={() => handleClick()}
       />
-      <Modal
-        open={isOpen}
-        title='Add new staff'
-        handleClose={handleClose}
-        size='md'
-      >
-        <StaffForm closeModal={handleClose} />
-      </Modal>
     </>
   )
 }

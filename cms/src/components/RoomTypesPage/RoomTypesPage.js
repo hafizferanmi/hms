@@ -47,7 +47,6 @@ const RoomTypeGridWrapper = ({ roomTypes, handleCardClick }) => {
 const RoomTypesPage = ({ roomTypes, formModal }) => {
   const { isOpen, closeModal, openModal } = formModal
   const [selectedRoomType, setSelectedRoomType] = useState(null)
-  const modalTitle = selectedRoomType ? 'Edit room type' : 'Add room type'
 
   const handleOpenModal = (data) => {
     setSelectedRoomType(data)
@@ -79,7 +78,6 @@ const RoomTypesPage = ({ roomTypes, formModal }) => {
       </div>
       <Modal
         open={isOpen}
-        title={modalTitle}
         handleClose={handleCloseModal}
         size='sm'
       >
