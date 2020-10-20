@@ -26,4 +26,4 @@ const schema = new Schema({
   timestamps: true
 })
 
-export default mongoose.model('hallType', schema)
+export default mongoose.model('hall', schema)

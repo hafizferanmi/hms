@@ -4,7 +4,7 @@ import { stringSchema } from './helpers'
 
 const schema = Joi.object()
   .keys({
-    roomNumber: stringSchema()
+    number: stringSchema()
       .label('Room number')
       .required(),
 

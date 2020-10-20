@@ -3,7 +3,7 @@ import { ROOM_STATUS } from '../constants/room'
 import R from 'ramda'
 
 const schema = new Schema({
-  roomNumber: {
+  number: {
     type: String,
     required: true
   },

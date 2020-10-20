@@ -20,7 +20,7 @@ export const addRoom = async (req, res) => {
 
   if (errorMsg) return res.json(failed(errorMsg))
 
-  const { roomNumber, desc, roomType: roomTypeId } = value
+  const { number, desc, roomType: roomTypeId } = value
 
   try {
     const roomType = await RoomType.findOne({ _id: roomTypeId, companyId: currentStaffCompanyId })
@@ -30,7 +30,7 @@ export const addRoom = async (req, res) => {
   }
 
   const roomData = {
-    roomNumber,
+    number,
     desc,
     roomTypeId,
     companyId: currentStaffCompanyId,
@@ -54,7 +54,7 @@ export const updateRoom = async (req, res) => {
   const { errorMsg, value } = validateRequestBody(RoomSchema, req.body)
 
   if (errorMsg) return res.json(failed(errorMsg))
-  const { roomNumber, desc, roomType: roomTypeId } = value
+  const { number, desc, roomType: roomTypeId } = value
 
   try {
     const roomType = await RoomType.findOne({ _id: roomTypeId, companyId: currentStaffCompanyId })
@@ -64,7 +64,7 @@ export const updateRoom = async (req, res) => {
   }
 
   const roomData = {
-    roomNumber,
+    number,
     desc,
     roomTypeId,
     updatedBy: currentStaffId

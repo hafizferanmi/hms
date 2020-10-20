@@ -214,11 +214,10 @@ export const getCheckIn = async (req, res) => {
 
   try {
     const checkIn = await CheckIn.find({ _id: checkInId, companyId: currentStaffCompanyId })
-    if (!checkIn) {
-      return res.json(failed('CheckIn not found.'))
-    } else {
-      return res.json(success(checkIn))
-    }
+      .populate('checkedInBy', 'name')
+      .populate('checkedOutBy', 'name')
+      .populate('roomId', ['number', 'status'])
+    return res.json(success(checkIn))
   } catch (e) {
     return res.json(failed('Error occured. Could not get checkIn.'))
   }
@@ -243,9 +242,12 @@ export const getAllCheckIn = async (req, res) => {
 
   try {
     const checkIns = await CheckIn.find(conditions)
+      .populate('checkedInBy', 'name')
+      .populate('checkedOutBy', 'name')
+      .populate('roomId', ['number', 'status'])
     return res.json(success(checkIns))
   } catch (e) {
-    return res.json(failed('Error occured. Could not checkIns'))
+    return res.json(failed('Error occured. Could not get checkIns'))
   }
 }
 

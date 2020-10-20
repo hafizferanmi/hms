@@ -9,6 +9,7 @@ const schema = new Schema({
   },
   roomId: {
     type: Schema.Types.ObjectId,
+    ref: 'room',
     required: true
   },
   title: {
@@ -59,10 +60,11 @@ const schema = new Schema({
     enum: R.values(PAYMENT_METHOD)
   },
   note: {
-    type: String,
+    type: String
   },
   checkedInBy: {
     type: Schema.Types.ObjectId,
+    ref: 'staff',
     required: true
   },
   checkedOut: {
@@ -70,7 +72,10 @@ const schema = new Schema({
     required: true,
     default: false
   },
-  checkedOutBy: { type: Schema.Types.ObjectId },
+  checkedOutBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'staff'
+  },
   createdBy: { type: Schema.Types.ObjectId },
   updatedBy: { type: Schema.Types.ObjectId }
 }, {

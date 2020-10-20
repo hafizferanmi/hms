@@ -25,7 +25,7 @@ const CheckInTable = ({ checkIns }) => {
               <tr key={i}>
                 <td> </td>
                 <td> {checkIn.name} </td>
-                <td> {checkIn.roomId} </td>
+                <td> {checkIn.roomId.number} </td>
                 <td> {checkIn.dateOfArrival} </td>
                 <td> {checkIn.dateOfDeparture} </td>
                 <td>  </td>
