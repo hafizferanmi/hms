@@ -36,11 +36,11 @@ const RoomTypesPage = ({ roomTypes }) => {
           ? (
             <StyledCardWrapper>
               {
-                roomTypes.map((type, i) =>
+                roomTypes.map((roomType, i) =>
                   (
                     <RoomTypeCard
                       key={i}
-                      type={type}
+                      roomType={roomType}
                       handleOpenModal={handleOpenModal}
                     />
                   ))
@@ -78,12 +78,12 @@ const StyledRoomTypeCard = styled.div`
   }
 `
 
-const RoomTypeCard = ({ type, handleOpenModal }) => {
+const RoomTypeCard = ({ roomType, handleOpenModal }) => {
   return (
     <StyledRoomTypeCard
-      onClick={() => handleOpenModal(type)}
+      onClick={() => handleOpenModal(roomType)}
     >
-      {type.name}
+      {roomType.name}
     </StyledRoomTypeCard>
   )
 }
