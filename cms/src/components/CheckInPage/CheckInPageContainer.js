@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { store as notification } from 'react-notifications-component'
+import notification from 'react-notifications-component'
 import CheckInPage from './CheckInPage'
 import useAsyncFn from '../../hooks/useAsyncFn'
 import {
   deleteCheckIn as deleteCheckInAPI
 } from '../../helpers/api'
-import { success, failed } from '../../helpers/notification'
+import { notify } from '../../helpers/notification'
 import {
   fetchCheckIns,
   deleteCheckIn as deleteCheckInAction
@@ -46,9 +46,9 @@ const CheckInPageContainer = () => {
   useEffect(() => {
     if (deleteCheckInResponse && deleteCheckInResponse.success) {
       dispatch(deleteCheckInAction(deleteCheckInResponse.result))
-      notification.addNotification(success('Checkin successfully deleted.'))
+      notification.success(...notify('Checkin successfully deleted.'))
     } else if (deleteCheckInResponse && !deleteCheckInResponse.success) {
-      notification.addNotification(failed(deleteCheckInResponse.message))
+      notification.error(...notify(deleteCheckInResponse.message))
     }
     // eslint-disable-next-line
   }, [deleteCheckInResponse])

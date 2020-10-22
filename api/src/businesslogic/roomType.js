@@ -12,7 +12,7 @@ const { RoomTypeSchema } = ValidationSchemas
 
 export const addRoomType = async (req, res) => {
   debug('addRoomType()')
-  const currentStaffCompanyId = req.staff.companyId
+  const companyId = req.staff.companyId
   const currentStaffId = req.staff._id
   const { value, errorMsg } = validateRequestBody(RoomTypeSchema, req.body)
 
@@ -20,20 +20,17 @@ export const addRoomType = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, desc, price } = value
   const roomTypeData = {
-    name,
-    desc,
-    price,
-    companyId: currentStaffCompanyId,
+    ...value,
+    companyId,
     createdBy: currentStaffId,
     updatedBy: currentStaffId
   }
 
   try {
-    const roomType = new RoomType(roomTypeData)
-    const newRoomType = await roomType.save()
-    return res.json(success(newRoomType))
+    let roomType = new RoomType(roomTypeData)
+    roomType = await roomType.save()
+    return res.json(success(roomType))
   } catch (e) {
     return res.json(failed('Error Occured, could not create room type.'))
   }
@@ -41,7 +38,7 @@ export const addRoomType = async (req, res) => {
 
 export const updateRoomType = async (req, res) => {
   debug('updateRoomType()')
-  const currentStaffCompanyId = req.staff.companyId
+  const companyId = req.staff.companyId
   const currentStaffId = req.staff._id
   const roomTypeId = req.params.roomTypeId
   const { value, errorMsg } = validateRequestBody(RoomTypeSchema, req.body)
@@ -50,17 +47,13 @@ export const updateRoomType = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, desc, price } = value
-
   const roomTypeData = {
-    name,
-    desc,
-    price,
+    ...value,
     updatedBy: currentStaffId
   }
 
   try {
-    const updatedRoomType = await RoomType.findOneAndUpdate({ _id: roomTypeId, companyId: currentStaffCompanyId }, roomTypeData, { new: true })
+    const updatedRoomType = await RoomType.findOneAndUpdate({ _id: roomTypeId, companyId }, roomTypeData, { new: true })
     return res.json(success(updatedRoomType))
   } catch (e) {
     return res.json(failed('Error Occured. Could not update room type.'))
@@ -70,10 +63,12 @@ export const updateRoomType = async (req, res) => {
 export const deleteRoomType = async (req, res) => {
   debug('deleteRoomType()')
   const roomTypeId = req.params.roomTypeId
-  const currentStaffCompanyId = req.staff.companyId
+  const companyId = req.staff.companyId
+
+  // Todo: Delete all rooms that fall under the roomtype.
 
   try {
-    const deletedRoomType = await RoomType.findOneAndDelete({ _id: roomTypeId, companyId: currentStaffCompanyId })
+    const deletedRoomType = await RoomType.findOneAndDelete({ _id: roomTypeId, companyId })
     return res.json(success(deletedRoomType))
   } catch (e) {
     return res.json(failed('Error occured. Could not delete room type'))
@@ -82,10 +77,10 @@ export const deleteRoomType = async (req, res) => {
 
 export const getRoomTypes = async (req, res) => {
   debug('getRoomTypes()')
-  const currentStaffCompanyId = req.staff.companyId
+  const companyId = req.staff.companyId
 
   try {
-    const companyRoomTypes = await RoomType.find({ companyId: currentStaffCompanyId })
+    const companyRoomTypes = await RoomType.find({ companyId })
     return res.json(success(companyRoomTypes))
   } catch (e) {
     return res.json(failed('Error occured. Try again.'))
@@ -95,9 +90,10 @@ export const getRoomTypes = async (req, res) => {
 export const getRoomType = async (req, res) => {
   debug('getRoomType()')
   const roomTypeId = req.params.roomTypeId
+  const companyId = req.staff.companyId
   try {
-    const roomType = await RoomType.findOne({ _id: roomTypeId })
-    const roomTypeRooms = await Room.find({ roomTypeId })
+    const roomType = await RoomType.findOne({ _id: roomTypeId, companyId })
+    const roomTypeRooms = await Room.find({ roomTypeId, companyId })
 
     const responseDetails = {
       type: roomType,

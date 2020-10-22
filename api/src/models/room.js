@@ -18,6 +18,7 @@ const schema = new Schema({
   },
   roomTypeId: {
     type: Schema.Types.ObjectId,
+    ref: 'roomType',
     required: true
   },
   companyId: {

@@ -1,15 +1,14 @@
 import * as yup from 'yup'
 
 const schema = yup.object().shape({
-  name: yup.string()
+  roomNumber: yup.string()
     .trim()
-    .label('Type name')
-    .required(),
+    .label('Room number'),
 
-  price: yup.string()
+  roomType: yup.string()
     .trim()
-    .label('Price')
-    .required(),
+    .required()
+    .label('Room type'),
 
   desc: yup.string()
     .trim()

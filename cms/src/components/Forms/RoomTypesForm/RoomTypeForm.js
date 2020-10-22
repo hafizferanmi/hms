@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers'
 import Input from '../../Inputs'
 import Button from '../../misc/Button'
 import RoomTypeSchema from './RoomTypeSchema'
+import ServerMessage from '../../misc/ErrorMessage'
 
 const RoomTypeFormWrapper = styled.form`
   display: flex;
@@ -63,7 +64,7 @@ const RoomTypeForm = ({ serverFormState, handleFormSubmit, roomType, deleteRoomT
           error={errors.desc}
         />
         {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
-        {message && <ErrorMessage>{message}</ErrorMessage>}
+        {message && <ServerMessage message={message} />}
         <Button
           label={`${roomType ? 'Edit' : 'Add'} Room Type`}
           type='submit'
@@ -73,7 +74,6 @@ const RoomTypeForm = ({ serverFormState, handleFormSubmit, roomType, deleteRoomT
           <DeleteButton onClick={handleDeleteRoomType}>
             Delete room type
           </DeleteButton>}
-
       </div>
     </RoomTypeFormWrapper>
   )

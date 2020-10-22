@@ -51,10 +51,11 @@ export const getRoomType = (roomTypeId) => fetchData(`/roomTypes/${roomTypeId}`)
 
 // ROOMS API
 export const getAllRooms = () => fetchData('/rooms/all')
-export const getRoom = (roomId) => fetchData(`/room/${roomId}`)
-export const addRoom = (body) => sendData('/room/add', body)
-export const updateRoom = (roomId, body) => modifyResource(`/room/update/${roomId}`, body)
-export const deleteRoom = (roomId) => deleteResource(`/room/delete/${roomId}`)
+export const getAllRoomsAndRoomTypes = () => fetchData('/rooms/all/roomtypes')
+export const getRoom = (roomId) => fetchData(`/rooms/${roomId}`)
+export const addRoom = (body) => sendData('/rooms/add', body)
+export const updateRoom = (roomId, body) => modifyResource(`/rooms/update/${roomId}`, body)
+export const deleteRoom = (roomId) => deleteResource(`/rooms/delete/${roomId}`)
 
 // CHECKIN API
 export const checkIn = (body) => sendData('/checkIn/add', body)

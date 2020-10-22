@@ -21,6 +21,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: font-medium;
     src: url(${FontMedium});
   }
+  *{
+    margin: 0px;
+    padding: 0px;
+  }
   body {
     background: #f5f9fe;
     font-family: font-regular;

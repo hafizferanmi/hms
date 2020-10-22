@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { store as notification } from 'react-notifications-component'
+import notification from 'cogo-toast'
 import Loading from '../misc/Loading'
 import StaffsPage from './StaffsPage'
 import useAsyncFn from '../../hooks/useAsyncFn'
 import {
   deleteStaff as deleteStaffAPI
 } from '../../helpers/api'
-import { success, failed } from '../../helpers/notification'
+import { notify } from '../../helpers/notification'
 import {
   fetchStaffs,
   deleteStaff as deleteStaffAction
@@ -46,9 +46,9 @@ const StaffsPageContainer = () => {
   useEffect(() => {
     if (deleteStaffResponse && deleteStaffResponse.success) {
       dispatch(deleteStaffAction(deleteStaffResponse.result))
-      notification.addNotification(success('Staff successfully deleted.'))
+      notification.success(...notify('Staff successfully deleted.'))
     } else if (deleteStaffResponse && !deleteStaffResponse.success) {
-      notification.addNotification(failed(deleteStaffResponse.message))
+      notification.error(...notify(deleteStaffResponse.message))
     }
     // eslint-disable-next-line
   }, [deleteStaffResponse])

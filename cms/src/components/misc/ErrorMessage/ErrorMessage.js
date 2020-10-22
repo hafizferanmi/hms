@@ -2,13 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 const ErrorMessageWrapper = styled.ul`
-  background-color: red;
-  color: blue;
+  color: rgba(214, 10, 46);
   padding: 5px;
+  margin-bottom: 0;
 
   li {
     list-style-type: none;
-    font-weight: bold;
+    font-size: 13px;
   }
 `
 

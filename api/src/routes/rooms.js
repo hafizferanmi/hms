@@ -5,7 +5,8 @@ import {
   deleteRoom,
   getRoom,
   getRoomsInRoomTypes,
-  getAllRooms
+  getAllRooms,
+  getRoomsAndRoomTypes
 } from '../businesslogic/room'
 import { STAFF_ROLES } from '../constants/staff'
 import currentStaff from '../middlewares/currentStaff'
@@ -18,6 +19,7 @@ const allowedStaff = [FRONT_DESK_OFFICER]
 router.get('/', (req, res) => res.json({ hi: 'Hello, from rooms' }))
 router.post('/add', currentStaff, allow(), addRoom)
 router.get('/all', currentStaff, allow(), getAllRooms)
+router.get('/all/roomtypes', currentStaff, allow(), getRoomsAndRoomTypes)
 router.put('/update/:roomId', currentStaff, allow(), updateRoom)
 router.delete('/delete/:roomId', currentStaff, allow(), deleteRoom)
 router.get('/:roomId', currentStaff, allow(allowedStaff), getRoom)

@@ -10,7 +10,7 @@ import {
 const initialState = {
   loading: false,
   error: null,
-  data: null
+  data: []
 }
 
 export default (state = initialState, action) => {
@@ -35,7 +35,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: 'Error Occured, could not fetch current room type.'
+        error: 'Error Occured, could not fetch current rooms.'
       }
 
     case ADD_ROOM:

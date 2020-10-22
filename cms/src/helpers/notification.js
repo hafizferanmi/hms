@@ -1,25 +1,3 @@
-const defaultNotificationConfig = Object.freeze({
-  insert: 'top',
-  container: 'top-right',
-  animationIn: ['animated', 'fadeIn'],
-  animationOut: ['animated', 'fadeOut'],
-  dismiss: {
-    duration: 4000,
-    pauseOnHover: true
-  },
-  showIcon: true
-})
+const config = Object.freeze({ position: 'top-right', hideAfter: 5 })
 
-export const success = (message) => ({
-  ...defaultNotificationConfig,
-  // title: 'Successful!',
-  message: message,
-  type: 'success'
-})
-
-export const failed = (message) => ({
-  ...defaultNotificationConfig,
-  // title: 'Failed',
-  message,
-  type: 'danger'
-})
+export const notify = (message) => [message, config]

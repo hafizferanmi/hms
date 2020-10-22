@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import useAsyncFn from '../../../hooks/useAsyncFn'
 import { useDispatch } from 'react-redux'
-import { store as notification } from 'react-notifications-component'
-import { success, failed } from '../../../helpers/notification'
+import notification from 'cogo-toast'
+import { notify } from '../../../helpers/notification'
 import {
   checkIn as addCheckInAPI,
   updateCheckIn as updateCheckInAPI,
@@ -38,12 +38,12 @@ const CheckInFormContainer = ({ checkIn, closeModal }) => {
       const newCheckIn = response.result.checkIn
       checkIn ? dispatch(updateCheckInAction(newCheckIn)) : dispatch(addCheckInAction(newCheckIn))
       const notificationMessage = checkIn ? 'CheckIn updated successfully' : 'CheckIn added successfully'
-      notification.addNotification(success(notificationMessage))
+      notification.success(...notify(notificationMessage))
       closeModal()
     }
 
     if (response && !response.success) {
-      notification.addNotification(failed(response.message))
+      notification.error(...notify(response.message))
     }
     // eslint-disable-next-line
   }, [response])
@@ -75,12 +75,12 @@ const CheckInFormContainer = ({ checkIn, closeModal }) => {
   useEffect(() => {
     if (deleteResponse && deleteResponse.success) {
       dispatch(deleteCheckInAction(checkIn))
-      notification.addNotification(success('CheckIn deleted successfully.'))
+      notification.success(...notify('CheckIn deleted successfully.'))
       closeModal()
     }
 
     if (deleteResponse && !deleteResponse.success) {
-      notification.addNotification(failed(deleteResponse.message))
+      notification.error(...notify(deleteResponse.message))
     }
     // eslint-disable-next-line
   }, [deleteResponse])

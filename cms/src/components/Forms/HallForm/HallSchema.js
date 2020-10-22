@@ -18,7 +18,6 @@ const schema = yup.object().shape({
 
   desc: yup.string()
     .trim()
-    .required()
     .label('Description')
 })
 

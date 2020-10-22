@@ -6,6 +6,7 @@ import CheckInPage from '../../CheckInPage'
 import ManagersPage from '../../ManagersPage'
 import DashboardPage from '../../DashboardPage'
 import HallsPage from '../../HallsPage'
+import RoomsPage from '../../RoomsPage'
 
 const AuthRoute = () => {
   return (
@@ -13,6 +14,7 @@ const AuthRoute = () => {
       <ManagersPage path='admin'>
         <DashboardPage path='/' />
         <StaffsPage path='/staffs' />
+        <RoomsPage path='/rooms' />
         <RoomTypesPage path='/roomtypes' />
         <CheckInPage path='/checkin' />
         <HallsPage path='/halls' />

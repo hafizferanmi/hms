@@ -1,15 +1,21 @@
 import React from 'react'
+import styled from 'styled-components'
 import MaterialButton from '@material-ui/core/Button'
+
+const StyledButton = styled(MaterialButton)`
+  box-shadow: none;
+  border-radius: 20px;
+`
 
 const Button = ({ label, ...props }) => {
   return (
-    <MaterialButton
-      variant='contained'
+    <StyledButton
+      variant='outlined'
       color='primary'
       {...props}
     >
       {label}
-    </MaterialButton>
+    </StyledButton>
   )
 }
 
