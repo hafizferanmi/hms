@@ -7,7 +7,7 @@ const LoggedOutRouteContainer = () => {
   const navigateTo = useNavigate()
   const currentStaff = useSelector(state => state.currentStaff)
 
-  if (currentStaff && currentStaff.data && currentStaff.data.tolani) navigateTo('/secure')
+  if (currentStaff && currentStaff.data) navigateTo('/secure')
   return (
     <LoggedOutRoute />
   )

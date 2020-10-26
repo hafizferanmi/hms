@@ -1,31 +1,68 @@
 import React from 'react'
-import SectionMenu from '../SectionMenu'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { makeStyles } from '@material-ui/core/styles'
 import Header from '../misc/Header'
-import styled from 'styled-components'
+import Navbar from '../misc/Navbar'
 
-const ManagersPageWrapper = styled.div`
-  display: flex;
-`
+const drawerWidth = 240
 
-const ContentWrapper = styled.div`
-  width: 100%;
-`
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex'
+  },
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0
+    }
+  },
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth
+  },
+  content: {
+    flexGrow: 1,
+    height: '100vh'
+  },
+  contentTopDesign: {
+    height: '300px',
+    background: '#1976d2'
+  },
+  contentWrapper: {
+    margin: theme.spacing(-30, 3)
+  }
+}))
 
-const ContentBody = styled.div`
-  padding: 20px 20px;
-`
+const ManagersPage = (props) => {
+  const { window, children } = props
+  const classes = useStyles()
+  const [mobileOpen, setMobileOpen] = React.useState(false)
 
-const ManagersPage = ({ children }) => {
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen)
+  }
+
+  const container = window !== undefined ? () => window().document.body : undefined
+
   return (
-    <ManagersPageWrapper>
-      <SectionMenu />
-      <ContentWrapper>
-        <Header />
-        <ContentBody>
+    <div className={classes.root}>
+      <CssBaseline />
+      <Header
+        handleDrawerToggle={handleDrawerToggle}
+      />
+      <Navbar
+        container={container}
+        mobileOpen={mobileOpen}
+        handleDrawerToggle={handleDrawerToggle}
+      />
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <div className={classes.contentTopDesign} />
+        <div className={classes.contentWrapper}>
           {children}
-        </ContentBody>
-      </ContentWrapper>
-    </ManagersPageWrapper>
+        </div>
+      </main>
+    </div>
   )
 }
 

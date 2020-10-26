@@ -6,14 +6,12 @@ import * as serviceWorker from './serviceWorker'
 import store from './redux'
 import { Provider } from 'react-redux'
 import GlobalStyle from './components/misc/GlobalStyle'
-import ReactNotification from 'react-notifications-component'
-import 'react-notifications-component/dist/theme.css'
+import 'react-perfect-scrollbar/dist/css/styles.css'
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <GlobalStyle />
-      <ReactNotification />
       <App />
     </Provider>
   </React.StrictMode>,
