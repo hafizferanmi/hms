@@ -1,6 +1,7 @@
 import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { makeStyles } from '@material-ui/core/styles'
+import { blue } from '@material-ui/core/colors'
 import Header from '../misc/Header'
 import Navbar from '../misc/Navbar'
 
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   contentTopDesign: {
     height: '300px',
-    background: '#1976d2'
+    backgroundColor: blue[500]
   },
   contentWrapper: {
     margin: theme.spacing(-30, 3)

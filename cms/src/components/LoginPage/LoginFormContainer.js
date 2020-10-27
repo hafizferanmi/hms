@@ -23,7 +23,7 @@ const LoginFormCantainer = () => {
     if (response && response.success) {
       const token = response.result
       setAuthToken(token)
-      navigateTo('/secure')
+      navigateTo('/secure/admin')
     }
     // eslint-disable-next-line
   }, [response])
