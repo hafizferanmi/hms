@@ -1,12 +1,14 @@
 import React from 'react'
 import { groupBy } from 'ramda'
-import { Grid, Typography, Button, Box } from '@material-ui/core'
+import { Grid, Typography, Button, Box, IconButton, Tooltip, Card } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import RoomTypeCard from './RoomTypeCard'
 import useModal from '../../hooks/useModal'
 import Modal from '../misc/Modal'
 import RoomTypeForm from '../Forms/RoomTypesForm'
 import { blue } from '@material-ui/core/colors'
+import ViewColumnSharpIcon from '@material-ui/icons/ViewColumnSharp'
+import ViewHeadlineSharpIcon from '@material-ui/icons/ViewHeadlineSharp'
 
 const useStyles = makeStyles((theme) => ({
   headerBox: {
@@ -32,17 +34,22 @@ const groupRoomWithRoomTypes = (rooms, roomTypes) => {
   const groupedRooms = groupByRoomType(rooms)
   const roomsWithType = roomTypes.map((roomType) =>
     ({
-      _id: roomType._id,
-      name: roomType.name,
+      ...roomType,
       rooms: groupedRooms[roomType._id]
     }))
   return roomsWithType
+}
+
+const VIEW = {
+  GRID: 'grid',
+  LIST: 'list'
 }
 
 const RoomsPage = ({ rooms, roomTypes }) => {
   const roomsWithType = groupRoomWithRoomTypes(rooms, roomTypes)
   const classes = useStyles()
   const { isOpen, openModal, closeModal, data: selectedRoomType } = useModal()
+  const [view, setView] = React.useState(VIEW.GRID)
   return (
     <>
       <Box
@@ -54,20 +61,85 @@ const RoomsPage = ({ rooms, roomTypes }) => {
           Rooms
         </Typography>
         <div>
+          <Tooltip
+            title='Grid view'
+            placement='top'
+            arrow
+          >
+            <IconButton onClick={() => setView(VIEW.GRID)}>
+              <ViewColumnSharpIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            title='List view'
+            placement='top'
+            arrow
+          >
+            <IconButton onClick={() => setView(VIEW.LIST)}>
+              <ViewHeadlineSharpIcon />
+            </IconButton>
+          </Tooltip>
           <Button className={classes.headerButton} variant='outlined'>Add RoomType</Button>
         </div>
       </Box>
       <div className={classes.pageContentWrapper}>
-        <Grid container spacing={2}>
-          {roomsWithType.map((roomType) => (
-            <Grid key={roomType._id} item xs={12} md={6} lg={3}>
-              <RoomTypeCard
-                roomType={roomType}
-                openModal={openModal}
-              />
+        {
+          view === VIEW.GRID && (
+            <Grid container spacing={2}>
+              {roomsWithType.map((roomType) => (
+                <Grid key={roomType._id} item xs={12} md={6} lg={3}>
+                  <RoomTypeCard
+                    roomType={roomType}
+                    openModal={openModal}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
+          )
+        }
+
+        {
+          view === VIEW.LIST && (
+            <>
+              <Box>
+                <Box>
+                  <Typography>
+                    Room type
+                  </Typography>
+                </Box>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={6} lg={2}>
+                    <Card>
+                      Hello
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={2}>
+                    <Card>
+                      Hello
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={2}>
+                    <Card>
+                      Hello
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={2}>
+                    <Card>
+                      Hello
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={2}>
+                    <Card>
+                      Hello
+                    </Card>
+                  </Grid>
+                </Grid>
+              </Box>
+
+            </>
+          )
+        }
+
         <Modal
           open={isOpen}
           handleClose={closeModal}

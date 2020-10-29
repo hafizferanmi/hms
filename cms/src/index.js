@@ -4,16 +4,23 @@ import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import store from './redux'
-import { Provider } from 'react-redux'
+import { ThemeProvider } from '@material-ui/core/styles'
+import theme from './theme'
+import { Provider as ReduxProvider } from 'react-redux'
 import GlobalStyle from './components/misc/GlobalStyle'
+import { CssBaseline } from '@material-ui/core'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <GlobalStyle />
-      <App />
-    </Provider>
+    <ReduxProvider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
+
+    </ReduxProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

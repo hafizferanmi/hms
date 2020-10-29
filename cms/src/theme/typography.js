@@ -1,4 +1,5 @@
 export default {
+  fontFamily: 'somesomefont',
   h1: {
     fontWeight: 500,
     fontSize: 35,
@@ -32,4 +33,4 @@ export default {
   overline: {
     fontWeight: 500
   }
-};
+}
