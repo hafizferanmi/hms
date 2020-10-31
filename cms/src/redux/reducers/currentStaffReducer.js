@@ -1,7 +1,8 @@
 import {
   FETCH_CURRENT_STAFF_ERROR,
   FETCH_CURRENT_STAFF_SUCCESS,
-  FETCH_CURRENT_STAFF_LOADING
+  FETCH_CURRENT_STAFF_LOADING,
+  LOGOUT
 } from '../types/staff'
 
 const initialState = {
@@ -33,6 +34,12 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         error: 'Error Occured, could not fetch current staff.'
+      }
+
+    case LOGOUT:
+      return {
+        ...state,
+        data: null
       }
 
     default:

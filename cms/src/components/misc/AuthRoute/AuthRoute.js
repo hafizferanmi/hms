@@ -7,10 +7,12 @@ import ManagersPage from '../../ManagersPage'
 import DashboardPage from '../../DashboardPage'
 import HallsPage from '../../HallsPage'
 import RoomsPage from '../../RoomsPage'
+import FrontDeskPage from '../../FrontDeskPage'
 
 const AuthRoute = () => {
   return (
     <Router>
+      <FrontDeskPage path='/frontdesk' />
       <ManagersPage path='admin'>
         <DashboardPage path='/' />
         <StaffsPage path='/staffs' />

@@ -11,6 +11,10 @@ import {
   Bell as BellIcon,
   User as UserIcon
 } from 'react-feather'
+import { removeToken } from '../../../helpers/auth'
+import { useNavigate } from '@reach/router'
+import { logout } from '../../../redux/actions/staff'
+import { useDispatch } from 'react-redux'
 
 const drawerWidth = 240
 
@@ -39,6 +43,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const HeaderIcons = ({ classes }) => {
+  const navigateTo = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    removeToken()
+    dispatch(logout())
+    navigateTo('/')
+  }
   return (
     <>
       <IconButton
@@ -58,7 +70,7 @@ const HeaderIcons = ({ classes }) => {
       <IconButton color='primary'>
         <UserIcon />
       </IconButton>
-      <IconButton color='primary'>
+      <IconButton onClick={handleLogout} color='primary'>
         <User />
       </IconButton>
     </>
@@ -67,6 +79,7 @@ const HeaderIcons = ({ classes }) => {
 
 const Header = ({ handleDrawerToggle }) => {
   const classes = useStyles()
+
   return (
     <>
       <AppBar position='fixed' elevation={1} className={classes.appBar}>

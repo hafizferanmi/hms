@@ -27,7 +27,7 @@ export const staffLogin = async (req, res) => {
       const token = generateAuthToken(staffId)
       return res.json(success(token))
     } else {
-      return res.json(failed('Invalid credentials'))
+      return res.json(failed('Wrong email/password combination.'))
     }
   } catch (e) {
     return res.json(failed('Error occured, try in a moment'))

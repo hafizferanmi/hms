@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import config from 'config'
 import Debug from 'debug'
+import cors from 'cors'
 import onAppStart from './onAppStart'
 import routes from './routes'
 
@@ -20,6 +21,7 @@ const {
   hallBookingRoute
 } = routes
 
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 

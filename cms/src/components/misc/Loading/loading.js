@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const LoadingWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   justify-content: center;
   align-items: center;
 `
@@ -13,7 +13,7 @@ const LoadingWrapper = styled.div`
 const Loading = () => {
   return (
     <LoadingWrapper>
-      <ReactLoading type='cylon' color='white' width='400px' height='400px' />
+      <ReactLoading />
     </LoadingWrapper>
   )
 }

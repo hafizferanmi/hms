@@ -7,7 +7,8 @@ import {
   DELETE_STAFF,
   FETCH_CURRENT_STAFF_ERROR,
   FETCH_CURRENT_STAFF_LOADING,
-  FETCH_CURRENT_STAFF_SUCCESS
+  FETCH_CURRENT_STAFF_SUCCESS,
+  LOGOUT
 } from '../types/staff'
 
 import { getStaffs, getCurrentStaff } from '../../helpers/api'
@@ -62,3 +63,7 @@ export const fetchCurrentStaff = () => async (dispatch) => {
     })
   }
 }
+
+export const logout = () => ({
+  type: LOGOUT
+})

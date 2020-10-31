@@ -47,3 +47,9 @@ export const STAFF_STATUS_LABEL = Object.freeze({
   [STAFF_STATUS.INACTIVE]: 'Inactive',
   [STAFF_STATUS.ON_LEAVE]: 'On leave'
 })
+
+export const STAFF_ROLE_ROUTE = Object.freeze({
+  [STAFF_ROLES.OWNER]: '/secure/admin',
+  [STAFF_ROLES.GENERAL_MANAGER]: '/secure/admin',
+  [STAFF_ROLES.FRONT_DESK_OFFICER]: '/secure/frontdesk'
+})

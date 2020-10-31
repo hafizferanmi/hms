@@ -12,10 +12,19 @@ const ErrorMessageWrapper = styled.ul`
   }
 `
 
-const ErrorMessage = ({ message }) => {
+const ErrorMessage = ({ networkError, message }) => {
+  const serverMessage = message && message.split('-')
+  const networkErrorMessage = networkError && 'Network error occured. Try again.'
+  let messages
+  if (serverMessage) {
+    messages = [...serverMessage, networkErrorMessage]
+  } else {
+    messages = [networkErrorMessage]
+  }
+
   return (
     <ErrorMessageWrapper>
-      {message.split(',').map((error, i) => (<li key={i}>{error}</li>))}
+      {messages.map((message, i) => (<li key={i}>{message}</li>))}
     </ErrorMessageWrapper>
   )
 }

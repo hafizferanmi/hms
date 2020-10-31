@@ -7,6 +7,7 @@ import {
   addStaff as addStaffAPI,
   updateStaff as updateStaffAPI
 } from '../../../helpers/api'
+import ErrorMessage from '../../misc/ErrorMessage'
 import { notify } from '../../../helpers/notification'
 import {
   addNewStaff,
@@ -39,7 +40,7 @@ const StaffFormContainer = ({ closeModal, staff }) => {
     }
 
     if (response && !response.success) {
-      notification.error(...notify(response.message))
+      notification.error(...notify(<ErrorMessage message={response.message} />))
     }
     // eslint-disable-next-line
   }, [response])

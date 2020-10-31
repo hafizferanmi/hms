@@ -3,6 +3,7 @@ import useAsyncFn from '../../../hooks/useAsyncFn'
 import { useDispatch } from 'react-redux'
 import notification from 'cogo-toast'
 import { notify } from '../../../helpers/notification'
+import ErrorMessage from '../../misc/ErrorMessage'
 import {
   addHall as addHallAPI,
   updateHall as updateHallAPI,
@@ -40,7 +41,7 @@ const HallFormContainer = ({ hall, closeModal }) => {
     }
 
     if (response && !response.success) {
-      notification.error(...notify(response.message))
+      notification.error(...notify(<ErrorMessage message={response.message} />))
     }
     // eslint-disable-next-line
   }, [response])

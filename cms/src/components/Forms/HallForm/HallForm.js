@@ -6,15 +6,10 @@ import { yupResolver } from '@hookform/resolvers'
 import Input from '../../Inputs'
 import Button from '../../misc/Button'
 import HallSchema from './HallSchema'
-import ServerErrorMessage from '../../misc/ErrorMessage'
+import ErrorMessage from '../../misc/ErrorMessage'
 
 const HallFormWrapper = styled.form`
   display: flex;
-`
-
-const ErrorMessage = styled.div`
-  text-align: center;
-  color: #DC3545;
 `
 
 const DeleteButton = styled.span`
@@ -70,8 +65,10 @@ const HallForm = ({ serverFormState, handleFormSubmit, hall, deleteProps }) => {
           error={errors.desc}
         />
         <div>
-          {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
-          {message && <ServerErrorMessage message={message} />}
+          <ErrorMessage
+            networkError={error}
+            message={message}
+          />
         </div>
         <Button
           label={`${hall ? 'Edit' : 'Add'} hall`}
