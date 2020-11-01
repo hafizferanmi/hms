@@ -15,6 +15,8 @@ export const STAFF_ROLES = Object.freeze({
   OWNER: 'OWNER'
 })
 
+export const ADMINISTRATOR = [STAFF_ROLES.OWNER, STAFF_ROLES.GENERAL_MANAGER]
+
 export const STAFF_STATUS = Object.freeze({
   ACTIVE: 'ACTIVE',
   SUSPENDED: 'SUSPENDED',

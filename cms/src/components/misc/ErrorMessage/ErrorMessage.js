@@ -1,18 +1,20 @@
 import React from 'react'
-import styled from 'styled-components'
+import { makeStyles } from '@material-ui/styles'
 
-const ErrorMessageWrapper = styled.ul`
-  color: rgba(214, 10, 46);
-  padding: 5px;
-  margin-bottom: 0;
-
-  li {
-    list-style-type: none;
-    font-size: 13px;
+const useStyles = makeStyles({
+  listWrapper: {
+    color: 'rgba(214, 10, 46)',
+    padding: '5px',
+    marginBottom: '5px'
+  },
+  listItem: {
+    listStyleType: 'none',
+    fontSize: '13px'
   }
-`
+})
 
 const ErrorMessage = ({ networkError, message }) => {
+  const classes = useStyles()
   const serverMessage = message && message.split('-')
   const networkErrorMessage = networkError && 'Network error occured. Try again.'
   let messages
@@ -23,9 +25,9 @@ const ErrorMessage = ({ networkError, message }) => {
   }
 
   return (
-    <ErrorMessageWrapper>
-      {messages.map((message, i) => (<li key={i}>{message}</li>))}
-    </ErrorMessageWrapper>
+    <ul className={classes.listWrapper}>
+      {messages.map((message, i) => (<li className={classes.listItem} key={i}>{message}</li>))}
+    </ul>
   )
 }
 

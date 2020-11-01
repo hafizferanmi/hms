@@ -6,11 +6,9 @@ const AUTH_TOKEN_KEY = '__token'
 export const saveAuthToken = token => window.localStorage.setItem(AUTH_TOKEN_KEY, token)
 const getAuthToken = () => window.localStorage.getItem(AUTH_TOKEN_KEY)
 
-const AUTH_TOKEN = getAuthToken(AUTH_TOKEN_KEY)
-
 const request = axios.create({
   baseURL: BASE_URL,
-  headers: { Authorization: `Bearer: ${AUTH_TOKEN}` }
+  headers: { Authorization: `Bearer: ${getAuthToken()}` }
 })
 
 export const fetchData = async (path) => {

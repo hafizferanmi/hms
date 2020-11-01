@@ -33,7 +33,8 @@ const routes = [
   { link: '/secure/admin/roomtypes', label: 'Room types', icon: SettingsIcon },
   { link: '/secure/admin/halls', label: 'Halls', icon: AlertCircleIcon },
   { link: '/secure/admin/staffs', label: 'Staffs', icon: UsersIcon },
-  { link: '/secure/admin/checkin', label: 'Check In', icon: KeyIcon }
+  { link: '/secure/admin/checkin', label: 'Check In', icon: KeyIcon },
+  { link: '/secure/frontdesk', label: 'FrontDesk', icon: KeyIcon }
 ]
 
 const Sidebar = () => {

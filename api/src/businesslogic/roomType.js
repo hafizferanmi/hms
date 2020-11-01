@@ -65,11 +65,11 @@ export const deleteRoomType = async (req, res) => {
   const roomTypeId = req.params.roomTypeId
   const companyId = req.staff.companyId
 
-  // Todo: Delete all rooms that fall under the roomtype.
-
   try {
-    const deletedRoomType = await RoomType.findOneAndDelete({ _id: roomTypeId, companyId })
-    return res.json(success(deletedRoomType))
+    const deletedRoomType = RoomType.findOneAndDelete({ _id: roomTypeId, companyId })
+    const deleteRoomsOfRoomTypes = Room.deleteMany({ roomTypeId: roomTypeId, companyId })
+    const deleted = await Promise.all([deletedRoomType, deleteRoomsOfRoomTypes])
+    return res.json(success(deleted[0]))
   } catch (e) {
     return res.json(failed('Error occured. Could not delete room type'))
   }
