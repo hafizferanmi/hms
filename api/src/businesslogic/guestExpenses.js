@@ -2,6 +2,7 @@ import Debug from 'debug'
 import GuestExpenses from '../models/guestExpenses'
 import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
+import { GUEST_EXPENSES_TYPE } from '../constants/misc'
 
 const debug = Debug('API:businesslogic/guestExpenses.js')
 
@@ -12,6 +13,7 @@ const { GuestExpensesSchema } = ValidationSchemas
 export const addExpenses = async (req, res) => {
   debug('addExpenses()')
   const companyId = req.staff.companyId
+  const staffRole = req.staff.role
   const currentStaffId = req.staff._id
   const checkInId = req.params.checkInId
   const { value, errorMsg } = validateRequestBody(GuestExpensesSchema, req.body)
@@ -24,6 +26,7 @@ export const addExpenses = async (req, res) => {
   const expenseData = {
     checkInId,
     desc,
+    typeOfExpense: GUEST_EXPENSES_TYPE[staffRole],
     note,
     payment: {
       ammount,
@@ -33,7 +36,6 @@ export const addExpenses = async (req, res) => {
     createdBy: currentStaffId,
     companyId
   }
-  // add type of expense dynamically to expense.
 
   try {
     let expense = new GuestExpenses(expenseData)
@@ -69,7 +71,7 @@ export const updateExpenses = async (req, res) => {
     createdBy: currentStaffId,
     companyId
   }
-  // add type of expense dynamically to expense.
+
   const conditions = {
     _id: expenseId,
     checkInId
