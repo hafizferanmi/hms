@@ -57,6 +57,10 @@ const schema = Joi.object()
       .label('Departure date')
       .required(),
 
+    ammount: stringSchema()
+      .label('Ammount')
+      .required(),
+
     paymentMethod: stringSchema()
       .label('Payment method')
       .default(PAYMENT_METHOD.CASH)

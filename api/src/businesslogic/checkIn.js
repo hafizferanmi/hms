@@ -14,7 +14,7 @@ const { validateRequestBody } = helpers.misc
 export const checkIn = async (req, res) => {
   debug('checkIn()')
   const currentStaffId = req.staff._id
-  const currentStaffCompanyId = req.staff.companyId
+  const companyId = req.staff.companyId
 
   const { errorMsg, value } = validateRequestBody(CheckInSchema, req.body)
 
@@ -35,34 +35,40 @@ export const checkIn = async (req, res) => {
     dateOfDeparture,
     paymentMethod,
     note,
+    ammount,
     room: roomId
   } = value
 
   const checkInDetails = {
-    roomId,
-    title,
-    name,
-    email,
-    phone,
-    occupation,
-    arrivingFrom,
-    purpose,
-    meansOfTravel,
-    nextOfKin,
-    nextOfKinPhoneNo,
+    room: roomId,
+    guest: {
+      title,
+      name,
+      email,
+      phone,
+      occupation,
+      arrivingFrom,
+      purpose,
+      meansOfTravel,
+      nextOfKin,
+      nextOfKinPhoneNo
+    },
+    payment: {
+      ammount,
+      method: paymentMethod
+    },
     dateOfArrival,
     dateOfDeparture,
-    paymentMethod,
     note,
     createdBy: currentStaffId,
     updatedBy: currentStaffId,
     checkedInBy: currentStaffId,
-    companyId: currentStaffCompanyId
+    companyId
   }
 
   const conditions = {
     _id: roomId,
-    companyId: currentStaffCompanyId
+    companyId
   }
 
   let room
@@ -82,11 +88,12 @@ export const checkIn = async (req, res) => {
   }
 
   try {
-    const bookedRoom = await Room.findOneAndUpdate(conditions, set, { new: true })
+    const bookedRoom = Room.findOneAndUpdate(conditions, set, { new: true })
     let checkIn = new CheckIn(checkInDetails)
-    checkIn = await checkIn.save()
+    checkIn = checkIn.save()
+    const [bookedRoomResolved, checkInResolved] = await Promise.all([bookedRoom, checkIn])
 
-    return res.json(success({ bookedRoom, checkIn }))
+    return res.json(success({ bookedRoomResolved, checkInResolved }))
   } catch (e) {
     return res.json(failed('Error occured. Could not book room.'))
   }
@@ -95,7 +102,7 @@ export const checkIn = async (req, res) => {
 export const updateCheckIn = async (req, res) => {
   debug('updateCheckIn()')
   const currentStaffId = req.staff._id
-  const currentStaffCompanyId = req.staff.companyId
+  const companyId = req.staff.companyId
   const checkInId = req.params.checkInId
 
   const { errorMsg, value } = validateRequestBody(CheckInSchema, req.body)
@@ -117,34 +124,42 @@ export const updateCheckIn = async (req, res) => {
     dateOfDeparture,
     paymentMethod,
     note,
+    ammount,
     room: roomId
   } = value
 
   const checkInDetails = {
-    roomId,
-    title,
-    name,
-    email,
-    phone,
-    occupation,
-    arrivingFrom,
-    purpose,
-    meansOfTravel,
-    nextOfKin,
-    nextOfKinPhoneNo,
+    room: roomId,
+    guest: {
+      title,
+      name,
+      email,
+      phone,
+      occupation,
+      arrivingFrom,
+      purpose,
+      meansOfTravel,
+      nextOfKin,
+      nextOfKinPhoneNo
+    },
+    payment: {
+      ammount,
+      method: paymentMethod
+    },
     dateOfArrival,
     dateOfDeparture,
-    paymentMethod,
     note,
+    createdBy: currentStaffId,
     updatedBy: currentStaffId,
-    companyId: currentStaffCompanyId
+    checkedInBy: currentStaffId,
+    companyId
   }
   // Todo: check if its the same room that was updated.
 
   let roomCheckIn
   try {
     // checking if not already checked out: cannot update checkIn when already checkedout
-    roomCheckIn = await CheckIn.find({ _id: checkInId, companyId: currentStaffCompanyId })
+    roomCheckIn = await CheckIn.find({ _id: checkInId, companyId })
   } catch (e) {
     return res.json(failed('Error Occured. Could not update checkIn'))
   }
@@ -152,7 +167,7 @@ export const updateCheckIn = async (req, res) => {
   if (!roomCheckIn) return res.json(failed('CheckIn not found.'))
   if (roomCheckIn.checkedOut) return res.json(failed('Room is already checkedout. Can no longer update'))
 
-  const checkInConditions = { _id: checkInId, companyId: currentStaffCompanyId }
+  const checkInConditions = { _id: checkInId, companyId }
 
   try {
     const updatedCheckIn = await CheckIn.findOneAndUpdate(checkInConditions, checkInDetails, { new: true })
@@ -209,11 +224,11 @@ export const checkOut = async (req, res) => {
 
 export const getCheckIn = async (req, res) => {
   debug('getCheckIn')
-  const currentStaffCompanyId = req.staff.companyId
+  const companyId = req.staff.companyId
   const checkInId = req.params.checkInId
 
   try {
-    const checkIn = await CheckIn.find({ _id: checkInId, companyId: currentStaffCompanyId })
+    const checkIn = await CheckIn.find({ _id: checkInId, companyId })
       .populate('checkedInBy', 'name')
       .populate('checkedOutBy', 'name')
       .populate('roomId', ['number', 'status'])
@@ -225,7 +240,7 @@ export const getCheckIn = async (req, res) => {
 
 export const getAllCheckIn = async (req, res) => {
   debug('getAllCheckIn()')
-  const currentStaffCompanyId = req.staff.companyId
+  const companyId = req.staff.companyId
 
   // Todo: query params to filter if all, checkedIn, checkedOut, From, To
   const type = req.query.type
@@ -233,7 +248,7 @@ export const getAllCheckIn = async (req, res) => {
   // const to = req.query.to
 
   const conditions = {
-    companyId: currentStaffCompanyId
+    companyId
   }
 
   if (type === 'CHECKEDOUT') {
@@ -253,12 +268,12 @@ export const getAllCheckIn = async (req, res) => {
 
 export const deleteCheckIn = async (req, res) => {
   debug('deleteCheckIn()')
-  const currentStaffCompanyId = req.staff.companyId
+  const companyId = req.staff.companyId
   const checkInId = req.params.checkInId
 
   let checkIn
   try {
-    checkIn = await CheckIn.find({ _id: checkInId, companyId: currentStaffCompanyId })
+    checkIn = await CheckIn.find({ _id: checkInId, companyId })
   } catch (e) {
     return res.json(failed('Error occured. Cannot delete checkIn.'))
   }
@@ -267,7 +282,7 @@ export const deleteCheckIn = async (req, res) => {
   if (checkIn.checkedOut) return res.json(failed('Cannot delete. Already checked out'))
 
   try {
-    const deletedCheckIn = await CheckIn.findOneAndDelete({ _id: checkInId, companyId: currentStaffCompanyId })
+    const deletedCheckIn = await CheckIn.findOneAndDelete({ _id: checkInId, companyId })
     return res.json(success(deletedCheckIn))
   } catch (e) {
     return res.json(failed('Error occured. Could not delete checkIn'))
