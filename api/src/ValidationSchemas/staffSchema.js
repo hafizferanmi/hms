@@ -24,6 +24,11 @@ const schema = Joi.object()
       .valid(...R.values(STAFF_ROLES))
       .required(),
 
+    disabled: Joi.boolean()
+      .label('Disabled')
+      .default(false)
+      .required(),
+
     phone: stringSchema()
       .label('Phone number')
       .min(11)

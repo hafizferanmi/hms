@@ -5,11 +5,6 @@ import { PAYMENT_METHOD } from '../constants/misc'
 
 const schema = Joi.object()
   .keys({
-    hall: stringSchema()
-      .label('Hall')
-      .length()
-      .required(),
-
     by: stringSchema()
       .label('Name of bookie')
       .required(),

@@ -37,6 +37,7 @@ export const staffLogin = (body) => sendData('/staff/login', body)
 export const getCurrentStaff = () => fetchData('staff/currentStaff')
 export const addStaff = (body) => sendData('/staff/add', body)
 export const updateStaff = (staffId, body) => modifyResource(`staff/update/${staffId}`, body)
+export const disableStaff = (staffId, body) => modifyResource(`staff/disable/${staffId}`, body)
 export const deleteStaff = (staffId) => deleteResource(`staff/delete/${staffId}`)
 export const getStaffs = () => fetchData('/staff/all')
 

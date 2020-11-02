@@ -6,6 +6,7 @@ import { STAFF_ROLES_LABEL, STAFF_STATUS_LABEL } from '../../constants/staff'
 import staffImg from '../../assets/images/logo-sm.png'
 import TrashIcon from '../icons/Trash'
 import EditIcon from '../icons/Pencil'
+import DisableButton from './DisableStaffButton'
 import { StaffPageAPIMethods } from './StaffsPageContainer'
 
 const StaffTableContainer = styled.div`
@@ -122,14 +123,15 @@ const StaffsTable = ({ staffs, handleOpen }) => {
         <tbody>
           {staffs.map((staff, i) =>
             <tr key={staff._id}>
-              <td><StaffIcon src={staffImg} alt={`${staff.name}'s name`} /></td>
+              <td><StaffIcon src={staffImg} alt={staff.name} /></td>
               <td>{staff.name}</td>
               <td>{staff.email}</td>
               <td>{staff.phone}</td>
               <td>{STAFF_ROLES_LABEL[staff.role]}</td>
-              <td>{STAFF_STATUS_LABEL[staff.status] || 'Active'}</td>
+              <td>{staff.disabled ? 'Not active' : 'Active'}</td>
               <td>
                 <div className='icon-wrapper'>
+                  <DisableButton staff={staff} />
                   <EditIcon onClick={() => handleOpen(staff)} />
                   <TrashIcon onClick={() => openDeleteModal(staff)} />
                 </div>

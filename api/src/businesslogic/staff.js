@@ -22,7 +22,7 @@ export const addStaff = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, password, email, role, phone } = value
+  const { name, password, email, role, phone, disabled } = value
 
   // check for company
   try {
@@ -46,6 +46,7 @@ export const addStaff = async (req, res) => {
     email,
     password: hashedPassword,
     role,
+    disabled,
     companyId,
     createdBy: currentStaffId,
     updatedBy: currentStaffId
@@ -60,6 +61,29 @@ export const addStaff = async (req, res) => {
   }
 }
 
+export const disableStaff = async (req, res) => {
+  debug('disableStaff()')
+  const companyId = req.staff.companyId
+  const staffId = req.params.staffId
+
+  let staff
+  try {
+    staff = await Staff.findOne({ _id: staffId, companyId })
+    if (!staff) return res.json(failed('Staff does not belong to this company.'))
+  } catch (e) {
+    return res.json(failed('Error occured. Try again!'))
+  }
+
+  const { disabled } = req.body
+
+  try {
+    const updatedStaff = await Staff.findOneAndUpdate({ _id: staffId }, { disabled }, { new: true })
+    return res.json(success(updatedStaff))
+  } catch (e) {
+    return res.json(failed('Update staff failed. Try again.'))
+  }
+}
+
 export const updateStaff = async (req, res) => {
   debug('updateStaff()')
   const currentCompanyId = req.staff.companyId
@@ -70,15 +94,15 @@ export const updateStaff = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, email, role, phone } = value
-
   let staff
   try {
     staff = await Staff.findOne({ _id: staffId, companyId: currentCompanyId })
-    if (!staff) return res.json(failed('Unauthorized. Staff does not belong to this company.'))
+    if (!staff) return res.json(failed('Staff does not belong to this company.'))
   } catch (e) {
     return res.json(failed('Error occured. Try again!'))
   }
+
+  const { name, email, role, phone, disabled } = value
 
   const staffData = {
     name,
@@ -86,11 +110,14 @@ export const updateStaff = async (req, res) => {
     email,
     role,
     phone,
+    disabled,
     updatedBy: staffId
   }
 
   try {
-    const updatedStaff = await Staff.findOneAndUpdate({ _id: staffId }, staffData, { new: true })
+    let updatedStaff = await Staff.findOneAndUpdate({ _id: staffId }, staffData, { new: true })
+    updatedStaff = updatedStaff.toObject()
+    delete updatedStaff.password
     return res.json(success(updatedStaff))
   } catch (e) {
     return res.json(failed('Update staff failed. Try again.'))
