@@ -1,11 +1,12 @@
 import { useContext, createContext } from 'react'
 
-const dataContext = createContext()
+const DataContext = createContext()
 
 const useDataProvider = () => {
-  const context = useContext(dataContext)
+  const Context = useContext(DataContext)
+  const Provider = DataContext.Provider
   return {
-    context
+    Context, Provider
   }
 }
 

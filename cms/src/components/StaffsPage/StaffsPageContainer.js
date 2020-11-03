@@ -4,6 +4,7 @@ import notification from 'cogo-toast'
 import Loading from '../misc/Loading'
 import StaffsPage from './StaffsPage'
 import useAsyncFn from '../../hooks/useAsyncFn'
+import useDataProvider from '../../hooks/useDataProvider'
 import {
   deleteStaff as deleteStaffAPI
 } from '../../helpers/api'

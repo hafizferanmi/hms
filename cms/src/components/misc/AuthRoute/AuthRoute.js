@@ -8,10 +8,12 @@ import DashboardPage from '../../DashboardPage'
 import HallsPage from '../../HallsPage'
 import RoomsPage from '../../RoomsPage'
 import FrontDeskPage from '../../FrontDeskPage'
+import AdminLandingPage from '../../AdminLandingPage'
 
 const AuthRoute = () => {
   return (
     <Router>
+      <AdminLandingPage path='/' />
       <FrontDeskPage path='/frontdesk' />
       <ManagersPage path='admin'>
         <DashboardPage path='/' />

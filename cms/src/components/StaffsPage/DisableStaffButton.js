@@ -12,10 +12,11 @@ import {
 import CheckIcon from '@material-ui/icons/CheckCircleOutline'
 import CrossIcon from '@material-ui/icons/HighlightOff'
 
-const DisableStaffButton = ({ staff }) => {
+const DisableStaffButton = ({ disableModal, staff, onClick }) => {
   const staffId = staff._id
   const disabled = staff.disabled
   const dispatch = useDispatch()
+  const { openModal, closeModal, data } = disableModal
   const {
     response,
     executeFn: disableStaff
@@ -28,6 +29,7 @@ const DisableStaffButton = ({ staff }) => {
         : `Staff with name "${staff.name}" disabled successfully`
       dispatch(updateStaffAction(response.result))
       notification.success(...notify(disableMessage))
+      closeModal()
     } else if (response && !response.success) {
       notification.error(...notify(response.message))
     }
@@ -35,14 +37,16 @@ const DisableStaffButton = ({ staff }) => {
   }, [response])
 
   const handleDisableStaff = () => {
-    disableStaff(staffId, { disabled: !disabled })
+    openModal(staff)
+    console.log('Disable data', data)
+    // disableStaff(staffId, { disabled: !disabled })
   }
 
   const Component = disabled ? CheckIcon : CrossIcon
 
   return (
     <div>
-      <Component onClick={handleDisableStaff} />
+      <Component onClick={onClick} />
     </div>
   )
 }
