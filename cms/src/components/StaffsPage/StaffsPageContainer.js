@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import notification from 'cogo-toast'
 import Loading from '../misc/Loading'
 import StaffsPage from './StaffsPage'
 import useAsyncFn from '../../hooks/useAsyncFn'
+import useNotify from '../../hooks/useNotify'
 import useDataProvider from '../../hooks/useDataProvider'
 import {
   deleteStaff as deleteStaffAPI
 } from '../../helpers/api'
-import { notify } from '../../helpers/notification'
 import {
   fetchStaffs,
   deleteStaff as deleteStaffAction
@@ -17,6 +16,7 @@ import {
 export const StaffPageAPIMethods = React.createContext(null)
 
 const StaffsPageContainer = () => {
+  const { Provider } = useDataProvider()
   const dispatch = useDispatch()
   const reduxStaff = useSelector(state => state.staffs)
   const { loading, error, data: staffs } = reduxStaff
@@ -26,43 +26,28 @@ const StaffsPageContainer = () => {
     // eslint-disable-next-line
   }, [])
 
-  const {
-    error: deleteStaffServerError,
-    loading: deleteStaffProcessing,
-    response: deleteStaffResponse,
-    executeFn: deleteStaff
-  } = useAsyncFn(deleteStaffAPI)
+  const deleteAsyncFn = useAsyncFn(deleteStaffAPI)
 
   const handleDeleteStaff = (staffId) => {
-    deleteStaff(staffId)
+    deleteAsyncFn.executeFn(staffId)
   }
 
   const deleteStaffProps = {
-    deleteStaffServerError,
-    deleteStaffResponse,
-    deleteStaffProcessing,
+    deleteServerState: deleteAsyncFn,
     handleDeleteStaff
   }
 
-  useEffect(() => {
-    if (deleteStaffResponse && deleteStaffResponse.success) {
-      dispatch(deleteStaffAction(deleteStaffResponse.result))
-      notification.success(...notify('Staff successfully deleted.'))
-    } else if (deleteStaffResponse && !deleteStaffResponse.success) {
-      notification.error(...notify(deleteStaffResponse.message))
-    }
-    // eslint-disable-next-line
-  }, [deleteStaffResponse])
+  useNotify({ message: 'Staff deleted successfully', response: deleteAsyncFn.response, action: deleteStaffAction })
 
   if (loading) return <Loading />
   if (error) return 'Error occured, we are on this issue.'
 
   return (
-    <StaffPageAPIMethods.Provider value={deleteStaffProps}>
+    <Provider value={deleteStaffProps}>
       <StaffsPage
         staffs={staffs}
       />
-    </StaffPageAPIMethods.Provider>
+    </Provider>
   )
 }
 

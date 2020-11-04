@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import useModal from '../../hooks/useModal'
+import useDataProvider from '../../hooks/useDataProvider'
 import ConfirmModal from '../misc/ConfirmModal'
 import { STAFF_ROLES_LABEL } from '../../constants/staff'
 import staffImg from '../../assets/images/logo-sm.png'
 import TrashIcon from '../icons/Trash'
 import EditIcon from '../icons/Pencil'
 import DisableButton from './DisableStaffButton'
-import { StaffPageAPIMethods } from './StaffsPageContainer'
 
 const StaffTableContainer = styled.div`
 background-color: white;
@@ -101,17 +101,9 @@ object-fit: contain;
 const tableHeaders = ['', 'Name', 'Email', 'Phone No', 'Job title', 'Status', '']
 
 const StaffsTable = ({ staffs, handleOpen }) => {
-  const {
-    handleDeleteStaff
-  } = useContext(StaffPageAPIMethods)
-  // const {
-  //   isOpen: deleteModalOpen,
-  //   openModal: openDeleteModal,
-  //   closeModal: closeDeleteModal,
-  //   data: deleteModalData
-  // } = useModal()
+  const { DataContext } = useDataProvider()
+  const { handleDeleteStaff } = DataContext
   const deleteModal = useModal()
-
   const disableModal = useModal()
 
   return (

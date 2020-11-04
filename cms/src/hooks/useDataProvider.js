@@ -6,7 +6,7 @@ const useDataProvider = () => {
   const Context = useContext(DataContext)
   const Provider = DataContext.Provider
   return {
-    Context, Provider
+    DataContext: Context, Provider
   }
 }
 
