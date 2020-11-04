@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { Link } from '@reach/router'
 import { Box, Container, Grid, Card } from '@material-ui/core'
+import RestaurantImg from '../../assets/images/restaurant.jpg'
 
 const useStyles = makeStyles((theme) => ({
   pageWrapper: {
@@ -11,30 +12,51 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  categoriesContainer: {
+    justifyContent: 'center'
+  },
+  categoryCardWrapper: {
+    overflow: 'hidden',
+    width: '100%',
+    height: '100%'
+  },
   categoryCard: {
-    background: 'rgba(89, 45, 42, .5)',
+    backgroundImage: `url(${RestaurantImg})`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
     fontWeight: 'bold',
     height: '200px',
     borderRadius: '0',
+    transition: 'all .2s linear',
+    '&:hover': {
+      transform: 'scale(1.02)',
+      transformOrigin: 'center',
+      '& $categoryCardContentWrapper': {
+        background: 'rgba(89, 45, 42, .4)'
+      }
+    }
+  },
+  categoryCardContentWrapper: {
+    width: '100%',
+    height: '100%',
+    background: 'rgba(89, 45, 42, .8)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     color: 'white',
-    textTransform: 'uppercase'
-  },
-  categoriesContainer: {
-    justifyContent: 'center'
+    textTransform: 'uppercase',
+    transition: 'all .2s linear'
   }
 }))
 
 const categories = [
-  { name: 'Dashboard', path: 'admin' },
-  { name: 'FrontDesk', path: 'frontdesk' },
-  // { name: 'Laundry', path: 'laundry' },
-  // { name: 'Bar', path: 'bar' },
-  // { name: 'Restaurant', path: 'restaurant' },
-  // { name: 'Gym', path: 'gym' },
-  { name: 'Hall', path: 'hall' }
+  { name: 'dashboard', path: 'admin' },
+  { name: 'frontDesk', path: 'frontdesk' },
+  { name: 'laundry', path: 'laundry' },
+  { name: 'bar', path: 'bar' },
+  { name: 'restaurant', path: 'restaurant' },
+  { name: 'gym', path: 'gym' },
+  { name: 'hall', path: 'hall' }
 ]
 
 const AdminLandingPage = () => {
@@ -46,7 +68,7 @@ const AdminLandingPage = () => {
           {categories.map((category, i) => (
             <Grid key={i} item xs={12} md={6} lg={3}>
               <Box
-                className=''
+                className={classes.categoryCardWrapper}
                 component={Link}
                 to={category.path}
               >
@@ -54,7 +76,9 @@ const AdminLandingPage = () => {
                   elevation={0}
                   className={classes.categoryCard}
                 >
-                  {category.name}
+                  <div className={classes.categoryCardContentWrapper}>
+                    {category.name}
+                  </div>
                 </Card>
               </Box>
             </Grid>

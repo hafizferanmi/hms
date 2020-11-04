@@ -101,8 +101,8 @@ object-fit: contain;
 const tableHeaders = ['', 'Name', 'Email', 'Phone No', 'Job title', 'Status', '']
 
 const StaffsTable = ({ staffs, handleOpen }) => {
-  const { DataContext } = useDataProvider()
-  const { handleDeleteStaff } = DataContext
+  const { dataInContext } = useDataProvider()
+  const { handleDeleteStaff, handleDisableStaff } = dataInContext
   const deleteModal = useModal()
   const disableModal = useModal()
 
@@ -146,7 +146,7 @@ const StaffsTable = ({ staffs, handleOpen }) => {
           isOpen={disableModal.isOpen}
           title={`${disableModal.data && disableModal.data.disabled ? 'Enable' : 'Disable'} staff`}
           closeModal={disableModal.closeModal}
-          confirmAction={() => window.alert('Will learn to diable soon. Like now now.')}
+          confirmAction={() => handleDisableStaff(disableModal.data)}
           message={`Do you want to ${disableModal.data && disableModal.data.disabled ? 'enable' : 'disable'} staff with name ${disableModal.data && disableModal.data.name}`}
         />
 

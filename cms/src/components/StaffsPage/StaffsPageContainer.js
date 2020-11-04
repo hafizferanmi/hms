@@ -6,14 +6,14 @@ import useAsyncFn from '../../hooks/useAsyncFn'
 import useNotify from '../../hooks/useNotify'
 import useDataProvider from '../../hooks/useDataProvider'
 import {
-  deleteStaff as deleteStaffAPI
+  deleteStaff as deleteStaffAPI,
+  disableStaff as disableStaffAPI
 } from '../../helpers/api'
 import {
   fetchStaffs,
+  updateStaffDetails as updateStaffAction,
   deleteStaff as deleteStaffAction
 } from '../../redux/actions/staff'
-
-export const StaffPageAPIMethods = React.createContext(null)
 
 const StaffsPageContainer = () => {
   const { Provider } = useDataProvider()
@@ -27,23 +27,34 @@ const StaffsPageContainer = () => {
   }, [])
 
   const deleteAsyncFn = useAsyncFn(deleteStaffAPI)
+  const disableStaffAsynFn = useAsyncFn(disableStaffAPI)
 
   const handleDeleteStaff = (staffId) => {
     deleteAsyncFn.executeFn(staffId)
   }
 
-  const deleteStaffProps = {
-    deleteServerState: deleteAsyncFn,
-    handleDeleteStaff
+  const [selectedStaff, setSelectedStaff] = React.useState(null)
+  const handleDisableStaff = (staff) => {
+    const staffId = staff._id
+    setSelectedStaff(staff)
+    disableStaffAsynFn.executeFn(staffId, { disabled: !staff.disabled })
   }
 
+  const providerValues = {
+    handleDeleteStaff,
+    handleDisableStaff
+  }
+
+  const disableMessage = selectedStaff && selectedStaff.disabled ? 'Staff enabled successfully' : 'Staff disabled successfully'
+
   useNotify({ message: 'Staff deleted successfully', response: deleteAsyncFn.response, action: deleteStaffAction })
+  useNotify({ message: disableMessage, response: disableStaffAsynFn.response, action: updateStaffAction })
 
   if (loading) return <Loading />
   if (error) return 'Error occured, we are on this issue.'
 
   return (
-    <Provider value={deleteStaffProps}>
+    <Provider value={providerValues}>
       <StaffsPage
         staffs={staffs}
       />
