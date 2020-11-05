@@ -3,33 +3,42 @@ import { PAYMENT_METHOD } from '../constants/misc'
 import R from 'ramda'
 
 const schema = new Schema({
-  hallId: {
+  hall: {
     type: Schema.Types.ObjectId,
     required: true
   },
-  by: {
-    type: String,
-    required: true
+  organizer: {
+    name: String,
+    phone: String,
+    email: String,
+    website: String
   },
-  phone: {
-    type: String
+  booking: {
+    from: {
+      date: Date,
+      time: String
+    },
+    to: {
+      date: Date,
+      time: String
+    }
   },
-  email: {
-    type: String
-  },
-  from: {
-    type: String,
-    required: true
-  },
-  to: {
-    type: String,
-    required: true
-  },
-  paymentMethod: {
-    type: String,
-    required: true,
-    default: PAYMENT_METHOD.CASH,
-    enum: R.values(PAYMENT_METHOD)
+  payment: {
+    ammount: {
+      type: Number,
+      required: true
+    },
+    method: {
+      type: String,
+      required: true,
+      default: PAYMENT_METHOD.CASH,
+      enum: R.values(PAYMENT_METHOD)
+    },
+    currency: {
+      type: String,
+      required: true,
+      default: 'NGN'
+    }
   },
   companyId: {
     type: Schema.Types.ObjectId,
