@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import useAsyncFn from '../../../hooks/useAsyncFn'
-import { useDispatch } from 'react-redux'
-import notification from 'cogo-toast'
-import { notify } from '../../../helpers/notification'
-import ErrorMessage from '../../misc/ErrorMessage'
+import useNotify from '../../../hooks/useNotify'
 import {
   addHall as addHallAPI,
   updateHall as updateHallAPI,
@@ -20,7 +17,6 @@ const HallFormContainer = ({ hall, closeModal }) => {
   const hallId = hall && hall._id
   const API = hall ? updateHallAPI : addHallAPI
 
-  const dispatch = useDispatch()
   const {
     error: serverError,
     loading: submitting,
@@ -32,19 +28,12 @@ const HallFormContainer = ({ hall, closeModal }) => {
     hallId ? submitForm(hallId, data) : submitForm(data)
   }
 
-  useEffect(() => {
-    if (response && response.success) {
-      hall ? dispatch(updateHallAction(response.result)) : dispatch(addHallAction(response.result))
-      const notificationMessage = hall ? 'Hall updated successfully' : 'Hall added successfully'
-      notification.success(...notify(notificationMessage))
-      closeModal()
-    }
-
-    if (response && !response.success) {
-      notification.error(...notify(<ErrorMessage message={response.message} />))
-    }
-    // eslint-disable-next-line
-  }, [response])
+  useNotify({
+    message: hall ? 'Hall updated successfully' : 'Hall added successfully',
+    action: hall ? updateHallAction : addHallAction,
+    callback: closeModal,
+    response
+  })
 
   const serverFormState = {
     error: serverError,
@@ -70,27 +59,20 @@ const HallFormContainer = ({ hall, closeModal }) => {
     handleDelete
   }
 
-  useEffect(() => {
-    if (deleteResponse && deleteResponse.success) {
-      dispatch(deleteHallAction(deleteResponse.result))
-      notification.success(...notify('Hall deleted successfully.'))
-      closeModal()
-    }
+  useNotify({
+    message: 'Hall deleted successfully.',
+    action: deleteHallAction,
+    response: deleteResponse,
+    callback: closeModal
+  })
 
-    if (deleteResponse && !deleteResponse.success) {
-      notification.error(...notify(deleteResponse.message))
-    }
-    // eslint-disable-next-line
-  }, [deleteResponse])
   return (
-    <div>
-      <HallForm
-        hall={hall}
-        serverFormState={serverFormState}
-        handleFormSubmit={handleFormSubmit}
-        deleteProps={deleteProps}
-      />
-    </div>
+    <HallForm
+      hall={hall}
+      serverFormState={serverFormState}
+      handleFormSubmit={handleFormSubmit}
+      deleteProps={deleteProps}
+    />
   )
 }
 

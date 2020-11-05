@@ -25,20 +25,21 @@ export const createCompany = async (req, res) => {
       return res.json(failed('Company already exists, choose a new subdomain'))
     }
 
-    const newCompany = await new Company({ name: companyName, subdomain })
-    company = await newCompany.save()
+    company = new Company({ name: companyName, subdomain })
+    company = await company.save()
   } catch (e) {
     return res.json(failed('Error Occured. Could not create company'))
   }
   try {
-    const newStaff = await new Staff({
+    let staff = await new Staff({
       name: manager,
       password: await hashPassword(password),
       email,
       role: STAFF_ROLES.GENERAL_MANAGER,
       company: company._id
     })
-    const staff = await newStaff.save()
+    staff = await staff.save()
+    staff = staff.toObject()
     delete staff.password
     return res.json(success({ company, staff }))
   } catch (e) {

@@ -52,11 +52,11 @@ const useStyles = makeStyles((theme) => ({
 const categories = [
   { name: 'dashboard', path: 'admin' },
   { name: 'frontDesk', path: 'frontdesk' },
-  { name: 'laundry', path: 'laundry' },
-  { name: 'bar', path: 'bar' },
-  { name: 'restaurant', path: 'restaurant' },
-  { name: 'gym', path: 'gym' },
-  { name: 'hall', path: 'hall' }
+  { name: 'hall', path: 'frontdesk' }
+  // { name: 'laundry', path: 'laundry' },
+  // { name: 'bar', path: 'bar' },
+  // { name: 'restaurant', path: 'restaurant' },
+  // { name: 'gym', path: 'gym' }
 ]
 
 const AdminLandingPage = () => {

@@ -93,7 +93,7 @@ export const checkIn = async (req, res) => {
     checkIn = checkIn.save()
     const [bookedRoomResolved, checkInResolved] = await Promise.all([bookedRoom, checkIn])
 
-    return res.json(success({ bookedRoomResolved, checkInResolved }))
+    return res.json(success({ bookedRoom: bookedRoomResolved, checkIn: checkInResolved }))
   } catch (e) {
     return res.json(failed('Error occured. Could not book room.'))
   }

@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'somesomefont';
+  font-family: 'hello';
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/fonts/BRFirmaCW-SemiBold.woff2') format('woff2');
+  src: url('./assets/fonts/BRFirmaCW-Medium.woff2') format('woff2');
 }

@@ -10,8 +10,8 @@ const useNotify = ({ message, response, action, callback }) => {
 
   useEffect(() => {
     if (response && response.success) {
-      dispatch(action(response.result))
-      notification.success(...notify(message))
+      action && dispatch(action(response.result))
+      message && notification.success(...notify(message))
       callback && callback()
     } else if (response && !response.success) {
       notification.error(...notify(<ErrorMessage message={response.message} />))

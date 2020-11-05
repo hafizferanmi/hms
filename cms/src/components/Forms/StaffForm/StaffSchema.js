@@ -6,12 +6,6 @@ const schema = yup.object().shape({
     .label('Staff name')
     .required(),
 
-  password: yup.string()
-    .trim()
-    .label('Password')
-    .min(4)
-    .required(),
-
   email: yup.string()
     .label('Email')
     .email()

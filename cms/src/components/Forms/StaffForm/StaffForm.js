@@ -45,14 +45,6 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
         />
         <Input.TextInput
           register={register}
-          name='password'
-          label='Password'
-          type='password'
-          error={errors.password}
-          required
-        />
-        <Input.TextInput
-          register={register}
           name='phone'
           label='Phone No.'
           error={errors.phone}

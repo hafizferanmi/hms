@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import useAsyncFn from '../../../hooks/useAsyncFn'
-import { useDispatch } from 'react-redux'
-import notification from 'cogo-toast'
-import { notify } from '../../../helpers/notification'
+import useNotify from '../../../hooks/useNotify'
 import {
   addRoomType as addRoomTypeAPI,
   updateRoomType as updateRoomTypeAPI,
@@ -14,13 +12,11 @@ import {
   deleteRoomType as deleteRoomTypeAction
 } from '../../../redux/actions/roomTypeAction'
 import RoomTypeForm from './RoomTypeForm'
-import ErrorMessage from '../../misc/ErrorMessage'
 
 const RoomTypesFormContainer = ({ roomType, closeModal }) => {
   const roomTypeId = roomType && roomType._id
   const API = roomTypeId ? updateRoomTypeAPI : addRoomTypeAPI
 
-  const dispatch = useDispatch()
   const {
     error: serverError,
     loading: submitting,
@@ -32,19 +28,12 @@ const RoomTypesFormContainer = ({ roomType, closeModal }) => {
     roomTypeId ? submitForm(roomTypeId, data) : submitForm(data)
   }
 
-  useEffect(() => {
-    if (response && response.success) {
-      roomType ? dispatch(updateRoomTypeAction(response.result)) : dispatch(addRoomTypeAction(response.result))
-      const notificationMessage = roomType ? 'Room type updated successfully' : 'Room type added successfully'
-      notification.success(...notify(notificationMessage))
-      closeModal()
-    }
-
-    if (response && !response.success) {
-      notification.error(...notify(<ErrorMessage message={response.message} />))
-    }
-    // eslint-disable-next-line
-  }, [response])
+  useNotify({
+    message: roomType ? 'Room type updated successfully' : 'Room type added successfully',
+    action: roomType ? updateRoomTypeAction : addRoomTypeAction,
+    response,
+    callback: closeModal
+  })
 
   const serverFormState = {
     error: serverError,
@@ -70,18 +59,13 @@ const RoomTypesFormContainer = ({ roomType, closeModal }) => {
     handleDeleteRoomType
   }
 
-  useEffect(() => {
-    if (deleteRoomTypeResponse && deleteRoomTypeResponse.success) {
-      dispatch(deleteRoomTypeAction(roomType))
-      notification.success(...notify('Room type deleted successfully.'))
-      closeModal()
-    }
+  useNotify({
+    message: 'Room type deleted successfully.',
+    action: deleteRoomTypeAction,
+    response: deleteRoomTypeResponse,
+    callback: closeModal
+  })
 
-    if (deleteRoomTypeResponse && !deleteRoomTypeResponse.success) {
-      notification.error(...notify(deleteRoomTypeResponse.message))
-    }
-    // eslint-disable-next-line
-  }, [deleteRoomTypeResponse])
   return (
     <div>
       <RoomTypeForm

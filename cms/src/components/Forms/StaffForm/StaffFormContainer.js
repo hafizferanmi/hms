@@ -38,13 +38,11 @@ const StaffFormContainer = ({ closeModal, staff }) => {
   }
 
   return (
-    <div>
-      <StaffForm
-        staff={staff}
-        serverFormState={serverFormState}
-        handleFormSubmit={handleFormSubmit}
-      />
-    </div>
+    <StaffForm
+      staff={staff}
+      serverFormState={serverFormState}
+      handleFormSubmit={handleFormSubmit}
+    />
   )
 }
 

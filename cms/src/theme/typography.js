@@ -1,5 +1,5 @@
 export default {
-  fontFamily: 'somesomefont',
+  fontFamily: 'hello',
   h1: {
     fontWeight: 500,
     fontSize: 35,

@@ -12,6 +12,7 @@ const schema = Joi.object()
 
     password: stringSchema()
       .label('Default password')
+      .default('password')
       .required(),
 
     email: stringSchema()
