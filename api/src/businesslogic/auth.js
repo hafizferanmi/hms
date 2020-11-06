@@ -18,14 +18,18 @@ export const staffLogin = async (req, res) => {
   }
 
   try {
-    const staff = await Staff.findOne({ email })
+    let staff = await Staff.findOne({ email })
+
     if (!staff) return res.json(failed('Login credentials failed.'))
     if (staff.disabled) return res.json(failed('Account disabled. Contact your adminstrator.'))
 
     if (await isCorrectPassword(password, staff.password)) {
       const staffId = staff._id
       const token = generateAuthToken(staffId)
-      return res.json(success(token))
+
+      staff = staff.toObject()
+      delete staff.password
+      return res.json(success({ token, staff }))
     } else {
       return res.json(failed('Wrong email/password combination.'))
     }

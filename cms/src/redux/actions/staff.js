@@ -53,16 +53,18 @@ export const fetchCurrentStaff = () => async (dispatch) => {
 
   try {
     const res = await getCurrentStaff()
-    dispatch({
-      type: FETCH_CURRENT_STAFF_SUCCESS,
-      payload: res.result
-    })
+    dispatch(setCurrentStaff(res.result))
   } catch (e) {
     dispatch({
       type: FETCH_CURRENT_STAFF_ERROR
     })
   }
 }
+
+export const setCurrentStaff = (payload) => ({
+  type: FETCH_CURRENT_STAFF_SUCCESS,
+  payload
+})
 
 export const logout = () => ({
   type: LOGOUT

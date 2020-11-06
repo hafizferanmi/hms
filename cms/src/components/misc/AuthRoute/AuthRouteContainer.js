@@ -26,9 +26,9 @@ const AuthRouteContainer = () => {
   const classess = useStyles()
   const { error, loading, data: currentStaff } = useSelector(state => state.currentStaff)
   useEffect(() => {
-    dispatch(fetchCurrentStaff())
+    if (!currentStaff) dispatch(fetchCurrentStaff())
     // eslint-disable-next-line
-  }, [])
+  }, [currentStaff])
 
   useEffect(() => {
     if (currentStaff && currentStaff.role && ADMINISTRATOR.includes(currentStaff.role)) {

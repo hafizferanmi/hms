@@ -14,6 +14,7 @@ export const addBooking = async (req, res) => {
   const companyId = req.staff.companyId
   const currentStaffId = req.staff._id
   const hall = req.params.hallId
+
   const { value, errorMsg } = validateRequestBody(HallBookingSchema, req.body)
 
   if (errorMsg) return res.json(failed(errorMsg))
