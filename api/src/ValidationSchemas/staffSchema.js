@@ -10,11 +10,6 @@ const schema = Joi.object()
       .label('Staff name')
       .required(),
 
-    password: stringSchema()
-      .label('Default password')
-      .default('password')
-      .required(),
-
     email: stringSchema()
       .label('Staff email')
       .email()

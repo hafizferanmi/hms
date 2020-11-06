@@ -1,6 +1,5 @@
 import Debug from 'debug'
 import Staff from '../models/staff'
-import Company from '../models/company'
 import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
 
@@ -12,6 +11,8 @@ const { failed, success } = helpers.response
 const { validateRequestBody } = helpers.misc
 const { StaffSchema } = ValidationSchemas
 
+const STAFF_DEFAULT_PASSWORD = '@password123'
+
 export const addStaff = async (req, res) => {
   debug('addStaff()')
   const companyId = req.staff.companyId
@@ -22,20 +23,10 @@ export const addStaff = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, password, email, role, phone, disabled } = value
-
-  // check for company
-  try {
-    const dbCompany = await Company.findById(companyId)
-    if (!dbCompany) {
-      return res.json(failed('Company does not exist!'))
-    }
-  } catch (e) {
-    return res.json(failed('Error occured, Do try again.'))
-  }
+  const { name, email, role, phone } = value
 
   // hash password
-  const hashedPassword = await hashPassword(password)
+  const hashedPassword = await hashPassword(STAFF_DEFAULT_PASSWORD)
   const normalizedPhoneNumber = normalizePhoneNumber(phone)
   const staff = await Staff.find({ email, companyId })
   if (!staff) return res.json(failed('Staff with email already exist!.'))
@@ -46,10 +37,8 @@ export const addStaff = async (req, res) => {
     email,
     password: hashedPassword,
     role,
-    disabled,
     companyId,
-    createdBy: currentStaffId,
-    updatedBy: currentStaffId
+    createdBy: currentStaffId
   }
 
   try {

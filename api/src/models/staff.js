@@ -30,6 +30,8 @@ const StaffSchema = new Schema({
     type: String,
     enum: R.values(STAFF_STATUS)
   },
+  resetPasswordToken: String,
+  resetPasswordTokenExpires: Number,
   createdBy: { type: Schema.Types.ObjectId },
   updatedBy: { type: Schema.Types.ObjectId }
 }, { timestamps: true })

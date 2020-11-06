@@ -31,13 +31,14 @@ const AuthRouteContainer = () => {
   }, [currentStaff])
 
   useEffect(() => {
-    if (currentStaff && currentStaff.role && ADMINISTRATOR.includes(currentStaff.role)) {
-      navigateTo(location.pathname)
-    } else if (currentStaff && currentStaff.role) {
-      navigateTo(STAFF_ROLE_ROUTE[currentStaff.role])
-    } else {
-      navigateTo('/')
-    }
+    console.log({ location })
+    // if (currentStaff && currentStaff.role && ADMINISTRATOR.includes(currentStaff.role)) {
+    //   navigateTo(location.pathname)
+    // } else if (currentStaff && currentStaff.role) {
+    //   navigateTo(STAFF_ROLE_ROUTE[currentStaff.role])
+    // } else {
+    //   navigateTo('/')
+    // }
     // eslint-disable-next-line
   }, [currentStaff])
 
