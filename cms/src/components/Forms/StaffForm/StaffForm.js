@@ -5,16 +5,13 @@ import { yupResolver } from '@hookform/resolvers'
 
 import Input from '../../Inputs'
 import Button from '../../misc/Button'
+import ErrorMessage from '../../misc/ErrorMessage'
 import StaffFormSchema from './StaffSchema'
 import { STAFF_ROLES_LABEL, STAFF_ROLES } from '../../../constants/staff'
 import { buildSelectOptions } from '../../../helpers/misc'
 
 const StaffFormWrapper = styled.form`
   display: flex;
-`
-
-const ErrorMessage = styled.div`
-  color: #DC3545;
 `
 
 const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
@@ -48,14 +45,6 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
         />
         <Input.TextInput
           register={register}
-          name='password'
-          label='Password'
-          type='password'
-          error={errors.password}
-          required
-        />
-        <Input.TextInput
-          register={register}
           name='phone'
           label='Phone No.'
           error={errors.phone}
@@ -73,8 +62,12 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
           name='role'
           control={control}
         />
-        {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
-        {message && <ErrorMessage>{message}</ErrorMessage>}
+        <div>
+          <ErrorMessage
+            networkError={error}
+            message={message}
+          />
+        </div>
         <Button
           label={`${staff ? 'Edit' : 'Add'} staff`}
           type='submit'

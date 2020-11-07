@@ -123,8 +123,8 @@ export const getRoomsAndRoomTypes = async (req, res) => {
   const companyId = req.staff.companyId
 
   try {
-    const rooms = await Room.find({ companyId })
-    const roomTypes = await RoomType.find({ companyId })
+    const rooms = Room.find({ companyId })
+    const roomTypes = RoomType.find({ companyId })
     const data = await Promise.all([rooms, roomTypes])
     return res.json(success({ rooms: data[0], roomTypes: data[1] }))
   } catch (e) {

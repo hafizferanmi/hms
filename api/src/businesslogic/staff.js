@@ -1,6 +1,5 @@
 import Debug from 'debug'
 import Staff from '../models/staff'
-import Company from '../models/company'
 import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
 
@@ -12,6 +11,8 @@ const { failed, success } = helpers.response
 const { validateRequestBody } = helpers.misc
 const { StaffSchema } = ValidationSchemas
 
+const STAFF_DEFAULT_PASSWORD = '@password123'
+
 export const addStaff = async (req, res) => {
   debug('addStaff()')
   const companyId = req.staff.companyId
@@ -22,20 +23,10 @@ export const addStaff = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, password, email, role, phone } = value
-
-  // check for company
-  try {
-    const dbCompany = await Company.findById(companyId)
-    if (!dbCompany) {
-      return res.json(failed('Company does not exist!'))
-    }
-  } catch (e) {
-    return res.json(failed('Error occured, Do try again.'))
-  }
+  const { name, email, role, phone } = value
 
   // hash password
-  const hashedPassword = await hashPassword(password)
+  const hashedPassword = await hashPassword(STAFF_DEFAULT_PASSWORD)
   const normalizedPhoneNumber = normalizePhoneNumber(phone)
   const staff = await Staff.find({ email, companyId })
   if (!staff) return res.json(failed('Staff with email already exist!.'))
@@ -47,8 +38,7 @@ export const addStaff = async (req, res) => {
     password: hashedPassword,
     role,
     companyId,
-    createdBy: currentStaffId,
-    updatedBy: currentStaffId
+    createdBy: currentStaffId
   }
 
   try {
@@ -57,6 +47,29 @@ export const addStaff = async (req, res) => {
     return res.json(success(staff))
   } catch (e) {
     return res.json(failed('Fatal error occured. Try again soon.'))
+  }
+}
+
+export const disableStaff = async (req, res) => {
+  debug('disableStaff()')
+  const companyId = req.staff.companyId
+  const staffId = req.params.staffId
+
+  let staff
+  try {
+    staff = await Staff.findOne({ _id: staffId, companyId })
+    if (!staff) return res.json(failed('Staff does not belong to this company.'))
+  } catch (e) {
+    return res.json(failed('Error occured. Try again!'))
+  }
+
+  const { disabled } = req.body
+
+  try {
+    const updatedStaff = await Staff.findOneAndUpdate({ _id: staffId }, { disabled }, { new: true })
+    return res.json(success(updatedStaff))
+  } catch (e) {
+    return res.json(failed('Update staff failed. Try again.'))
   }
 }
 
@@ -70,15 +83,15 @@ export const updateStaff = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, email, role, phone } = value
-
   let staff
   try {
     staff = await Staff.findOne({ _id: staffId, companyId: currentCompanyId })
-    if (!staff) return res.json(failed('Unauthorized. Staff does not belong to this company.'))
+    if (!staff) return res.json(failed('Staff does not belong to this company.'))
   } catch (e) {
     return res.json(failed('Error occured. Try again!'))
   }
+
+  const { name, email, role, phone, disabled } = value
 
   const staffData = {
     name,
@@ -86,11 +99,14 @@ export const updateStaff = async (req, res) => {
     email,
     role,
     phone,
+    disabled,
     updatedBy: staffId
   }
 
   try {
-    const updatedStaff = await Staff.findOneAndUpdate({ _id: staffId }, staffData, { new: true })
+    let updatedStaff = await Staff.findOneAndUpdate({ _id: staffId }, staffData, { new: true })
+    updatedStaff = updatedStaff.toObject()
+    delete updatedStaff.password
     return res.json(success(updatedStaff))
   } catch (e) {
     return res.json(failed('Update staff failed. Try again.'))
@@ -128,23 +144,16 @@ export const getStaff = async (req, res) => {
 
 export const deleteStaff = async (req, res) => {
   debug('deleteStaff()')
-  const currentCompanyId = req.staff.companyId
-  const staffId = req.params.staffId
-  debug(`staffId - ${staffId}`)
-
-  let staff
-  try {
-    staff = await Staff.findOne({ _id: staffId, companyId: currentCompanyId })
-    if (!staff) {
-      return res.json(failed('Unauthorized, staff does not exist.'))
-    }
-  } catch (e) {
-    return res.json(failed('Error Occured. Could not find staff.'))
-  }
+  const companyId = req.staff.companyId
+  const staffToDelete = req.params.staffId
+  const staffDeletingId = req.staff._id
 
   try {
-    const deletedStaff = await Staff.findOneAndDelete({ _id: staffId })
-    return res.json(success(deletedStaff))
+    let staff = await Staff.findOne({ _id: staffToDelete, companyId })
+    if (!staff) return res.status(400).json(failed('Unauthorized, staff does not exist.'))
+
+    staff = await staff.delete(staffDeletingId)
+    return res.json(success(staff))
   } catch (e) {
     return res.json(failed('Error occured. Could not delete staff.'))
   }

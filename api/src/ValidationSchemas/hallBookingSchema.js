@@ -5,29 +5,37 @@ import { PAYMENT_METHOD } from '../constants/misc'
 
 const schema = Joi.object()
   .keys({
-    hall: stringSchema()
-      .label('Hall')
-      .length()
+    organizerName: stringSchema()
+      .label('Name/Organization of bookie')
       .required(),
 
-    by: stringSchema()
-      .label('Name of bookie')
-      .required(),
-
-    phone: stringSchema()
+    organizerPhone: stringSchema()
       .label('Bookie phone no.')
+      .required()
       .min(11),
 
-    email: stringSchema()
+    organizerEmail: stringSchema()
       .label('Organizers email')
       .email(),
 
-    from: stringSchema()
+    bookingFromDate: stringSchema()
+      .label('Booking start date')
+      .required(),
+
+    bookingfromTime: stringSchema()
       .label('Booking start time')
       .required(),
 
-    to: stringSchema()
+    bookingToDate: stringSchema()
+      .label('Booking end date')
+      .required(),
+
+    bookingToTime: stringSchema()
       .label('Booking end time')
+      .required(),
+
+    ammount: stringSchema()
+      .label('Ammount')
       .required(),
 
     paymentMethod: stringSchema()

@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import useAsyncFn from '../../../hooks/useAsyncFn'
-import { useDispatch } from 'react-redux'
-import notification from 'cogo-toast'
+import useNotify from '../../../hooks/useNotify'
 import StaffForm from './StaffForm'
 import {
   addStaff as addStaffAPI,
   updateStaff as updateStaffAPI
 } from '../../../helpers/api'
-import { notify } from '../../../helpers/notification'
 import {
   addNewStaff,
   updateStaffDetails
@@ -16,7 +14,6 @@ import {
 const StaffFormContainer = ({ closeModal, staff }) => {
   const API = staff ? updateStaffAPI : addStaffAPI
 
-  const dispatch = useDispatch()
   const {
     error: serverError,
     loading: submitting,
@@ -30,19 +27,9 @@ const StaffFormContainer = ({ closeModal, staff }) => {
     staff ? submitForm(staffId, data) : submitForm(data)
   }
 
-  useEffect(() => {
-    if (response && response.success) {
-      staff ? dispatch(updateStaffDetails(response.result)) : dispatch(addNewStaff(response.result))
-      const notificationMessage = staff ? 'Staff details updated successfully.' : 'Staff added successfully.'
-      notification.success(...notify(notificationMessage))
-      closeModal()
-    }
-
-    if (response && !response.success) {
-      notification.error(...notify(response.message))
-    }
-    // eslint-disable-next-line
-  }, [response])
+  const notificationMessage = staff ? 'Staff details updated successfully.' : 'Staff added successfully.'
+  const action = staff ? updateStaffDetails : addNewStaff
+  useNotify({ message: notificationMessage, action, response, callback: closeModal })
 
   const serverFormState = {
     error: serverError,
@@ -51,13 +38,11 @@ const StaffFormContainer = ({ closeModal, staff }) => {
   }
 
   return (
-    <div>
-      <StaffForm
-        staff={staff}
-        serverFormState={serverFormState}
-        handleFormSubmit={handleFormSubmit}
-      />
-    </div>
+    <StaffForm
+      staff={staff}
+      serverFormState={serverFormState}
+      handleFormSubmit={handleFormSubmit}
+    />
   )
 }
 

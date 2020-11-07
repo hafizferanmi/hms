@@ -1,18 +1,20 @@
 import React from 'react'
 import { Router } from '@reach/router'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import LoggedOutRoute from './components/misc/LoggedOutRoute'
 import AuthRoute from './components/misc/AuthRoute'
+import PerfectScrollBar from 'react-perfect-scrollbar'
 
 const NotfoundPage = () => <div>Page not found</div>
 
 const App = () => {
   return (
-    <Router>
-      <LoggedOutRoute path='/api' />
-      <AuthRoute path='/secure/*' />
-      <NotfoundPage default />
-    </Router>
+    <PerfectScrollBar>
+      <Router>
+        <LoggedOutRoute path='/*' />
+        <AuthRoute path='/secure/*' />
+        <NotfoundPage default />
+      </Router>
+    </PerfectScrollBar>
   )
 }
 

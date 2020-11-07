@@ -19,15 +19,10 @@ export const addHall = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, desc, price, capacity } = value
   const hallData = {
-    name,
-    desc,
-    price,
-    capacity,
+    ...value,
     companyId,
-    createdBy: currentStaffId,
-    updatedBy: currentStaffId
+    createdBy: currentStaffId
   }
 
   try {
@@ -50,17 +45,12 @@ export const updateHall = async (req, res) => {
     return res.json(failed(errorMsg))
   }
 
-  const { name, desc, price, capacity } = value
-
-  const conditions = { _id: hallId, companyId: currentStaffCompanyId }
-
   const hallData = {
-    name,
-    desc,
-    price,
-    capacity,
+    ...value,
     updatedBy: currentStaffId
   }
+
+  const conditions = { _id: hallId, companyId: currentStaffCompanyId }
 
   try {
     const updatedHall = await Hall.findOneAndUpdate(conditions, hallData, { new: true })

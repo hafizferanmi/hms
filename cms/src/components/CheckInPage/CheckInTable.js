@@ -1,41 +1,87 @@
 import React from 'react'
-import styled from 'styled-components'
+import { makeStyles } from '@material-ui/core/styles'
+import MaterialTable from 'material-table'
 
-const TableWrapper = styled.div`
-  background: white;
-  margin-top: 40px;
-`
+const useStyles = makeStyles({
+  tableWrapper: {
+    maxWidth: '100%',
+    marginTop: 20,
+    boxShadow: 'none',
+    padding: 20,
+    background: 'white'
+  }
+})
 
-const Table = styled.table`
-  width: 100%;
-`
+const tableStyle = {
+  boxShadow: 'none'
+}
 
-const CheckInTableHeader = ['', 'Name', 'Room', 'Arrival', 'Departure', '']
+const columns = [
+  { title: 'Name', field: 'name', defaultSort: 'asc' },
+  { title: 'Room', field: 'room' },
+  { title: 'Arrival', field: 'dateOfArrival', type: 'date' },
+  { title: 'Departure', field: 'dateOfDeparture', type: 'date' }
+]
 
 const CheckInTable = ({ checkIns }) => {
+  const classes = useStyles()
   return (
-    <TableWrapper>
-      <Table>
-        <thead>
-          <tr>
-            {CheckInTableHeader.map((header, i) => (<th key={i}>{header} </th>))}
-          </tr>
-        </thead>
-        <tbody>
-          {checkIns.map((checkIn, i) =>
-            (
-              <tr key={i}>
-                <td> </td>
-                <td> {checkIn.name} </td>
-                <td> {checkIn.roomId.number} </td>
-                <td> {checkIn.dateOfArrival} </td>
-                <td> {checkIn.dateOfDeparture} </td>
-                <td>  </td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
-    </TableWrapper>
+    <div className={classes.tableWrapper}>
+      <MaterialTable
+        columns={columns}
+        data={checkIns}
+        style={tableStyle}
+        title='CheckIns'
+        actions={[
+          {
+            icon: 'delete',
+            tooltip: 'Delete User',
+            iconProps: {
+              color: 'primary',
+              style: {},
+              fontSize: 'small'
+            },
+            onClick: (event, rowData) => {
+              console.log({ event })
+              console.log({ rowData })
+              window.alert('Screaming')
+            }
+          }
+        ]}
+        detailPanel={rowData => {
+          return (
+            <div
+              style={{
+                fontSize: 100,
+                textAlign: 'center',
+                color: 'white',
+                backgroundColor: '#FDD835'
+              }}
+            >
+              {rowData.dateOfArrival}
+            </div>
+          )
+        }}
+        options={{
+          toolbar: true,
+          paging: false,
+          actionsColumnIndex: -1,
+          selection: false,
+          exportButton: true,
+          exportAllData: true,
+          search: true,
+          searchFieldAlignment: 'left',
+          showTitle: false,
+          toolbarButtonAlignment: 'right',
+          sorting: true,
+          showSelectAllCheckbox: false,
+          showTextRowsSelected: false,
+          searchFieldVariant: 'outlined',
+          columnsButton: true,
+          thirdSortClick: false
+        }}
+      />
+    </div>
   )
 }
 

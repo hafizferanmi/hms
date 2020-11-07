@@ -1,18 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
 
 import Input from '../../Inputs'
 import Button from '../../misc/Button'
 import RoomSchema from './RoomSchema'
-import ServerErrorMessage from '../../misc/ErrorMessage'
-
-const RoomFormWrapper = styled.form``
-
-const ErrorMessage = styled.div`
-  color: #DC3545;
-`
+import ErrorMessage from '../../misc/ErrorMessage'
 
 const RoomForm = ({ serverFormState, handleFormSubmit, room }) => {
   const { register, handleSubmit, errors, formState } = useForm({
@@ -21,10 +14,10 @@ const RoomForm = ({ serverFormState, handleFormSubmit, room }) => {
   })
 
   const { isSubmitting } = formState
-  const { error, message, success } = serverFormState
+  const { error, message } = serverFormState
   const title = room && room._id ? 'Edit Room' : 'Add Room'
   return (
-    <RoomFormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div>
         <p>{title}</p>
         <Input.TextInput
@@ -49,8 +42,10 @@ const RoomForm = ({ serverFormState, handleFormSubmit, room }) => {
           error={errors.roomType}
         />
         <div>
-          {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
-          {message && !success && <ServerErrorMessage message={message} />}
+          <ErrorMessage
+            networkError={error}
+            message={message}
+          />
         </div>
         <Button
           label={`${room && room._id ? 'Edit' : 'Add'} Room`}
@@ -59,7 +54,7 @@ const RoomForm = ({ serverFormState, handleFormSubmit, room }) => {
         />
       </div>
 
-    </RoomFormWrapper>
+    </form>
   )
 }
 

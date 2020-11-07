@@ -1,27 +1,32 @@
 import React from 'react'
-import styled from 'styled-components'
 import CreateStaffButton from './CreateStaffButton'
 import StaffsTable from './StaffTable'
 import useModal from '../../hooks/useModal'
 import Modal from '../misc/Modal'
 import StaffForm from '../Forms/StaffForm'
+import { makeStyles } from '@material-ui/core/styles'
+import { Box, Typography } from '@material-ui/core'
 
-const PageTopWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
+const useStyles = makeStyles((theme) => ({
+  boxContainer: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  }
+}))
 
 const StaffsPage = ({ staffs }) => {
+  const classes = useStyles()
   const { isOpen, openModal, closeModal, data: staff } = useModal()
   const handleOpen = (data) => openModal(data)
   const handleClose = () => closeModal()
   return (
     <>
-      <PageTopWrapper>
-        <h3>Our company staffs</h3>
+      <Box className={classes.boxContainer}>
+        <Typography variant='h4' color='textSecondary'>
+          Our company staffs
+        </Typography>
         <CreateStaffButton handleClick={handleOpen} />
-      </PageTopWrapper>
+      </Box>
       <div>
         {staffs.length ? (
           <StaffsTable

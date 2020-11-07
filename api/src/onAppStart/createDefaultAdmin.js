@@ -2,7 +2,7 @@ import Admin from '../models/admin'
 import helpers from '../helpers'
 import Debug from 'debug'
 
-const debug = Debug('API: Default Admin')
+const debug = Debug('API:onAppStart/createDefaultAdmin.js')
 
 debug('Checking if need to create a default admin user')
 const { hashPassword } = helpers.password

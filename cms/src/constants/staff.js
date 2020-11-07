@@ -15,6 +15,8 @@ export const STAFF_ROLES = Object.freeze({
   OWNER: 'OWNER'
 })
 
+export const ADMINISTRATOR = [STAFF_ROLES.OWNER, STAFF_ROLES.GENERAL_MANAGER]
+
 export const STAFF_STATUS = Object.freeze({
   ACTIVE: 'ACTIVE',
   SUSPENDED: 'SUSPENDED',
@@ -46,4 +48,10 @@ export const STAFF_STATUS_LABEL = Object.freeze({
   [STAFF_STATUS.PENDING]: 'Pending',
   [STAFF_STATUS.INACTIVE]: 'Inactive',
   [STAFF_STATUS.ON_LEAVE]: 'On leave'
+})
+
+export const STAFF_ROLE_ROUTE = Object.freeze({
+  [STAFF_ROLES.OWNER]: '/secure/admin',
+  [STAFF_ROLES.GENERAL_MANAGER]: '/secure/admin',
+  [STAFF_ROLES.FRONT_DESK_OFFICER]: '/secure/frontdesk'
 })

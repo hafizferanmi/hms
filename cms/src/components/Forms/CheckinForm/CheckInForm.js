@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers'
 
 import Input from '../../Inputs'
 import Button from '../../misc/Button'
-import ServerErrorMessage from '../../misc/ErrorMessage'
+import ErrorMessage from '../../misc/ErrorMessage'
 import CheckInSchema from './CheckInSchema'
 
 const ChecInFormWrapper = styled.form`
@@ -21,9 +21,6 @@ const FormInputWrapper = styled.div`
       width: 48%;
     }
   }
-`
-const ErrorMessage = styled.div`
-  color: #DC3545;
 `
 
 const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
@@ -164,8 +161,10 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
           label='Room'
         />
         <div>
-          {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
-          {message && <ServerErrorMessage message={message} />}
+          <ErrorMessage
+            networkError={error}
+            message={message}
+          />
         </div>
         <Button
           label={`${checkIn ? 'Edit' : 'Add'} CheckIn`}

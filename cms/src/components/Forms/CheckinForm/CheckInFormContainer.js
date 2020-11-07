@@ -8,6 +8,7 @@ import {
   updateCheckIn as updateCheckInAPI,
   deleteCheckIn as deleteCheckInAPI
 } from '../../../helpers/api'
+import ErrorMessage from '../../misc/ErrorMessage'
 import {
   addCheckIn as addCheckInAction,
   updateCheckIn as updateCheckInAction,
@@ -43,7 +44,7 @@ const CheckInFormContainer = ({ checkIn, closeModal }) => {
     }
 
     if (response && !response.success) {
-      notification.error(...notify(response.message))
+      notification.error(...notify(<ErrorMessage message={response.message} />))
     }
     // eslint-disable-next-line
   }, [response])

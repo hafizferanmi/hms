@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import RoomTypesPage from './RoomTypesPage'
+import RoomTypesPage from './RoomTypesPageOld'
 import { fetchRoomTypes } from '../../redux/actions/roomTypeAction'
 import Loading from '../misc/Loading'
 

@@ -1,12 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import useModal from '../../hooks/useModal'
+import useDataProvider from '../../hooks/useDataProvider'
 import ConfirmModal from '../misc/ConfirmModal'
-import { STAFF_ROLES_LABEL, STAFF_STATUS_LABEL } from '../../constants/staff'
+import { STAFF_ROLES_LABEL } from '../../constants/staff'
 import staffImg from '../../assets/images/logo-sm.png'
 import TrashIcon from '../icons/Trash'
 import EditIcon from '../icons/Pencil'
-import { StaffPageAPIMethods } from './StaffsPageContainer'
+import DisableButton from './DisableStaffButton'
 
 const StaffTableContainer = styled.div`
 background-color: white;
@@ -100,15 +101,10 @@ object-fit: contain;
 const tableHeaders = ['', 'Name', 'Email', 'Phone No', 'Job title', 'Status', '']
 
 const StaffsTable = ({ staffs, handleOpen }) => {
-  const {
-    handleDeleteStaff
-  } = useContext(StaffPageAPIMethods)
-  const {
-    isOpen: deleteModalOpen,
-    openModal: openDeleteModal,
-    closeModal: closeDeleteModal,
-    data: deleteModalData
-  } = useModal()
+  const { dataInContext } = useDataProvider()
+  const { handleDeleteStaff, handleDisableStaff } = dataInContext
+  const deleteModal = useModal()
+  const disableModal = useModal()
 
   return (
     <StaffTableContainer>
@@ -122,16 +118,17 @@ const StaffsTable = ({ staffs, handleOpen }) => {
         <tbody>
           {staffs.map((staff, i) =>
             <tr key={staff._id}>
-              <td><StaffIcon src={staffImg} alt={`${staff.name}'s name`} /></td>
+              <td><StaffIcon src={staffImg} alt={staff.name} /></td>
               <td>{staff.name}</td>
               <td>{staff.email}</td>
               <td>{staff.phone}</td>
               <td>{STAFF_ROLES_LABEL[staff.role]}</td>
-              <td>{STAFF_STATUS_LABEL[staff.status] || 'Active'}</td>
+              <td>{staff.disabled ? 'Not active' : 'Active'}</td>
               <td>
                 <div className='icon-wrapper'>
+                  <DisableButton onClick={() => disableModal.openModal(staff)} disableModal={disableModal} staff={staff} />
                   <EditIcon onClick={() => handleOpen(staff)} />
-                  <TrashIcon onClick={() => openDeleteModal(staff)} />
+                  <TrashIcon onClick={() => deleteModal.openModal(staff)} />
                 </div>
               </td>
             </tr>
@@ -139,11 +136,18 @@ const StaffsTable = ({ staffs, handleOpen }) => {
 
         </tbody>
         <ConfirmModal
-          isOpen={deleteModalOpen}
+          isOpen={deleteModal.isOpen}
           title='Delete staff'
-          closeModal={closeDeleteModal}
-          confirmAction={() => handleDeleteStaff(deleteModalData._id)}
-          message={`Do you want to delete staff with name ${deleteModalData && deleteModalData.name}`}
+          closeModal={deleteModal.closeModal}
+          confirmAction={() => handleDeleteStaff(deleteModal.data._id)}
+          message={`Do you want to delete staff with name ${deleteModal.data && deleteModal.data.name}`}
+        />
+        <ConfirmModal
+          isOpen={disableModal.isOpen}
+          title={`${disableModal.data && disableModal.data.disabled ? 'Enable' : 'Disable'} staff`}
+          closeModal={disableModal.closeModal}
+          confirmAction={() => handleDisableStaff(disableModal.data)}
+          message={`Do you want to ${disableModal.data && disableModal.data.disabled ? 'enable' : 'disable'} staff with name ${disableModal.data && disableModal.data.name}`}
         />
 
       </TableWrapper>

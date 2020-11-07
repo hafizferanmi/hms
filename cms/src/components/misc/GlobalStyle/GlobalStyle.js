@@ -1,34 +1,39 @@
-import { createGlobalStyle } from 'styled-components'
-import FontBold from '../../../assets/fonts/BRFirmaCW-Bold.woff2'
-import FontSemiBold from '../../../assets/fonts/BRFirmaCW-SemiBold.woff2'
-import FontRegular from '../../../assets/fonts/BRFirmaCW-Regular.woff2'
-import FontMedium from '../../../assets/fonts/BRFirmaCW-Medium.woff2'
+import { createStyles, makeStyles } from '@material-ui/core'
+import Raleway from '../../../assets/fonts/raleway.woff2'
 
-const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: font-bold;
-    src: url(${FontBold});
+const useStyles = makeStyles(() => createStyles({
+  '@global': {
+    '*': {
+      boxSizing: 'border-box',
+      margin: 0,
+      padding: 0
+    },
+    html: {
+      '-webkit-font-smoothing': 'antialiased',
+      '-moz-osx-font-smoothing': 'grayscale',
+      height: '100%',
+      width: '100%',
+      fontFamily: Raleway
+    },
+    body: {
+      backgroundColor: '#f4f6f8',
+      height: '100%',
+      width: '100%'
+    },
+    a: {
+      textDecoration: 'none'
+    },
+    '#root': {
+      height: '100%',
+      width: '100%'
+    }
   }
-  @font-face {
-    font-family: font-semibold;
-    src: url(${FontSemiBold});
-  }
-  @font-face {
-    font-family: font-regular;
-    src: url(${FontRegular});
-  }
-  @font-face {
-    font-family: font-medium;
-    src: url(${FontMedium});
-  }
-  *{
-    margin: 0px;
-    padding: 0px;
-  }
-  body {
-    background: #f5f9fe;
-    font-family: font-regular;
-  }
-`
+}))
 
-export default GlobalStyle
+const GlobalStyles = () => {
+  useStyles()
+
+  return null
+}
+
+export default GlobalStyles

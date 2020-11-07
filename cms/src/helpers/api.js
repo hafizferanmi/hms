@@ -6,11 +6,9 @@ const AUTH_TOKEN_KEY = '__token'
 export const saveAuthToken = token => window.localStorage.setItem(AUTH_TOKEN_KEY, token)
 const getAuthToken = () => window.localStorage.getItem(AUTH_TOKEN_KEY)
 
-const AUTH_TOKEN = getAuthToken(AUTH_TOKEN_KEY)
-
 const request = axios.create({
   baseURL: BASE_URL,
-  headers: { Authorization: `Bearer: ${AUTH_TOKEN}` }
+  headers: { Authorization: `Bearer: ${getAuthToken()}` }
 })
 
 export const fetchData = async (path) => {
@@ -39,6 +37,7 @@ export const staffLogin = (body) => sendData('/staff/login', body)
 export const getCurrentStaff = () => fetchData('staff/currentStaff')
 export const addStaff = (body) => sendData('/staff/add', body)
 export const updateStaff = (staffId, body) => modifyResource(`staff/update/${staffId}`, body)
+export const disableStaff = (staffId, body) => modifyResource(`staff/disable/${staffId}`, body)
 export const deleteStaff = (staffId) => deleteResource(`staff/delete/${staffId}`)
 export const getStaffs = () => fetchData('/staff/all')
 

@@ -5,7 +5,7 @@ import Staff from '../models/staff'
 const { verifyAuthToken, getTokenFromHeader } = helpers.jwt
 const { failed } = helpers.response
 
-const debug = Debug('API: Middleware')
+const debug = Debug('API: currentStaff.js')
 
 const currentStaff = async (req, res, next) => {
   debug('currentStaff()')
@@ -24,8 +24,11 @@ const currentStaff = async (req, res, next) => {
   if (!decodedToken || !decodedToken.id) return res.json(failed('Unauthorized'))
 
   try {
-    const staff = await Staff.findById(decodedToken.id)
+    let staff = await Staff.findById(decodedToken.id)
     if (!staff) return res.json(failed('Unauthorized'))
+
+    staff = staff.toObject()
+    delete staff.password
 
     req.staff = staff
     next()

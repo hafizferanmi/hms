@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import config from 'config'
 import Debug from 'debug'
+import cors from 'cors'
 import onAppStart from './onAppStart'
 import routes from './routes'
 
@@ -17,9 +18,11 @@ const {
   roomTypesRoute,
   checkInroute,
   hallsRoute,
-  hallBookingRoute
+  hallBookingRoute,
+  settingsRoute
 } = routes
 
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -31,6 +34,7 @@ app.use('/roomTypes', roomTypesRoute)
 app.use('/checkIn', checkInroute)
 app.use('/hall', hallsRoute)
 app.use('/booking', hallBookingRoute)
+app.use('/settings', settingsRoute)
 
 app.get('/', (req, res) => res.json({ message: 'Welcome!' }))
 

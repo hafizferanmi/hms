@@ -1,25 +1,37 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Modal } from 'react-bootstrap'
+import { makeStyles } from '@material-ui/core/styles'
+import Modal from '@material-ui/core/Modal'
+import Backdrop from '@material-ui/core/Backdrop'
 
-const ModalWrapper = styled(Modal)`
-  .modal-content {
-    margin-top: 100px;
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalContentWrapper: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(2, 2, 3),
+    borderRadius: '5px',
+    width: '600px'
   }
-`
+}))
 
-const CustomModal = ({ open = true, title, children, handleClose, size = 'md' }) => {
+const CustomModal = ({ open, children, handleClose, title }) => {
+  const classes = useStyles()
   return (
-    <ModalWrapper show={open} onHide={handleClose} animation={false} size={size}>
-      {
-        title && (
-          <Modal.Header closeButton>
-            <Modal.Title>{title} </Modal.Title>
-          </Modal.Header>
-        )
-      }
-      <Modal.Body>{children}</Modal.Body>
-    </ModalWrapper>
+    <Modal
+      aria-labelledby={title}
+      aria-describedby={title}
+      className={classes.modal}
+      open={open}
+      onClose={handleClose}
+      BackdropComponent={Backdrop}
+    >
+      <div className={classes.modalContentWrapper}>
+        {children}
+      </div>
+    </Modal>
   )
 }
 

@@ -6,15 +6,10 @@ import { yupResolver } from '@hookform/resolvers'
 import Input from '../../Inputs'
 import Button from '../../misc/Button'
 import RoomTypeSchema from './RoomTypeSchema'
-import ServerMessage from '../../misc/ErrorMessage'
+import ErrorMessage from '../../misc/ErrorMessage'
 
 const RoomTypeFormWrapper = styled.form`
   display: flex;
-`
-
-const ErrorMessage = styled.div`
-  text-align: center;
-  color: #DC3545;
 `
 
 const DeleteButton = styled.span`
@@ -63,8 +58,12 @@ const RoomTypeForm = ({ serverFormState, handleFormSubmit, roomType, deleteRoomT
           rows={4}
           error={errors.desc}
         />
-        {error && <ErrorMessage>Error occured, try again.</ErrorMessage>}
-        {message && <ServerMessage message={message} />}
+        <div>
+          <ErrorMessage
+            networkError={error}
+            message={message}
+          />
+        </div>
         <Button
           label={`${roomType ? 'Edit' : 'Add'} Room Type`}
           type='submit'

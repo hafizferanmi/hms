@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import R from 'ramda'
+import MongooseDelete from 'mongoose-delete'
 
 import { STAFF_ROLES, STAFF_STATUS } from '../constants/staff'
 
@@ -30,8 +31,14 @@ const StaffSchema = new Schema({
     type: String,
     enum: R.values(STAFF_STATUS)
   },
+  resetPasswordToken: String,
+  resetPasswordTokenExpires: Number,
   createdBy: { type: Schema.Types.ObjectId },
   updatedBy: { type: Schema.Types.ObjectId }
-}, { timestamps: true })
+}, {
+  timestamps: true
+})
+
+StaffSchema.plugin(MongooseDelete, { deletedBy: true, deletedAt: true })
 
 export default mongoose.model('staff', StaffSchema)

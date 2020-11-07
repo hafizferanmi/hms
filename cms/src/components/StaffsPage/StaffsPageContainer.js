@@ -1,21 +1,22 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import notification from 'cogo-toast'
 import Loading from '../misc/Loading'
 import StaffsPage from './StaffsPage'
 import useAsyncFn from '../../hooks/useAsyncFn'
+import useNotify from '../../hooks/useNotify'
+import useDataProvider from '../../hooks/useDataProvider'
 import {
-  deleteStaff as deleteStaffAPI
+  deleteStaff as deleteStaffAPI,
+  disableStaff as disableStaffAPI
 } from '../../helpers/api'
-import { notify } from '../../helpers/notification'
 import {
   fetchStaffs,
+  updateStaffDetails as updateStaffAction,
   deleteStaff as deleteStaffAction
 } from '../../redux/actions/staff'
 
-export const StaffPageAPIMethods = React.createContext(null)
-
 const StaffsPageContainer = () => {
+  const { Provider } = useDataProvider()
   const dispatch = useDispatch()
   const reduxStaff = useSelector(state => state.staffs)
   const { loading, error, data: staffs } = reduxStaff
@@ -25,43 +26,39 @@ const StaffsPageContainer = () => {
     // eslint-disable-next-line
   }, [])
 
-  const {
-    error: deleteStaffServerError,
-    loading: deleteStaffProcessing,
-    response: deleteStaffResponse,
-    executeFn: deleteStaff
-  } = useAsyncFn(deleteStaffAPI)
+  const deleteAsyncFn = useAsyncFn(deleteStaffAPI)
+  const disableStaffAsynFn = useAsyncFn(disableStaffAPI)
 
   const handleDeleteStaff = (staffId) => {
-    deleteStaff(staffId)
+    deleteAsyncFn.executeFn(staffId)
   }
 
-  const deleteStaffProps = {
-    deleteStaffServerError,
-    deleteStaffResponse,
-    deleteStaffProcessing,
-    handleDeleteStaff
+  const [selectedStaff, setSelectedStaff] = React.useState(null)
+  const handleDisableStaff = (staff) => {
+    const staffId = staff._id
+    setSelectedStaff(staff)
+    disableStaffAsynFn.executeFn(staffId, { disabled: !staff.disabled })
   }
 
-  useEffect(() => {
-    if (deleteStaffResponse && deleteStaffResponse.success) {
-      dispatch(deleteStaffAction(deleteStaffResponse.result))
-      notification.success(...notify('Staff successfully deleted.'))
-    } else if (deleteStaffResponse && !deleteStaffResponse.success) {
-      notification.error(...notify(deleteStaffResponse.message))
-    }
-    // eslint-disable-next-line
-  }, [deleteStaffResponse])
+  const providerValues = {
+    handleDeleteStaff,
+    handleDisableStaff
+  }
+
+  const disableMessage = selectedStaff && selectedStaff.disabled ? 'Staff enabled successfully' : 'Staff disabled successfully'
+
+  useNotify({ message: 'Staff deleted successfully', response: deleteAsyncFn.response, action: deleteStaffAction })
+  useNotify({ message: disableMessage, response: disableStaffAsynFn.response, action: updateStaffAction })
 
   if (loading) return <Loading />
   if (error) return 'Error occured, we are on this issue.'
 
   return (
-    <StaffPageAPIMethods.Provider value={deleteStaffProps}>
+    <Provider value={providerValues}>
       <StaffsPage
         staffs={staffs}
       />
-    </StaffPageAPIMethods.Provider>
+    </Provider>
   )
 }
 
