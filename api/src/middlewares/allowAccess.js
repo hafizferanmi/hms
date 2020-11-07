@@ -8,7 +8,7 @@ const { GENERAL_MANAGER, OWNER } = STAFF_ROLES
 const management = [GENERAL_MANAGER, OWNER]
 
 const allow = (roles = []) => {
-  debug('allowAccess')
+  // debug('allowAccess')
   return (req, res, next) => {
     const currentStaffRole = req.staff.role
     debug(currentStaffRole)
@@ -21,7 +21,6 @@ const allow = (roles = []) => {
         next()
       }
     }
-
   }
 }
 

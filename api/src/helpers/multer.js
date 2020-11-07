@@ -7,12 +7,15 @@ export const storage = multer.diskStorage({
   },
 
   filename: (req, file, cb) => {
+    console.log('filename', file.originalname)
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
   }
 })
 
 export const imageFilter = (req, file, cb) => {
-  if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+  const imgFileTypes = ['image/jpeg', 'image/png']
+  if (!imgFileTypes.includes(file.mimetype)) {
+    console.log('Got here')
     req.fileValidationError = 'Only image files are allowed!'
     return cb(new Error('Only image files are allowed!'), false)
   }

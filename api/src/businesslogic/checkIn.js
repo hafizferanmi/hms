@@ -5,7 +5,7 @@ import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
 import { ROOM_STATUS } from '../constants/room'
 
-const debug = Debug('API:businessLogin/checkIn.js')
+const debug = Debug('API:businessLogic/checkIn.js')
 
 const { CheckInSchema } = ValidationSchemas
 const { success, failed } = helpers.response

@@ -40,7 +40,7 @@ export const staffLogin = async (req, res) => {
 }
 
 export const adminLogin = async (req, res) => {
-  debug('adminLogin')
+  debug('adminLogin()')
   const { email, password } = req.body
   if (!email || !password) {
     return res.json(failed('Fill form properly to proceed'))
@@ -68,7 +68,7 @@ export const adminLogin = async (req, res) => {
 }
 
 export const changeStaffPassword = async (req, res) => {
-  debug('changeStaffPasswod')
+  debug('changeStaffPassword()')
   const staffId = req.staff._id
 
   const { oldPassword, newPassword, confirmPassword } = req.body
@@ -89,7 +89,7 @@ export const changeStaffPassword = async (req, res) => {
 }
 
 export const recoverStaffPassword = async (req, res) => {
-  debug('recoverStaffPassword')
+  debug('recoverStaffPassword()')
   const { email } = req.body
   if (!email) res.json(failed('Your registered email has to be provided'))
 
@@ -112,7 +112,7 @@ export const recoverStaffPassword = async (req, res) => {
 }
 
 export const resetPassword = async (req, res) => {
-  debug('resetPassword')
+  debug('resetPassword()')
   // extract token from url, send new password and confirm password to the server, store the new password
   const { token, email, password, confirmPassword } = req.body
 
