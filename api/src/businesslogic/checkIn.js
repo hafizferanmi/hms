@@ -270,6 +270,7 @@ export const deleteCheckIn = async (req, res) => {
   debug('deleteCheckIn()')
   const companyId = req.staff.companyId
   const checkInId = req.params.checkInId
+  const staffId = req.staff._id
 
   let checkIn
   try {
@@ -282,7 +283,7 @@ export const deleteCheckIn = async (req, res) => {
   if (checkIn.checkedOut) return res.json(failed('Cannot delete. Already checked out'))
 
   try {
-    const deletedCheckIn = await CheckIn.findOneAndDelete({ _id: checkInId, companyId })
+    const deletedCheckIn = await checkIn.delete(staffId)
     return res.json(success(deletedCheckIn))
   } catch (e) {
     return res.json(failed('Error occured. Could not delete checkIn'))

@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import MongooseDelete from 'mongoose-delete'
 import { PAYMENT_METHOD } from '../constants/misc'
 import R from 'ramda'
 
@@ -94,5 +95,7 @@ const schema = new Schema({
 }, {
   timestamps: true
 })
+
+schema.plugin(MongooseDelete, { deletedBy: true, deletedAt: true })
 
 export default mongoose.model('checkIn', schema)

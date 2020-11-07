@@ -6,6 +6,7 @@ import CheckInSchema from './checkInSchema'
 import HallSchema from './hallSchema'
 import HallBookingSchema from './hallBookingSchema'
 import GuestExpensesSchema from './guestExpensesSchema'
+import SettingsSchema from './settingSchema'
 
 export default {
   CompanySchema,
@@ -15,5 +16,6 @@ export default {
   CheckInSchema,
   HallSchema,
   HallBookingSchema,
-  GuestExpensesSchema
+  GuestExpensesSchema,
+  SettingsSchema
 }

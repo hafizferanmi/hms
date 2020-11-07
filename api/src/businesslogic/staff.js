@@ -144,23 +144,16 @@ export const getStaff = async (req, res) => {
 
 export const deleteStaff = async (req, res) => {
   debug('deleteStaff()')
-  const currentCompanyId = req.staff.companyId
-  const staffId = req.params.staffId
-  debug(`staffId - ${staffId}`)
-
-  let staff
-  try {
-    staff = await Staff.findOne({ _id: staffId, companyId: currentCompanyId })
-    if (!staff) {
-      return res.json(failed('Unauthorized, staff does not exist.'))
-    }
-  } catch (e) {
-    return res.json(failed('Error Occured. Could not find staff.'))
-  }
+  const companyId = req.staff.companyId
+  const staffToDelete = req.params.staffId
+  const staffDeletingId = req.staff._id
 
   try {
-    const deletedStaff = await Staff.findOneAndDelete({ _id: staffId })
-    return res.json(success(deletedStaff))
+    let staff = await Staff.findOne({ _id: staffToDelete, companyId })
+    if (!staff) return res.status(400).json(failed('Unauthorized, staff does not exist.'))
+
+    staff = await staff.delete(staffDeletingId)
+    return res.json(success(staff))
   } catch (e) {
     return res.json(failed('Error occured. Could not delete staff.'))
   }

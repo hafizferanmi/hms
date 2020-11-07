@@ -105,7 +105,7 @@ export const getExpensesByCheckIn = async (req, res) => {
   const checkInId = req.params.checkInId
 
   try {
-    const expenses = GuestExpenses.find({ checkInId, companyId })
+    const expenses = await GuestExpenses.find({ checkInId, companyId })
     return res.json(success(expenses))
   } catch (e) {
     return res.json(failed('Error occured. Could not get expenses'))
@@ -118,7 +118,7 @@ export const getSingleExpense = async (req, res) => {
   const expenseId = req.params.expenseId
 
   try {
-    const expense = GuestExpenses.find({ _id: expenseId, companyId })
+    const expense = await GuestExpenses.find({ _id: expenseId, companyId })
     return res.json(success(expense))
   } catch (e) {
     return res.json(failed('Error occured. Could not get expense.'))
@@ -129,9 +129,12 @@ export const deleteExpense = async (req, res) => {
   debug('deleteExpense()')
   const companyId = req.staff.companyId
   const expenseId = req.params.expenseId
+  const staffId = req.staff._id
 
   try {
-    const expense = GuestExpenses.findOneAndDelete({ _id: expenseId, companyId })
+    let expense = await GuestExpenses.findOne({ _id: expenseId, companyId })
+    if (!expense) return res.json(failed('Expense not found.'))
+    expense = GuestExpenses.delete(staffId)
     return res.json(success(expense))
   } catch (e) {
     return res.json(failed('Error occured. Could not get expense.'))

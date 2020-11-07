@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import MongooseDelete from 'mongoose-delete'
 
 const schema = new Schema({
   name: {
@@ -40,5 +41,7 @@ const schema = new Schema({
 }, {
   timestamps: true
 })
+
+schema.plugin(MongooseDelete, { deletedBy: true, deletedAt: true })
 
 export default mongoose.model('company', schema)

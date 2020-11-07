@@ -60,14 +60,14 @@ export const addBooking = async (req, res) => {
 
   try {
     let booking = new Booking(bookingDetails)
-    booking = booking.save()
+    booking = await booking.save()
     return res.json(success(booking))
   } catch (e) {
     return res.json(failed('Error occured. Try again soon'))
   }
 }
 
-export const updateBooking = (req, res) => {
+export const updateBooking = async (req, res) => {
   debug('updateBooking()')
   const companyId = req.staff.companyId
   const currentStaffId = req.staff._id
@@ -115,45 +115,48 @@ export const updateBooking = (req, res) => {
   }
 
   try {
-    const booking = Booking.findOneAndUpdate({ _id: bookingId, companyId }, { bookingDetails }, { new: true })
+    const booking = await Booking.findOneAndUpdate({ _id: bookingId, companyId }, { bookingDetails }, { new: true })
     return res.json(success(booking))
   } catch (e) {
     return res.json(failed('Error occured. Try again soon'))
   }
 }
 
-export const getBooking = (req, res) => {
+export const getBooking = async (req, res) => {
   debug('getBooking()')
   const companyId = req.staff.companyId
   const bookingId = req.params.bookingId
 
   try {
-    const booking = Booking.findOne({ _id: bookingId, companyId })
+    const booking = await Booking.findOne({ _id: bookingId, companyId })
     return res.json(success(booking))
   } catch (e) {
     return res.json(failed('Error occured. Try again.'))
   }
 }
 
-export const getBookings = (req, res) => {
+export const getBookings = async (req, res) => {
   debug('getBookings()')
   const companyId = req.staff.companyId
 
   try {
-    const bookings = Booking.findOne({ companyId })
+    const bookings = await Booking.findOne({ companyId })
     return res.json(success(bookings))
   } catch (e) {
     return res.json(failed('Error occured. Try again.'))
   }
 }
 
-export const deleteBooking = (req, res) => {
+export const deleteBooking = async (req, res) => {
   debug('deleteBooking()')
   const companyId = req.staff.companyId
   const bookingId = req.params.bookingId
+  const staffId = req.staff._id
 
   try {
-    const booking = Booking.findOneAndDelete({ _id: bookingId, companyId })
+    let booking = await Booking.findOne({ _id: bookingId, companyId })
+    if (!booking) return res.status(400).json(failed('Not found'))
+    booking = await booking.delete(staffId)
     return res.json(success(booking))
   } catch (e) {
     return res.json(failed('Error occured. Try again.'))
