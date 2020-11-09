@@ -5,6 +5,11 @@ export const buildSelectOptions = (titles, labels) => {
   return options
 }
 
+export const buildBooleanOptions = () => ([
+  { label: 'Yes', value: true },
+  { label: 'No', value: false }
+])
+
 export const getInitials = (name = '') =>
   name.replace(/\s+/, ' ')
     .split(' ')

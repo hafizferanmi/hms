@@ -1,5 +1,5 @@
 {
-  "name": "HMS",
+  "name": "hms",
   "version": "0.0.1",
   "description": "Hotel Management systems API",
   "main": "app.js",
@@ -7,7 +7,7 @@
     "babel-node": "babel-node",
     "dev": "cross-env DEBUG=API:* BABEL_DISABLE_CACHE=1 nodemon --exec npm run babel-node -- ./src/app.js",
     "build": "NODE_ENV=production babel src -d dist",
-    "start": "NODE_ENV=production node dist/index.js",
+    "start": "NODE_ENV=production node dist/app.js",
     "mongo:start": "docker-compose up -d mongodb",
     "mongo:stop": "docker-compose stop mongodb",
     "lint:js": "standard \"./src/**/*.js\""
@@ -24,9 +24,11 @@
     "express": "^4.17.1",
     "joi": "^17.2.1",
     "jsonwebtoken": "^8.5.1",
+    "mailgun-js": "^0.22.0",
     "mongoose": "^5.9.20",
     "mongoose-delete": "^0.5.2",
     "multer": "^1.4.2",
+    "nodemailer": "^6.4.15",
     "nodemon": "^2.0.4",
     "ramda": "^0.27.0"
   },

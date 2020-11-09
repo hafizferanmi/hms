@@ -25,7 +25,7 @@ thead tr th {
   padding: 15px 0px;
   font-weight: normal;
   color: #8e95a9;
-
+  text-align: left;
 }
 
 tbody {
@@ -45,26 +45,21 @@ tbody {
     }
 
     td {
-      padding: 10px 0;
+      padding: 12px 0;
       margin: 30px;
+      text-align: left;
 
       :first-of-type {
         padding-left: 10px;
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
       }
 
       :last-of-type {
         padding-right: 5px;
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
-        width: 80px;
 
         .icon-wrapper {
-          display: none;
-
-          svg:first-child {
-            margin-right: 10px;
+          svg {
+            margin-right: 5px;
+            display: none;
 
             &::after {
               content: 'ade';
@@ -83,7 +78,9 @@ tbody {
       background-color: #f2f6ff;
 
       td .icon-wrapper {
-        display: block;
+        svg {
+          display: inline;
+        }
       } 
     }
   }

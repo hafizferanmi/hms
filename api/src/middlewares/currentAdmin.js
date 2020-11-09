@@ -5,10 +5,10 @@ import Admin from '../models/admin'
 const { verifyAuthToken, getTokenFromHeader } = helpers.jwt
 const { failed } = helpers.response
 
-const debug = Debug('API: Middleware')
+const debug = Debug('API:middlewares/currentAdmin.js')
 
 const currentAdmin = async (req, res, next) => {
-  debug('Current Admin')
+  debug('currentAdmin()')
   const authToken = req.get('Authorization')
   if (!authToken) {
     return res.json(failed('Unauthorized'))

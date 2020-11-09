@@ -14,7 +14,7 @@ const upload = multer({ storage, fileFilter: imageFilter }).single('logo')
 
 export const updateCompanyInfo = async (req, res) => {
   debug('updateCompanyInfo()')
-  const companyId = req.staff.company
+  const companyId = req.staff.companyId
   const staffId = req.staff._id
 
   const { errorMsg, value } = validateRequestBody(RoomSchema, req.body)
@@ -41,7 +41,7 @@ export const uploadCompanyLogo = (req, res) => {
   upload(req, res, async (err) => {
     const errorMsg = validateFileUpload(req, err)
     if (errorMsg === 'ERROR_OCCURED') return res.json(failed('Slight issue with the logo upload. Try again'))
-    if (errorMsg === 'NO_FILE_UPLOADED') return res.json(failed('You need to upload your logo image.'))
+    if (errorMsg === 'NO_FILE_UPLOADED') return res.json(failed('You need to upload your company logo image.'))
     if (errorMsg) return res.json(failed(errorMsg))
     const logo = req.file && req.file.path
 
