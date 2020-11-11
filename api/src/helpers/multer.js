@@ -20,6 +20,15 @@ export const imageFilter = (req, file, cb) => {
   cb(null, true)
 }
 
+export const csvFilter = (req, file, cb) => {
+  const csvFileTypes = ['text/csv']
+  if (!csvFileTypes.includes(file.mimetype)) {
+    req.fileValidationError = 'Only CSV files are allowed!'
+    return cb(new Error('Only CSV files are allowed!'), false)
+  }
+  cb(null, true)
+}
+
 export const validateFileUpload = (req, err) => {
   let errorMsg
   if (req.fileValidationError) {

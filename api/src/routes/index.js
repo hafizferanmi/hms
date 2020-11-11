@@ -7,6 +7,7 @@ import checkInroute from './checkIn'
 import hallsRoute from './hall'
 import hallBookingRoute from './hallBooking'
 import settingsRoute from './settings'
+import bulkUploadRoute from './bulkUpload'
 
 export default {
   adminRoutes,
@@ -17,5 +18,6 @@ export default {
   checkInroute,
   hallsRoute,
   hallBookingRoute,
-  settingsRoute
+  settingsRoute,
+  bulkUploadRoute
 }

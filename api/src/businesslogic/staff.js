@@ -13,7 +13,7 @@ const { failed, success } = helpers.response
 const { validateRequestBody } = helpers.misc
 const { StaffSchema } = ValidationSchemas
 
-const upload = multer({ storage, fileFilter: imageFilter }).single('logo')
+const upload = multer({ storage, fileFilter: imageFilter }).single('dp')
 
 const STAFF_DEFAULT_PASSWORD = '@password123'
 

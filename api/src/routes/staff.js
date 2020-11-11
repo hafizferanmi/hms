@@ -7,7 +7,8 @@ import {
   disableStaff,
   deleteStaff,
   addStaff,
-  currentStaff as currentLoggedInStaff
+  currentStaff as currentLoggedInStaff,
+  updateDisplayPicture
 } from '../businesslogic/staff'
 import currentStaff from '../middlewares/currentStaff'
 import allow from '../middlewares/allowAccess'
@@ -25,5 +26,6 @@ router.put('/update/:staffId', currentStaff, allow(), updateStaff)
 router.put('/disable/:staffId', currentStaff, allow(), disableStaff)
 router.delete('/delete/:staffId', currentStaff, allow(), deleteStaff)
 router.post('/add', currentStaff, allow(), addStaff)
+router.post('/upload-dp', currentStaff, allow(), updateDisplayPicture)
 
 export default router
