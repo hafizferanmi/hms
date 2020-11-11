@@ -1,86 +1,50 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import MaterialTable from 'material-table'
+import { Box } from '@material-ui/core'
+import CheckInRoomCard from './CheckInRoomCard'
+import CheckInDesc from './CheckInDesc'
 
 const useStyles = makeStyles({
-  tableWrapper: {
+  pageWrapper: {
     maxWidth: '100%',
-    marginTop: 20,
     boxShadow: 'none',
-    padding: 20,
-    background: 'white'
+    background: 'white',
+    display: 'flex',
+    height: '100vh',
+    overflow: 'auto'
+  },
+  checkInCardsContainer: {
+    width: '30%',
+    borderRight: '1px solid red',
+    padding: 10
+  },
+  checkInDescContainer: {
+    width: '100%',
+    padding: 10
   }
 })
 
-const tableStyle = {
-  boxShadow: 'none'
-}
-
-const columns = [
-  { title: 'Name', field: 'name', defaultSort: 'asc' },
-  { title: 'Room', field: 'room' },
-  { title: 'Arrival', field: 'dateOfArrival', type: 'date' },
-  { title: 'Departure', field: 'dateOfDeparture', type: 'date' }
-]
-
 const CheckInTable = ({ checkIns }) => {
   const classes = useStyles()
+  const [selectedCheckIn, setSelectedCheckIn] = React.useState()
+  const handleSelectCheckIn = (checkIn) => setSelectedCheckIn(checkIn)
   return (
-    <div className={classes.tableWrapper}>
-      <MaterialTable
-        columns={columns}
-        data={checkIns}
-        style={tableStyle}
-        title='CheckIns'
-        actions={[
-          {
-            icon: 'delete',
-            tooltip: 'Delete User',
-            iconProps: {
-              color: 'primary',
-              style: {},
-              fontSize: 'small'
-            },
-            onClick: (event, rowData) => {
-              console.log({ event })
-              console.log({ rowData })
-              window.alert('Screaming')
-            }
-          }
-        ]}
-        detailPanel={rowData => {
-          return (
-            <div
-              style={{
-                fontSize: 100,
-                textAlign: 'center',
-                color: 'white',
-                backgroundColor: '#FDD835'
-              }}
-            >
-              {rowData.dateOfArrival}
-            </div>
-          )
-        }}
-        options={{
-          toolbar: true,
-          paging: false,
-          actionsColumnIndex: -1,
-          selection: false,
-          exportButton: true,
-          exportAllData: true,
-          search: true,
-          searchFieldAlignment: 'left',
-          showTitle: false,
-          toolbarButtonAlignment: 'right',
-          sorting: true,
-          showSelectAllCheckbox: false,
-          showTextRowsSelected: false,
-          searchFieldVariant: 'outlined',
-          columnsButton: true,
-          thirdSortClick: false
-        }}
-      />
+    <div className={classes.pageWrapper}>
+      <Box className={classes.checkInCardsContainer}>
+        {
+          checkIns.map(checkIn => (
+            <CheckInRoomCard
+              key={checkIn.createdAt}
+              handleSelectCheckIn={handleSelectCheckIn}
+              checkIn={checkIn}
+            />
+          ))
+        }
+      </Box>
+      <Box className={classes.checkInDescContainer}>
+        {selectedCheckIn && <CheckInDesc checkIn={selectedCheckIn} />}
+        {!selectedCheckIn && <div>There is no checkIn selected yet.</div>}
+      </Box>
     </div>
   )
 }

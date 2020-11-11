@@ -1,6 +1,8 @@
 import Debug from 'debug'
+import multer from 'multer'
 import Staff from '../models/staff'
 import helpers from '../helpers'
+import { storage, imageFilter, validateFileUpload } from '../helpers/multer'
 import ValidationSchemas from '../ValidationSchemas'
 
 const debug = Debug('API:businesslogic/staff.js')
@@ -10,6 +12,8 @@ const { normalizePhoneNumber } = helpers.user
 const { failed, success } = helpers.response
 const { validateRequestBody } = helpers.misc
 const { StaffSchema } = ValidationSchemas
+
+const upload = multer({ storage, fileFilter: imageFilter }).single('logo')
 
 const STAFF_DEFAULT_PASSWORD = '@password123'
 
@@ -162,4 +166,25 @@ export const deleteStaff = async (req, res) => {
 export const currentStaff = async (req, res) => {
   debug('currentStaff()')
   return res.json(success(req.staff))
+}
+
+export const updateDisplayPicture = (req, res) => {
+  debug('updateDisplayPicture()')
+  const companyId = req.staff.companyId
+  const staffId = req.staff._id
+
+  upload(req, res, async (err) => {
+    const errorMsg = validateFileUpload(req, err)
+    if (errorMsg === 'ERROR_OCCURED') return res.json(failed('Slight issue with the display picture upload. Try again'))
+    if (errorMsg === 'NO_FILE_UPLOADED') return res.json(failed('You need to upload your image to proceed.'))
+    if (errorMsg) return res.json(failed(errorMsg))
+    const displayImage = req.file && req.file.path
+
+    try {
+      const company = await Staff.findOneAndUpdate({ _id: staffId, companyId }, { displayImage }, { new: true })
+      return res.json(success(company))
+    } catch (e) {
+      return res.json(failed('Error occured, try again.'))
+    }
+  })
 }

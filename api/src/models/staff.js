@@ -23,6 +23,7 @@ const StaffSchema = new Schema({
     required: true,
     enum: R.values(STAFF_ROLES)
   },
+  displayImage: String,
   disabled: {
     type: Boolean,
     default: false
