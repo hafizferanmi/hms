@@ -4,7 +4,6 @@ import Debug from 'debug'
 
 const debug = Debug('API:onAppStart/createDefaultAdmin.js')
 
-debug('Checking if need to create a default admin user')
 const { hashPassword } = helpers.password
 
 const DEFAULT_ADMIN_EMAIL = 'admin@hms.ng'
@@ -12,6 +11,7 @@ const DEFAULT_ADMIN_PASSWORD = 'adm1n'
 const DEFAULT_ADMIN_NAME = 'Admin'
 
 const createDefaultAdmin = async () => {
+  debug('createDefaultAdmin()')
   let isDefaultAdminCreated
   try {
     isDefaultAdminCreated = await Admin.findOne({ email: DEFAULT_ADMIN_EMAIL })
@@ -19,12 +19,8 @@ const createDefaultAdmin = async () => {
     debug('Error occured trying to get default admin')
   }
 
-  if (isDefaultAdminCreated) {
-    debug('Default admin already exists')
-    return
-  }
+  if (isDefaultAdminCreated) return true
 
-  debug('Creating default admin user')
   const password = await hashPassword(DEFAULT_ADMIN_PASSWORD)
   const adminData = {
     email: DEFAULT_ADMIN_EMAIL,
@@ -36,7 +32,7 @@ const createDefaultAdmin = async () => {
     const admin = await new Admin(adminData)
     await admin.save()
   } catch (e) {
-    console.log('Error Occured: ' + e)
+    debug('Error Occured: ' + e)
   }
 }
 

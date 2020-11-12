@@ -1,7 +1,9 @@
 import createDefaultAdmin from './createDefaultAdmin'
-import db from './db'
+import connectDB from './db'
+import runCronJobs from './cron'
 
 export default () => {
-  db()
+  connectDB()
   createDefaultAdmin()
+  runCronJobs()
 }
