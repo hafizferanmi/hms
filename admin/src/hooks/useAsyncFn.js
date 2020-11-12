@@ -10,7 +10,7 @@ const useAsyncFn = (asyncFn) => {
   const executeFn = (...args) => {
     return asyncFn(...args)
       .then(data => {
-        setState({ ...state, loading: false, data })
+        setState({ ...state, loading: false, data: data.result })
         return data
       })
       .catch(error => {

@@ -38,8 +38,8 @@ const Loginform = props => {
   const onSubmit = data => {
     adminLogin(data)
       .then((res) => {
-        if (res && res.token) {
-          setAuthToken(res.token)
+        if (res && res.result) {
+          setAuthToken(res.result.token)
           navigateTo('/dashboard')
         } else {
           setError('Invalid login credentials.')

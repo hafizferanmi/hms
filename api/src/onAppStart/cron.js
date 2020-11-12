@@ -1,12 +1,11 @@
 import cron from 'node-cron'
 import Debug from 'debug'
-
-import sendFreeTrialOverMail from '../cronjobs/sendFreeTrialOverMail'
+import sendHappyNewMonthMessages from '../cronjobs/sendHappyNewMonthMessages'
 
 const debug = Debug('API:onAppStart/cron.js')
 
 const cronjobs = [
-  sendFreeTrialOverMail
+  sendHappyNewMonthMessages
 ]
 
 // TODO: check if there is any message to be sent to people lodging
@@ -15,6 +14,8 @@ const cronjobs = [
 // check if events coming today
 // remind hall owners about events for the day.
 // remind attendees about todays event.
+
+// https://crontab.guru
 
 const runCronJobs = () => {
   debug('runCronJobs()')

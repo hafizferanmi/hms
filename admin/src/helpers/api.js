@@ -15,12 +15,12 @@ const request = axios.create({
 
 export const fetchData = async (path) => {
   const res = await request.get(path)
-  return res.data.data
+  return res.data
 }
 
 const sendData = async (path, body = {}) => {
   const res = await request.post(path, body)
-  return res.data.data
+  return res.data
 }
 
 export const deleteResource = async (path, body) => {

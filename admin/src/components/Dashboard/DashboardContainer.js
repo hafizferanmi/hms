@@ -15,6 +15,8 @@ const DashboardContainer = () => {
     executeFn: getCompanies
   } = useAsyncFn(fetchCompanies)
 
+  console.log({ companies })
+
   useEffect(() => {
     setCompanies({ ...companies, loading: true })
     getCompanies()
