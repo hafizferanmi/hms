@@ -43,7 +43,7 @@ export const uploadCompanyLogo = (req, res) => {
     if (errorMsg === 'ERROR_OCCURED') return res.json(failed('Slight issue with the logo upload. Try again'))
     if (errorMsg === 'NO_FILE_UPLOADED') return res.json(failed('You need to upload your company logo image.'))
     if (errorMsg) return res.json(failed(errorMsg))
-    const logo = req.file && req.file.path
+    const logo = req.file && req.file.filename
 
     try {
       const company = await Company.findOneAndUpdate({ _id: companyId }, { logo }, { new: true })

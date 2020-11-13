@@ -1,5 +1,6 @@
 import Debug from 'debug'
 import multer from 'multer'
+import fs from 'fs'
 import helpers from '../helpers'
 import BulkUpload from '../models/bulkUpload'
 import { storage, csvFilter, validateFileUpload } from '../helpers/multer'
@@ -22,7 +23,7 @@ export const uploadBulkPhoneCSV = async (req, res) => {
     if (errorMsg === 'ERROR_OCCURED') return res.json(failed('Slight issue with the phone file upload. Try again'))
     if (errorMsg === 'NO_FILE_UPLOADED') return res.json(failed('You need to upload a CSV file containing phone numbers to proceed.'))
     if (errorMsg) return res.json(failed(errorMsg))
-    const filename = req.file && req.file.path
+    const filename = req.file && req.file.filename
 
     // Todo: open file to check if the file uploaded is a valid csv file and it contains validated phone numbers
     // Todo: count numbers of email addressess uploaded in the file.
@@ -54,7 +55,7 @@ export const uploadBulkEmailCSV = async (req, res) => {
     if (errorMsg === 'ERROR_OCCURED') return res.json(failed('Slight issue with the emails file upload. Try again'))
     if (errorMsg === 'NO_FILE_UPLOADED') return res.json(failed('You need to upload a CSV file containing emails to proceed.'))
     if (errorMsg) return res.json(failed(errorMsg))
-    const filename = req.file && req.file.path
+    const filename = req.file && req.file.filename
 
     // Todo: open file to check if the file uploaded is a valid csv file and it contains validated EMAIL addressess.
     // Todo: count numbers of email addressess uploaded in the file.
@@ -114,11 +115,10 @@ export const deleteBulkFileUpload = async (req, res) => {
   const staffId = req.staff._id
   const fileId = req.params.fileId
 
-  // TODO: Delete the actual file from the server for later processing.
-
   try {
     let file = await BulkUpload.findOne({ _id: fileId, companyId })
     if (!file) return res.status(400).json(failed('Unauthorized, file does not exist.'))
+    fs.unlinkSync(file.filename) // removes file from server
 
     file = await file.delete(staffId)
     return res.json(success(file))

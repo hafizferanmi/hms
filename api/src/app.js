@@ -26,6 +26,7 @@ const {
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static('uploads'))
 
 app.use('/admin', adminRoutes)
 app.use('/company', companyRoutes)

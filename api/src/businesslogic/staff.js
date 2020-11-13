@@ -178,7 +178,7 @@ export const updateDisplayPicture = (req, res) => {
     if (errorMsg === 'ERROR_OCCURED') return res.json(failed('Slight issue with the display picture upload. Try again'))
     if (errorMsg === 'NO_FILE_UPLOADED') return res.json(failed('You need to upload your image to proceed.'))
     if (errorMsg) return res.json(failed(errorMsg))
-    const displayImage = req.file && req.file.path
+    const displayImage = req.file && req.file.filename
 
     try {
       const company = await Staff.findOneAndUpdate({ _id: staffId, companyId }, { displayImage }, { new: true })

@@ -7,15 +7,17 @@ import {
   getBulkFiles
 } from '../businesslogic/bulkFileUpload'
 
+import currentStaff from '../middlewares/currentStaff'
+
 const router = Router()
 
 router.get('/', (req, res) => {
   return res.json({ hi: 'Hi to Bulk upload' })
 })
-router.post('/uploadEmailCSV', uploadBulkEmailCSV)
-router.post('/uploadPhoneCSV', uploadBulkPhoneCSV)
-router.delete('/deleteUploadedFile/:fileId', deleteBulkFileUpload)
-router.get('/all', getBulkFiles)
-router.get('/:fileId', getBulkFile)
+router.post('/uploadEmailCSV', currentStaff, uploadBulkEmailCSV)
+router.post('/uploadPhoneCSV', currentStaff, uploadBulkPhoneCSV)
+router.delete('/delete/:fileId', currentStaff, deleteBulkFileUpload)
+router.get('/all', currentStaff, getBulkFiles)
+router.get('/:fileId', currentStaff, getBulkFile)
 
 export default router
