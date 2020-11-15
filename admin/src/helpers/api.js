@@ -1,6 +1,11 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:3001'
+let BASE_URL
+
+if (process.env.NODE_ENV === 'development') BASE_URL = 'http://localhost:3001'
+if (process.env.NODE_ENV === 'test') BASE_URL = 'http://.api.isuites.xyz'
+if (process.env.NODE_ENV === 'production') BASE_URL = 'http://api.isuites.xyz'
+
 const AUTH_TOKEN_KEY = '__token'
 
 export const saveAuthToken = token => window.localStorage.setItem(AUTH_TOKEN_KEY, token)
