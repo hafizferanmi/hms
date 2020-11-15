@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c8ad1f89.chunk.css",
+    "main.js": "/static/js/main.c58a2b2a.chunk.js",
+    "main.js.map": "/static/js/main.c58a2b2a.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.f65105ae.js",
+    "runtime-main.js.map": "/static/js/runtime-main.f65105ae.js.map",
+    "static/css/2.18fb2ca0.chunk.css": "/static/css/2.18fb2ca0.chunk.css",
+    "static/js/2.7deaad8a.chunk.js": "/static/js/2.7deaad8a.chunk.js",
+    "static/js/2.7deaad8a.chunk.js.map": "/static/js/2.7deaad8a.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.8c4a2f59bc8dde44904287ea31940b0b.js": "/precache-manifest.8c4a2f59bc8dde44904287ea31940b0b.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.18fb2ca0.chunk.css.map": "/static/css/2.18fb2ca0.chunk.css.map",
+    "static/css/main.c8ad1f89.chunk.css.map": "/static/css/main.c8ad1f89.chunk.css.map",
+    "static/js/2.7deaad8a.chunk.js.LICENSE.txt": "/static/js/2.7deaad8a.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/static/media/BRFirmaCW-Medium.638ff989.woff2",
+    "static/media/loginformbackground.jpg": "/static/media/loginformbackground.4556371f.jpg",
+    "static/media/raleway.woff2": "/static/media/raleway.94934930.woff2",
+    "static/media/restaurant.jpg": "/static/media/restaurant.b17e07da.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f65105ae.js",
+    "static/css/2.18fb2ca0.chunk.css",
+    "static/js/2.7deaad8a.chunk.js",
+    "static/css/main.c8ad1f89.chunk.css",
+    "static/js/main.c58a2b2a.chunk.js"
+  ]
+}
