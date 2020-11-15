@@ -15,7 +15,7 @@ const { FRONT_DESK_OFFICER } = STAFF_ROLES
 const allowedStaff = [FRONT_DESK_OFFICER]
 
 router.get('/', (req, res) => res.json({ hi: 'Hello, from hall bookings' }))
-router.post('/add', currentStaff, allow(), addBooking)
+router.post('/:hallId/add', currentStaff, allow(), addBooking)
 router.get('/all', currentStaff, allow(), getBookings)
 router.put('/update/:bookingId', currentStaff, allow(), updateBooking)
 router.delete('/delete/:bookingId', currentStaff, allow(), deleteBooking)

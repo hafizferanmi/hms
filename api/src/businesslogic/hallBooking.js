@@ -1,4 +1,5 @@
 import Debug from 'debug'
+import dayjs from 'dayjs'
 import Booking from '../models/hallBooking'
 import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
@@ -24,13 +25,38 @@ export const addBooking = async (req, res) => {
     organizerPhone,
     organizerEmail,
     organizerWebsite,
-    bookingFromDate,
-    bookingFromTime,
-    bookingToDate,
-    bookingToTime,
+    bookingStartDate,
+    bookingStartTime,
+    bookingEndDate,
+    bookingEndTime,
     paymentMethod,
     ammount
   } = value
+
+  const eventStartsAt = `${bookingStartDate}T${bookingStartTime}:00.000Z`
+  const eventEndsAt = `${bookingEndDate}T${bookingEndTime}:00.000Z`
+
+  if (dayjs(eventEndsAt).isBefore(dayjs(eventStartsAt))) {
+    return res.json(failed('Booking time cannot end before they are started.'))
+  }
+
+  if (dayjs(eventStartsAt).isBefore(dayjs(), 'minute') || dayjs(eventEndsAt).isBefore(dayjs(), 'minute')) {
+    return res.json(failed('You cannot create an event with start/end time less than now.'))
+  }
+
+  try {
+    const bookings = await Booking.find({ companyId, hall, to: { $gt: eventStartsAt } })
+    if (bookings.length) return res.json(failed('The hall is already booked for the time choosen.'))
+  } catch (e) {
+    return res.json(failed('Error occured, could not fetch existing events.'))
+  }
+
+  try {
+    const bookings = await Booking.find({ companyId, hall, from: { $gt: eventStartsAt } })
+    if (bookings.length) return res.json(failed('The hall is being booked for part of the time choosen'))
+  } catch (e) {
+    return res.json(failed('An error occured. We are on it at the moment'))
+  }
 
   const bookingDetails = {
     hall,
@@ -40,16 +66,8 @@ export const addBooking = async (req, res) => {
       email: organizerEmail,
       website: organizerWebsite
     },
-    booking: {
-      from: {
-        date: bookingFromDate,
-        time: bookingFromTime
-      },
-      to: {
-        date: bookingToDate,
-        time: bookingToTime
-      }
-    },
+    from: eventStartsAt,
+    to: eventEndsAt,
     payment: {
       ammount,
       method: paymentMethod
@@ -63,7 +81,7 @@ export const addBooking = async (req, res) => {
     booking = await booking.save()
     return res.json(success(booking))
   } catch (e) {
-    return res.json(failed('Error occured. Try again soon'))
+    return res.json(failed('Error occured. Try again soon!'))
   }
 }
 
@@ -139,8 +157,10 @@ export const getBookings = async (req, res) => {
   debug('getBookings()')
   const companyId = req.staff.companyId
 
+  // TODO: filter with different parameters
+
   try {
-    const bookings = await Booking.findOne({ companyId })
+    const bookings = await Booking.find({ companyId })
     return res.json(success(bookings))
   } catch (e) {
     return res.json(failed('Error occured. Try again.'))

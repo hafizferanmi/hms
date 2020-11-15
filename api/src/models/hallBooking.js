@@ -14,15 +14,13 @@ const schema = new Schema({
     email: String,
     website: String
   },
-  booking: {
-    from: {
-      date: Date,
-      time: String
-    },
-    to: {
-      date: Date,
-      time: String
-    }
+  from: {
+    type: Date,
+    required: true
+  },
+  to: {
+    type: Date,
+    required: true
   },
   payment: {
     ammount: {
