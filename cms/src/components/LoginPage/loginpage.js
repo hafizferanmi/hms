@@ -34,6 +34,7 @@ const useStyles = makeStyles({
     top: '150px',
     fontSize: '64px',
     fontWeight: 900,
+    userSelect: 'none',
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: 1.38,
@@ -42,7 +43,8 @@ const useStyles = makeStyles({
       opacity: '0.8'
     },
     '& p:last-of-type': {
-      opacity: '0.6'
+      opacity: '0.6',
+      fontSize: 60
     }
   },
   agreementTextWrapper: {

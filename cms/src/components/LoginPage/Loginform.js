@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
 import { makeStyles } from '@material-ui/styles'
-import { Person, RemoveRedEyeOutlined, Edit } from '@material-ui/icons'
+import { Person, Visibility, VisibilityOff, LockOutlined } from '@material-ui/icons'
 
 import ErrorMessage from '../misc/ErrorMessage'
 import LoginFormSchema from './LoginFormSchema'
@@ -25,6 +25,11 @@ const useStyles = makeStyles({
     fontWeight: 500,
     marginBottom: 20,
     color: '#0c2e67'
+  },
+  signInDesc: {
+    fontSize: 12,
+    textAlign: 'center',
+    color: 'black'
   },
   buttonWrapper: {
     display: 'flex',
@@ -105,6 +110,7 @@ const Loginform = ({ serverState, submitForm }) => {
   return (
     <form className={classes.loginFormWrapper} onSubmit={handleSubmit(submitForm)}>
       <p className={classes.signInText}>Sign in</p>
+      <span className={classes.signInDesc}>Enter your credentials to login into our beautiful app</span>
       <div>
         <div className={classes.iconInputWrapper}>
           <div className={classes.iconWrapper}><Person /></div>
@@ -112,11 +118,11 @@ const Loginform = ({ serverState, submitForm }) => {
         </div>
         <div style={{ position: 'relative' }}>
           <div className={classes.iconInputWrapper}>
-            <div className={classes.iconWrapper}><Edit /></div>
+            <div className={classes.iconWrapper}><LockOutlined /></div>
             <input className={classes.input} type={passwordVisible ? 'text' : 'password'} ref={register} name='password' placeholder='password' />
           </div>
           <div onClick={handleEyeClick} style={{ position: 'absolute', top: '7px', right: '10px', fontSize: '6px', color: '#e0e2e5', cursor: 'pointer' }}>
-            <RemoveRedEyeOutlined />
+            {passwordVisible ? <Visibility /> : <VisibilityOff />}
           </div>
         </div>
 
