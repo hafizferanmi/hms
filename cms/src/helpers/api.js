@@ -38,7 +38,7 @@ export const modifyResource = async (path, body) => {
 // AUTH API
 export const staffLogin = (body) => sendData('/staff/login', body)
 export const forgotPassword = (body) => sendData('/staff/recover-password', body)
-export const resetPassword = (body) => sendData('/staff/reset-passsword')
+export const resetPassword = (body) => sendData('/staff/reset-password', body)
 export const changePassword = (body) => sendData('/staff/change-password', body)
 
 // STAFF API

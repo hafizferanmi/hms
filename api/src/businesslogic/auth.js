@@ -94,7 +94,7 @@ export const recoverStaffPassword = async (req, res) => {
   if (!email) res.json(failed('Your registered email has to be provided'))
 
   try {
-    const staff = Staff.findOne({ email })
+    const staff = await Staff.findOne({ email })
     if (!staff) return res.json(failed('Invalid, user not found.'))
 
     const token = crypto.randomBytes(20).toString('hex')

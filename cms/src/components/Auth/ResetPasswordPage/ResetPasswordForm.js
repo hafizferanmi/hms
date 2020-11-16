@@ -4,10 +4,10 @@ import { yupResolver } from '@hookform/resolvers'
 import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
 import { Link } from '@reach/router'
-import { Person } from '@material-ui/icons'
+import { Person, Visibility, VisibilityOff, LockOutlined } from '@material-ui/icons'
 
 import ErrorMessage from '../../misc/ErrorMessage'
-import ForgotPasswordSchema from './ForgotPasswordSchema'
+import ResetPasswordSchema from './ResetPasswordSchema'
 
 const useStyles = makeStyles({
   loginFormWrapper: {
@@ -106,26 +106,53 @@ const useStyles = makeStyles({
   }
 })
 
-const ForgotPasswordForm = ({ serverState, submitForm }) => {
+const ResetPasswordForm = ({ serverState, submitForm }) => {
   const classes = useStyles()
   const { register, handleSubmit, errors, formState } = useForm({
-    resolver: yupResolver(ForgotPasswordSchema)
+    resolver: yupResolver(ResetPasswordSchema)
   })
   const { isSubmitting } = formState
   const { message, serverError } = serverState
 
+  const [passwordVisible, setPasswordVisibility] = React.useState(false)
+  const handleEyeClick = () => {
+    setPasswordVisibility(!passwordVisible)
+  }
+
   return (
     <form className={classes.loginFormWrapper} onSubmit={handleSubmit(submitForm)}>
-      <p className={classes.signInText}>Forgot password</p>
-      <span className={classes.signInDesc}>Enter your email address to continue</span>
+      <p className={classes.signInText}>Reset password</p>
+      <span className={classes.signInDesc}>Enter your your mail and new password to continue</span>
       <div>
         <div className={classes.iconInputWrapper}>
           <div className={classes.iconWrapper}><Person /></div>
           <input className={classes.input} type='email' ref={register} name='email' placeholder='email address' />
         </div>
 
+        <div style={{ position: 'relative' }}>
+          <div className={classes.iconInputWrapper}>
+            <div className={classes.iconWrapper}><LockOutlined /></div>
+            <input className={classes.input} type={passwordVisible ? 'text' : 'password'} ref={register} name='password' placeholder='new password' />
+          </div>
+          <div onClick={handleEyeClick} style={{ position: 'absolute', top: '7px', right: '10px', fontSize: '6px', color: '#e0e2e5', cursor: 'pointer' }}>
+            {passwordVisible ? <Visibility /> : <VisibilityOff />}
+          </div>
+        </div>
+
+        <div style={{ position: 'relative' }}>
+          <div className={classes.iconInputWrapper}>
+            <div className={classes.iconWrapper}><LockOutlined /></div>
+            <input className={classes.input} type={passwordVisible ? 'text' : 'password'} ref={register} name='confirmPassword' placeholder='confirm password' />
+          </div>
+          <div onClick={handleEyeClick} style={{ position: 'absolute', top: '7px', right: '10px', fontSize: '6px', color: '#e0e2e5', cursor: 'pointer' }}>
+            {passwordVisible ? <Visibility /> : <VisibilityOff />}
+          </div>
+        </div>
+
         <div className={classes.errorMessage}>
           {errors && <p className={classes.error}>{errors && errors.email && errors.email.message}</p>}
+          {errors && <p className={classes.error}>{errors && errors.password && errors.password.message}</p>}
+          {errors && <p className={classes.error}>{errors && errors.confirmPassword && errors.confirmPassword.message}</p>}
           <ErrorMessage
             networkError={serverError}
             message={message}
@@ -151,4 +178,4 @@ const ForgotPasswordForm = ({ serverState, submitForm }) => {
   )
 }
 
-export default ForgotPasswordForm
+export default ResetPasswordForm

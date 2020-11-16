@@ -4,6 +4,7 @@ import LoginPage from '../../Auth/LoginPage'
 import ForgotPasswordPage from '../../Auth/ForgotPasswordPage'
 import ResetPasswordPage from '../../Auth/ResetPasswordPage'
 import ForgotPasswordSuccess from '../../Auth/ForgotPasswordPage/ForgotPasswordSuccess'
+import ResetPasswordSuccess from '../../Auth/ResetPasswordPage/ResetPasswordSuccess'
 
 const NotFoundPage = () => {
   return (
@@ -19,7 +20,8 @@ const LoggedOutRoute = () => {
       <LoginPage path='/' />
       <ForgotPasswordPage path='/forgot-password' />
       <ForgotPasswordSuccess path='/forgot-password-success' />
-      <ResetPasswordPage path='/reset-password' />
+      <ResetPasswordPage path='/reset-password/:token' />
+      <ResetPasswordSuccess path='/reset-password-success' />
       <NotFoundPage default />
     </Router>
   )
