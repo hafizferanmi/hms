@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import { staffLogin } from '../businesslogic/auth'
 import {
   getAllStaffs,
   getStaff,
@@ -10,6 +9,12 @@ import {
   currentStaff as currentLoggedInStaff,
   updateDisplayPicture
 } from '../businesslogic/staff'
+import {
+  staffLogin,
+  resetPassword,
+  recoverStaffPassword,
+  changeStaffPassword
+} from '../businesslogic/auth'
 import currentStaff from '../middlewares/currentStaff'
 import allow from '../middlewares/allowAccess'
 
@@ -27,5 +32,8 @@ router.put('/disable/:staffId', currentStaff, allow(), disableStaff)
 router.delete('/delete/:staffId', currentStaff, allow(), deleteStaff)
 router.post('/add', currentStaff, allow(), addStaff)
 router.post('/upload-dp', currentStaff, allow(), updateDisplayPicture)
+router.post('/recover-password', recoverStaffPassword)
+router.post('/reset-password', resetPassword)
+router.post('/change-password', currentStaff, changeStaffPassword)
 
 export default router

@@ -2,10 +2,12 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
 import { makeStyles } from '@material-ui/styles'
-import { Person, Visibility, VisibilityOff, LockOutlined } from '@material-ui/icons'
+import Button from '@material-ui/core/Button'
+import { Link } from '@reach/router'
+import { Person } from '@material-ui/icons'
 
-import ErrorMessage from '../misc/ErrorMessage'
-import LoginFormSchema from './LoginFormSchema'
+import ErrorMessage from '../../misc/ErrorMessage'
+import ForgotPasswordSchema from './ForgotPasswordSchema'
 
 const useStyles = makeStyles({
   loginFormWrapper: {
@@ -24,7 +26,8 @@ const useStyles = makeStyles({
     fontSize: 30,
     fontWeight: 500,
     marginBottom: 20,
-    color: '#0c2e67'
+    color: '#0c2e67',
+    textTransform: 'uppercase'
   },
   signInDesc: {
     fontSize: 12,
@@ -38,17 +41,26 @@ const useStyles = makeStyles({
     marginTop: 20
   },
   forgotPasswordText: {
-    marginTop: 10
+    marginTop: 10,
+    '& a': {
+      color: '#e0e2e5'
+    },
+    '& a:hover': {
+      color: 'black'
+    }
   },
   button: {
     background: '#0066f5',
     borderRadius: 30,
     color: 'white',
-    padding: '15px 25px',
+    padding: '10px 20px',
     fontSize: 13,
     border: 0,
     outline: 0,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    '&:hover': {
+      background: '#0066f5'
+    }
   },
   newAccountWrapper: {
     marginTop: 30,
@@ -97,53 +109,39 @@ const useStyles = makeStyles({
 const Loginform = ({ serverState, submitForm }) => {
   const classes = useStyles()
   const { register, handleSubmit, errors, formState } = useForm({
-    resolver: yupResolver(LoginFormSchema)
+    resolver: yupResolver(ForgotPasswordSchema)
   })
   const { isSubmitting } = formState
   const { message, serverError } = serverState
 
-  const [passwordVisible, setPasswordVisibility] = React.useState(false)
-  const handleEyeClick = () => {
-    setPasswordVisibility(!passwordVisible)
-  }
-
   return (
     <form className={classes.loginFormWrapper} onSubmit={handleSubmit(submitForm)}>
-      <p className={classes.signInText}>Sign in</p>
-      <span className={classes.signInDesc}>Enter your credentials to login into our beautiful app</span>
+      <p className={classes.signInText}>Forgot password</p>
+      <span className={classes.signInDesc}>Enter your email address to continue</span>
       <div>
         <div className={classes.iconInputWrapper}>
           <div className={classes.iconWrapper}><Person /></div>
           <input className={classes.input} type='email' ref={register} name='email' placeholder='email address' />
         </div>
-        <div style={{ position: 'relative' }}>
-          <div className={classes.iconInputWrapper}>
-            <div className={classes.iconWrapper}><LockOutlined /></div>
-            <input className={classes.input} type={passwordVisible ? 'text' : 'password'} ref={register} name='password' placeholder='password' />
-          </div>
-          <div onClick={handleEyeClick} style={{ position: 'absolute', top: '7px', right: '10px', fontSize: '6px', color: '#e0e2e5', cursor: 'pointer' }}>
-            {passwordVisible ? <Visibility /> : <VisibilityOff />}
-          </div>
-        </div>
 
         <div className={classes.errorMessage}>
           {errors && <p className={classes.error}>{errors && errors.email && errors.email.message}</p>}
-          {errors && <p className={classes.error}>{errors && errors.password && errors.password.message}</p>}
           <ErrorMessage
             networkError={serverError}
             message={message}
           />
         </div>
         <div className={classes.buttonWrapper}>
-          <span className={classes.forgotPasswordText}>Forgot password ?</span>
-          <button
+          <span className={classes.forgotPasswordText}><Link to='/'> Want to login? </Link></span>
+          <Button
             className={classes.button}
-            label='Login'
+            label='Reset password'
             type='submit'
+            color='primary'
             disabled={isSubmitting}
           >
-            LOGIN
-          </button>
+            Reset password
+          </Button>
         </div>
         <div className={classes.newAccountWrapper}>
           <span>New user? Create an account</span>

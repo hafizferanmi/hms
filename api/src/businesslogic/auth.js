@@ -77,8 +77,8 @@ export const changeStaffPassword = async (req, res) => {
 
   try {
     const staff = await Staff.findById(staffId)
-    const isPasswordSame = await !isCorrectPassword(oldPassword, staff.password)
-    if (isPasswordSame) return res.json(failed('Incorrect old password.'))
+    const isPasswordSame = await isCorrectPassword(oldPassword, staff.password)
+    if (!isPasswordSame) return res.json(failed('Incorrect old password.'))
 
     const hashedPassword = await hashPassword(newPassword)
     await Staff.findOneAndUpdate({ _id: staffId }, { password: hashedPassword }, { new: true })

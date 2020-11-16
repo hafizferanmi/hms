@@ -3,7 +3,7 @@ import Loginform from './LoginFormContainer'
 import { makeStyles } from '@material-ui/styles'
 import { Typography } from '@material-ui/core'
 
-import loginformbackground from '../../assets/images/loginformbackground.jpg'
+import loginformbackground from '../../../assets/images/loginformbackground.jpg'
 
 const useStyles = makeStyles({
   loginPageWrapper: {
