@@ -1,11 +1,10 @@
-import config from 'config'
 import jwt from 'jsonwebtoken'
 
-const getJwtSecret = () => config.get('jwtSecret')
+const JWT_SECRET = 'HMSJWT'
 
-const generateAuthToken = id => jwt.sign({ id }, getJwtSecret())
+const generateAuthToken = id => jwt.sign({ id }, JWT_SECRET)
 
-const verifyAuthToken = token => jwt.verify(token, getJwtSecret())
+const verifyAuthToken = token => jwt.verify(token, JWT_SECRET)
 
 const getTokenFromHeader = header => header.replace('Bearer: ', '')
 

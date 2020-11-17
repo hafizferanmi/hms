@@ -1,12 +1,11 @@
 import mongoose from 'mongoose'
-import config from 'config'
 import Debug from 'debug'
 
 const debug = Debug('API:onAppStart/db.js')
 
 const dbSetup = () => {
   debug('dbSetup()')
-  const mongoURL = config.get('mongoURL')
+  const mongoURL = 'mongodb://localhost:27017/hms'
 
   if (process.env.NODE_ENV !== 'production') {
     mongoose.set('debug', true)

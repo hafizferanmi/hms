@@ -1,6 +1,5 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import config from 'config'
 import Debug from 'debug'
 import cors from 'cors'
 import onAppStart from './onAppStart'
@@ -9,7 +8,7 @@ import routes from './routes'
 onAppStart()
 const debug = Debug('API:app.js')
 const app = express()
-const port = config.get('port') || 3001
+const port = 3001
 const {
   adminRoutes,
   companyRoutes,
