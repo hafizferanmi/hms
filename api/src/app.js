@@ -9,7 +9,7 @@ import routes from './routes'
 onAppStart()
 const debug = Debug('API:app.js')
 const app = express()
-const port = config.get('port')
+const port = config.get('port') || 3001
 const {
   adminRoutes,
   companyRoutes,
@@ -42,5 +42,6 @@ app.use('/bulkUpload', bulkUploadRoute)
 app.get('/', (req, res) => res.json({ message: 'Welcome!' }))
 
 app.listen(port, () => {
+  console.log('Server is up and running on port ' + port)
   debug('Server is up and running on port ' + port)
 })

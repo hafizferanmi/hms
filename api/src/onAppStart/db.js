@@ -18,6 +18,7 @@ const dbSetup = () => {
     useCreateIndex: true,
     useFindAndModify: false
   })
+    .then(() => console.log('Connected to mongodb'))
     .catch((err) => console.error('Error connecting to MongoDB: ', err))
 }
 
