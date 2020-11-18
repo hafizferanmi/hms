@@ -1,155 +1,181 @@
 import React from 'react'
-import styled from 'styled-components'
+import classnames from 'clsx'
+import { makeStyles } from '@material-ui/styles'
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Avatar, Box, Tooltip } from '@material-ui/core'
+import { EditOutlined, DeleteForeverOutlined } from '@material-ui/icons'
+import { STAFF_ROLES_LABEL } from '../../constants/staff'
 import useModal from '../../hooks/useModal'
 import useDataProvider from '../../hooks/useDataProvider'
 import ConfirmModal from '../misc/ConfirmModal'
-import { STAFF_ROLES_LABEL } from '../../constants/staff'
-import staffImg from '../../assets/images/logo-sm.png'
-import TrashIcon from '../icons/Trash'
-import EditIcon from '../icons/Pencil'
-import DisableButton from './DisableStaffButton'
+import { blue, lightGreen, red, green, cyan, grey } from '@material-ui/core/colors'
+import { getInitials } from '../../helpers/misc'
+import CheckIcon from '@material-ui/icons/CheckCircleOutline'
+import CrossIcon from '@material-ui/icons/HighlightOff'
 
-const StaffTableContainer = styled.div`
-background-color: white;
-border-radius: 12px;
-padding: 10px;
-margin-top: 30px;
-`
-
-const TableWrapper = styled.table`
-width: 100%;
-border-collapse: collapse;
-overflow: hidden;
-
-thead tr th {
-  padding: 15px 0px;
-  font-weight: normal;
-  color: #8e95a9;
-  text-align: left;
-}
-
-tbody {
-  margin-top: 200px;
-
-  > tr {
-    font-size: 14px;
-    background-color: #fafafb;
-    margin-bottom: 40px;
-    cursor: pointer;
-    padding-top: 12px;
-    border-radius: 10px;
-    border-bottom: 1px solid #dae2eb;
-
-    :last-of-type {
-      border-bottom: none;
+const useStyles = makeStyles((theme) => ({
+  table: {
+    minWidth: 650
+  },
+  tableHeader: {
+    background: '#f5f5fb',
+    fontSize: 14,
+    borderRadius: 'none'
+  },
+  tableBody: {
+    cursor: 'pointer'
+  },
+  tableHeaderCell: {
+    color: '#b5c0d0',
+    textTransform: 'uppercase'
+  },
+  tableCell: {
+    color: '#0c2e67',
+    fontSize: 15,
+    fontWeight: '550',
+    textTransform: 'uppercase'
+  },
+  tableRow: {
+    '&:hover': {
+      border: 'none',
+      boxShadow: '0 3px 12px 0 rgba(0, 102, 245, 0.1)'
     }
-
-    td {
-      padding: 12px 0;
-      margin: 30px;
-      text-align: left;
-
-      :first-of-type {
-        padding-left: 10px;
-      }
-
-      :last-of-type {
-        padding-right: 5px;
-
-        .icon-wrapper {
-          svg {
-            margin-right: 5px;
-            display: none;
-
-            &::after {
-              content: 'ade';
-              position: absolute;
-              top: 2px;
-              width: 5px;
-              background: red;
-            }
-          }
-        }
-        
-      }
+  },
+  staffStatus: {
+    width: 'fit-content',
+    padding: '3px 8px',
+    textTransform: 'uppercase',
+    borderRadius: 6,
+    fontSize: 10
+  },
+  staffName: {
+    marginLeft: 10
+  },
+  staffEnabled: {
+    background: lightGreen[200],
+    color: lightGreen[900]
+  },
+  staffDisabled: {
+    background: grey[200],
+    color: grey[900]
+  },
+  avatar: {
+    color: 'white',
+    backgroundColor: blue[400],
+    width: theme.spacing(4.5),
+    height: theme.spacing(4.5)
+  },
+  iconWrapper: {
+    padding: '2px 6px',
+    borderRadius: '50%',
+    marginRight: 15,
+    '& svg': {
+      marginTop: 5,
+      fontSize: 20
     }
-
-    :hover {
-      background-color: #f2f6ff;
-
-      td .icon-wrapper {
-        svg {
-          display: inline;
-        }
-      } 
-    }
+  },
+  disableIcon: {
+    backgroundColor: green[50],
+    color: green[900]
+  },
+  deleteIcon: {
+    backgroundColor: red[50],
+    color: red[900]
+  },
+  editIcon: {
+    backgroundColor: cyan[50],
+    color: cyan[900]
   }
-}
-`
+}))
 
-const StaffIcon = styled.img`
-width: 33px;
-height: 33px;
-border-radius: 50%;
-border: 1px solid white;
-object-fit: contain;
-`
+const tableHeaders = ['Name', 'Email', 'Phone No', 'Job title', 'Status', '']
 
-const tableHeaders = ['', 'Name', 'Email', 'Phone No', 'Job title', 'Status', '']
-
-const StaffsTable = ({ staffs, handleOpen }) => {
+const StaffTable = ({ staffs, handleOpen }) => {
+  const classes = useStyles()
   const { dataInContext } = useDataProvider()
   const { handleDeleteStaff, handleDisableStaff } = dataInContext
   const deleteModal = useModal()
   const disableModal = useModal()
-
   return (
-    <StaffTableContainer>
-      <TableWrapper className=''>
-        <thead>
-          <tr>
-            {tableHeaders.map((header, i) =>
-              <th key={i}>{header}</th>)}
-          </tr>
-        </thead>
-        <tbody>
-          {staffs.map((staff, i) =>
-            <tr key={staff._id}>
-              <td><StaffIcon src={staffImg} alt={staff.name} /></td>
-              <td>{staff.name}</td>
-              <td>{staff.email}</td>
-              <td>{staff.phone}</td>
-              <td>{STAFF_ROLES_LABEL[staff.role]}</td>
-              <td>{staff.disabled ? 'Not active' : 'Active'}</td>
-              <td>
-                <div className='icon-wrapper'>
-                  <DisableButton onClick={() => disableModal.openModal(staff)} disableModal={disableModal} staff={staff} />
-                  <EditIcon onClick={() => handleOpen(staff)} />
-                  <TrashIcon onClick={() => deleteModal.openModal(staff)} />
-                </div>
-              </td>
-            </tr>
-          )}
+    <TableContainer elevation={0} component={Paper}>
+      <Table className={classes.table} aria-label='staffs table'>
+        <TableHead className={classes.tableHeader}>
+          <TableRow>
+            {
+              tableHeaders.map((header) => (
+                <TableCell className={classes.tableHeaderCell} key={header}>{header}</TableCell>
+              ))
+            }
+          </TableRow>
+        </TableHead>
+        <TableBody className={classes.tableBody}>
+          {staffs.map((staff) => (
+            <TableRow key={staff.name} className={classes.tableRow}>
+              <TableCell component='th' scope='row' className={classes.tableCell}>
+                <Box component='div' display='flex' alignItems='center'>
+                  <Avatar alt={staff.name} src={staff.displayImage} className={classes.avatar}>
+                    {getInitials(staff.name)}
+                  </Avatar>
+                  <span className={classes.staffName}>{staff.name}</span>
+                </Box>
 
-        </tbody>
-        <ConfirmModal
-          isOpen={deleteModal.isOpen}
-          title='Delete staff'
-          closeModal={deleteModal.closeModal}
-          confirmAction={() => handleDeleteStaff(deleteModal.data._id)}
-          message={`Do you want to delete staff with name ${deleteModal.data && deleteModal.data.name}`}
-        />
-        <ConfirmModal
-          isOpen={disableModal.isOpen}
-          title={`${disableModal.data && disableModal.data.disabled ? 'Enable' : 'Disable'} staff`}
-          closeModal={disableModal.closeModal}
-          confirmAction={() => handleDisableStaff(disableModal.data)}
-          message={`Do you want to ${disableModal.data && disableModal.data.disabled ? 'enable' : 'disable'} staff with name ${disableModal.data && disableModal.data.name}`}
-        />
+              </TableCell>
+              <TableCell className={classes.tableCell} align='left'>{staff.email}</TableCell>
+              <TableCell className={classes.tableCell} align='left'>{staff.phone}</TableCell>
+              <TableCell className={classes.tableCell} align='left'>{STAFF_ROLES_LABEL[staff.role]}</TableCell>
+              <TableCell className={classes.tableCell} align='left'>
+                {
+                  <div className={classnames(classes.staffStatus, staff.disabled ? classes.staffDisabled : classes.staffEnabled)}>
+                    {staff.disabled ? 'Disabled' : 'Enabled'}
+                  </div>
+                }
+              </TableCell>
+              <TableCell align='left'>
+                <Box display='flex'>
+                  <div className={classnames(classes.iconWrapper, classes.editIcon)}>
+                    <Tooltip title='Edit' aria-label='Edit'>
+                      <EditOutlined onClick={() => handleOpen(staff)} />
+                    </Tooltip>
+                  </div>
+                  <div className={classnames(classes.iconWrapper, classes.disableIcon)}>
+                    {staff.disabled && (
+                      <Tooltip title='Enable staff' aria-label='Enable staff'>
+                        <CheckIcon disabled={staff.disabled} onClick={() => disableModal.openModal(staff)} />
+                      </Tooltip>
+                    )}
+                    {!staff.disabled && (
+                      <Tooltip title='Disable staff' aria-label='Disable staff'>
+                        <CrossIcon disabled={staff.disabled} onClick={() => disableModal.openModal(staff)} />
+                      </Tooltip>
+                    )}
+                  </div>
+                  <div className={classnames(classes.iconWrapper, classes.deleteIcon)}>
+                    <Tooltip title='Delete' aria-label='Delete'>
+                      <DeleteForeverOutlined onClick={() => deleteModal.openModal(staff)} />
+                    </Tooltip>
+                  </div>
+                </Box>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        title='Delete staff'
+        closeModal={deleteModal.closeModal}
+        confirmAction={() => handleDeleteStaff(deleteModal.data._id)}
+        message={`Do you want to delete staff with name ${deleteModal.data && deleteModal.data.name}`}
+      />
+      <ConfirmModal
+        isOpen={disableModal.isOpen}
+        title={`${disableModal.data && disableModal.data.disabled ? 'Enable' : 'Disable'} staff`}
+        closeModal={disableModal.closeModal}
+        confirmAction={() => handleDisableStaff(disableModal.data)}
+        message={`Do you want to ${disableModal.data && disableModal.data.disabled ? 'enable' : 'disable'} staff with name ${disableModal.data && disableModal.data.name}`}
+      />
 
-      </TableWrapper>
-    </StaffTableContainer>
+    </TableContainer>
   )
 }
 
-export default StaffsTable
+export default StaffTable

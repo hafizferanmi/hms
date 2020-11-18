@@ -1,9 +1,7 @@
 import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { makeStyles } from '@material-ui/core/styles'
-import { blue } from '@material-ui/core/colors'
-import Header from '../misc/Header'
-import Navbar from '../misc/Navbar'
+import Sidebar from '../Sidebar'
 
 const drawerWidth = 240
 
@@ -17,53 +15,36 @@ const useStyles = makeStyles((theme) => ({
       flexShrink: 0
     }
   },
-  toolbar: theme.mixins.toolbar,
-  drawerPaper: {
-    width: drawerWidth
+  aside: {
+    background: 'white',
+    flexBasis: drawerWidth
   },
   content: {
     flexGrow: 1,
-    height: '100vh'
-  },
-  contentTopDesign: {
-    height: '300px',
-    backgroundColor: blue[500]
-  },
-  contentWrapper: {
-    margin: theme.spacing(-30, 3)
+    height: '100vh',
+    background: '#f4f8fc',
+    padding: 40
   }
 }))
 
 const ManagersPage = (props) => {
-  const { window, children } = props
+  const { children } = props
   const classes = useStyles()
-  const [mobileOpen, setMobileOpen] = React.useState(false)
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
-  }
-
-  const container = window !== undefined ? () => window().document.body : undefined
 
   return (
-    <div className={classes.root}>
+    <>
       <CssBaseline />
-      <Header
-        handleDrawerToggle={handleDrawerToggle}
-      />
-      <Navbar
-        container={container}
-        mobileOpen={mobileOpen}
-        handleDrawerToggle={handleDrawerToggle}
-      />
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <div className={classes.contentTopDesign} />
-        <div className={classes.contentWrapper}>
-          {children}
-        </div>
-      </main>
-    </div>
+      <div className={classes.root}>
+        <aside className={classes.aside}>
+          <Sidebar />
+        </aside>
+        <main className={classes.content}>
+          <div className={classes.contentWrapper}>
+            {children}
+          </div>
+        </main>
+      </div>
+    </>
   )
 }
 

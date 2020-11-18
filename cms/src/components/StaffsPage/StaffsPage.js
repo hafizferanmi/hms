@@ -1,48 +1,81 @@
 import React from 'react'
-import CreateStaffButton from './CreateStaffButton'
+import PageLayout from '../ManagersPage/ManagersLayout'
 import StaffsTable from './StaffTable'
 import useModal from '../../hooks/useModal'
 import Modal from '../misc/Modal'
 import StaffForm from '../Forms/StaffForm'
 import { makeStyles } from '@material-ui/core/styles'
-import { Box, Typography } from '@material-ui/core'
+import { SearchOutlined } from '@material-ui/icons'
+import Button from '../misc/Button'
 
 const useStyles = makeStyles((theme) => ({
   boxContainer: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  pageWrapper: {
+    background: 'white',
+    borderRadius: 5
+  },
+  pageTopWrapper: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px 40px'
+  },
+  searchBox: {
+    display: 'flex',
+    '& svg': {
+      color: '#b5c0d0',
+      marginTop: 5
+    },
+    '& input': {
+      padding: 5,
+      outline: 0,
+      border: 0,
+      fontSize: 18,
+      '&::placeholder': {
+        color: '#b5c0d0'
+      }
+    }
   }
 }))
 
 const StaffsPage = ({ staffs }) => {
   const classes = useStyles()
   const { isOpen, openModal, closeModal, data: staff } = useModal()
-  const handleOpen = (data) => openModal(data)
-  const handleClose = () => closeModal()
+  const openStaffFormModal = (data) => openModal(data)
+  const closeStaffFormModal = () => closeModal()
   return (
-    <>
-      <Box className={classes.boxContainer}>
-        <Typography variant='h4' color='textSecondary'>
-          Our company staffs
-        </Typography>
-        <CreateStaffButton handleClick={handleOpen} />
-      </Box>
-      <div>
+    <PageLayout title='staffs'>
+      <div className={classes.pageWrapper}>
+        <div className={classes.pageTopWrapper}>
+          <div className={classes.searchBox}>
+            <SearchOutlined />
+            <input type='text' name='search' placeholder='search staffs' />
+          </div>
+          <div className={classes.button}>
+            <Button
+              label='Add staff'
+              onClick={() => openStaffFormModal()}
+            />
+          </div>
+        </div>
         {staffs.length ? (
           <StaffsTable
             staffs={staffs}
-            handleOpen={handleOpen}
+            handleOpen={openStaffFormModal}
           />
         ) : <div>You have not added any staff yet.</div>}
       </div>
       <Modal
         open={isOpen}
-        handleClose={handleClose}
+        handleClose={closeStaffFormModal}
         size='md'
       >
-        <StaffForm staff={staff} closeModal={handleClose} />
+        <StaffForm staff={staff} closeModal={closeStaffFormModal} />
       </Modal>
-    </>
+    </PageLayout>
   )
 }
 
