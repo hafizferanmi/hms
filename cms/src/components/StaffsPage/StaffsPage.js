@@ -5,8 +5,9 @@ import useModal from '../../hooks/useModal'
 import Modal from '../misc/Modal'
 import StaffForm from '../Forms/StaffForm'
 import { makeStyles } from '@material-ui/core/styles'
-import { SearchOutlined } from '@material-ui/icons'
+import { SearchOutlined, Add as PlusIcon } from '@material-ui/icons'
 import Button from '../misc/Button'
+import Pagination from './Pagination'
 
 const useStyles = makeStyles((theme) => ({
   boxContainer: {
@@ -57,6 +58,7 @@ const StaffsPage = ({ staffs }) => {
           <div className={classes.button}>
             <Button
               label='Add staff'
+              endIcon={<PlusIcon />}
               onClick={() => openStaffFormModal()}
             />
           </div>
@@ -75,6 +77,7 @@ const StaffsPage = ({ staffs }) => {
       >
         <StaffForm staff={staff} closeModal={closeStaffFormModal} />
       </Modal>
+      <Pagination />
     </PageLayout>
   )
 }

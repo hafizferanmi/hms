@@ -11,6 +11,7 @@ import { blue, lightGreen, red, green, cyan, grey } from '@material-ui/core/colo
 import { getInitials } from '../../helpers/misc'
 import CheckIcon from '@material-ui/icons/CheckCircleOutline'
 import CrossIcon from '@material-ui/icons/HighlightOff'
+import Pagination from './Pagination'
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -31,13 +32,30 @@ const useStyles = makeStyles((theme) => ({
   tableCell: {
     color: '#0c2e67',
     fontSize: 15,
-    fontWeight: '550',
-    textTransform: 'uppercase'
+    textTransform: 'capitalize',
+    letterSpacing: 0.1
   },
   tableRow: {
     '&:hover': {
       border: 'none',
-      boxShadow: '0 3px 12px 0 rgba(0, 102, 245, 0.1)'
+      boxShadow: '0 3px 12px 0 rgba(0, 102, 245, 0.1)',
+      '& $disableIcon': {
+        backgroundColor: green[50],
+        color: green[900]
+      },
+      '& $deleteIcon': {
+        backgroundColor: red[50],
+        color: red[900]
+      },
+      '& $editIcon': {
+        backgroundColor: cyan[50],
+        color: cyan[900]
+      }
+    }
+  },
+  paddedTableRow: {
+    '& > td:nth-child(1), & > th:first-of-type': {
+      paddingLeft: 40
     }
   },
   staffStatus: {
@@ -61,8 +79,9 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     color: 'white',
     backgroundColor: blue[400],
-    width: theme.spacing(4.5),
-    height: theme.spacing(4.5)
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    fontSize: 14
   },
   iconWrapper: {
     padding: '2px 6px',
@@ -74,16 +93,16 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   disableIcon: {
-    backgroundColor: green[50],
-    color: green[900]
+    backgroundColor: grey[200],
+    color: grey[500]
   },
   deleteIcon: {
-    backgroundColor: red[50],
-    color: red[900]
+    backgroundColor: grey[200],
+    color: grey[500]
   },
   editIcon: {
-    backgroundColor: cyan[50],
-    color: cyan[900]
+    backgroundColor: grey[200],
+    color: grey[500]
   }
 }))
 
@@ -96,10 +115,11 @@ const StaffTable = ({ staffs, handleOpen }) => {
   const deleteModal = useModal()
   const disableModal = useModal()
   return (
+    <>
     <TableContainer elevation={0} component={Paper}>
       <Table className={classes.table} aria-label='staffs table'>
         <TableHead className={classes.tableHeader}>
-          <TableRow>
+          <TableRow className={classes.paddedTableRow}>
             {
               tableHeaders.map((header) => (
                 <TableCell className={classes.tableHeaderCell} key={header}>{header}</TableCell>
@@ -109,15 +129,14 @@ const StaffTable = ({ staffs, handleOpen }) => {
         </TableHead>
         <TableBody className={classes.tableBody}>
           {staffs.map((staff) => (
-            <TableRow key={staff.name} className={classes.tableRow}>
-              <TableCell component='th' scope='row' className={classes.tableCell}>
+            <TableRow key={staff.name} className={classnames(classes.paddedTableRow, classes.tableRow)}>
+              <TableCell className={classes.tableCell}>
                 <Box component='div' display='flex' alignItems='center'>
                   <Avatar alt={staff.name} src={staff.displayImage} className={classes.avatar}>
                     {getInitials(staff.name)}
                   </Avatar>
                   <span className={classes.staffName}>{staff.name}</span>
                 </Box>
-
               </TableCell>
               <TableCell className={classes.tableCell} align='left'>{staff.email}</TableCell>
               <TableCell className={classes.tableCell} align='left'>{staff.phone}</TableCell>
@@ -131,11 +150,11 @@ const StaffTable = ({ staffs, handleOpen }) => {
               </TableCell>
               <TableCell align='left'>
                 <Box display='flex'>
-                  <div className={classnames(classes.iconWrapper, classes.editIcon)}>
-                    <Tooltip title='Edit' aria-label='Edit'>
+                  <Tooltip title='Edit staff' aria-label='Edit'>
+                    <div className={classnames(classes.iconWrapper, classes.editIcon)}>
                       <EditOutlined onClick={() => handleOpen(staff)} />
-                    </Tooltip>
-                  </div>
+                    </div>
+                  </Tooltip>
                   <div className={classnames(classes.iconWrapper, classes.disableIcon)}>
                     {staff.disabled && (
                       <Tooltip title='Enable staff' aria-label='Enable staff'>
@@ -149,7 +168,7 @@ const StaffTable = ({ staffs, handleOpen }) => {
                     )}
                   </div>
                   <div className={classnames(classes.iconWrapper, classes.deleteIcon)}>
-                    <Tooltip title='Delete' aria-label='Delete'>
+                    <Tooltip title='Delete staff' aria-label='Delete'>
                       <DeleteForeverOutlined onClick={() => deleteModal.openModal(staff)} />
                     </Tooltip>
                   </div>
@@ -175,6 +194,7 @@ const StaffTable = ({ staffs, handleOpen }) => {
       />
 
     </TableContainer>
+    </>
   )
 }
 

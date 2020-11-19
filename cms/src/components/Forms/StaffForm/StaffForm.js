@@ -12,6 +12,7 @@ import { buildSelectOptions } from '../../../helpers/misc'
 
 const StaffFormWrapper = styled.form`
   display: flex;
+  width: 400px;
 `
 
 const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {

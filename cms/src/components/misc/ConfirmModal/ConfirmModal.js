@@ -1,23 +1,27 @@
 import React from 'react'
-import styled from 'styled-components'
 import Modal from '../Modal'
 import Button from '../Button'
+import { red, green } from '@material-ui/core/colors'
+import { makeStyles } from '@material-ui/styles'
 
-const ConfirmModalWrapper = styled.div`
-  text-align: center;
-  padding: 50px;
-`
-
-const ButtonWrapper = styled.div`
-  margin-top: 40px;
-
-  button:first-child {
-    background-color: red;
-    margin-right: 10px;
+const useStyles = makeStyles({
+  confirmModalWrapper: {
+    textAlign: 'center',
+    padding: 50
+  },
+  buttonWrapper: {
+    marginTop: 40
+  },
+  yesButton: {
+    background: red[400]
+  },
+  noButton: {
+    background: green[400]
   }
-`
+})
 
 const ConfirmModal = ({ isOpen, title, closeModal, message, confirmAction }) => {
+  const classes = useStyles()
   const handleConfirmAction = () => {
     confirmAction()
     closeModal()
@@ -28,20 +32,22 @@ const ConfirmModal = ({ isOpen, title, closeModal, message, confirmAction }) => 
       handleClose={closeModal}
       size='lg'
     >
-      <ConfirmModalWrapper>
+      <div className={classes.confirmModalWrapper}>
         <h2>{title}</h2>
         <div>{message}</div>
-        <ButtonWrapper>
+        <div className={classes.buttonWrapper}>
           <Button
+            className={classes.yesButton}
             label='Yes'
             onClick={handleConfirmAction}
           />
           <Button
+            className={classes.noButton}
             label='No'
             onClick={() => closeModal()}
           />
-        </ButtonWrapper>
-      </ConfirmModalWrapper>
+        </div>
+      </div>
     </Modal>
   )
 }
