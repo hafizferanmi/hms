@@ -1,20 +1,30 @@
 import React from 'react'
-import { Link as RouterLink } from '@reach/router'
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
+import NavLink from '../misc/NavLink'
 import {
-  Button,
   ListItem,
-  makeStyles
+  makeStyles,
+  Box
 } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   item: {
     display: 'flex',
     paddingTop: 0,
-    paddingBottom: 0
+    paddingBottom: 0,
+    '& .active': {
+      color: 'yellow',
+      '& $title': {
+        fontWeight: 'bold',
+        color: 'yellow'
+      },
+      '& $icon': {
+        color: 'yellow'
+      }
+    }
   },
-  button: {
+  box: {
     color: theme.palette.text.secondary,
     fontWeight: theme.typography.fontWeightMedium,
     justifyContent: 'flex-start',
@@ -24,19 +34,12 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   icon: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    color: 'blue'
   },
   title: {
-    marginRight: 'auto'
-  },
-  active: {
-    color: theme.palette.primary.main,
-    '& $title': {
-      fontWeight: theme.typography.fontWeightBold
-    },
-    '& $icon': {
-      color: theme.palette.primary.main
-    }
+    marginRight: 'auto',
+    color: 'blue'
   }
 }))
 
@@ -55,9 +58,9 @@ const NavItem = ({
       disableGutters
       {...rest}
     >
-      <Button
+      <Box
         className={classes.button}
-        component={RouterLink}
+        component={NavLink}
         to={href}
       >
         {Icon && (
@@ -69,7 +72,7 @@ const NavItem = ({
         <span className={classes.title}>
           {title}
         </span>
-      </Button>
+      </Box>
     </ListItem>
   )
 }

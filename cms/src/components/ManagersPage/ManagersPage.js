@@ -17,9 +17,15 @@ const useStyles = makeStyles((theme) => ({
   },
   aside: {
     background: 'white',
-    flexBasis: drawerWidth
+    width: drawerWidth,
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    height: '100vh',
+    zIndex: 20
   },
   content: {
+    marginLeft: drawerWidth,
     flexGrow: 1,
     height: '100vh',
     background: '#f4f8fc',

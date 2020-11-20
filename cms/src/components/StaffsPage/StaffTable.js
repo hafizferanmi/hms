@@ -11,7 +11,6 @@ import { blue, lightGreen, red, green, cyan, grey } from '@material-ui/core/colo
 import { getInitials } from '../../helpers/misc'
 import CheckIcon from '@material-ui/icons/CheckCircleOutline'
 import CrossIcon from '@material-ui/icons/HighlightOff'
-import Pagination from './Pagination'
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -116,84 +115,84 @@ const StaffTable = ({ staffs, handleOpen }) => {
   const disableModal = useModal()
   return (
     <>
-    <TableContainer elevation={0} component={Paper}>
-      <Table className={classes.table} aria-label='staffs table'>
-        <TableHead className={classes.tableHeader}>
-          <TableRow className={classes.paddedTableRow}>
-            {
-              tableHeaders.map((header) => (
-                <TableCell className={classes.tableHeaderCell} key={header}>{header}</TableCell>
-              ))
-            }
-          </TableRow>
-        </TableHead>
-        <TableBody className={classes.tableBody}>
-          {staffs.map((staff) => (
-            <TableRow key={staff.name} className={classnames(classes.paddedTableRow, classes.tableRow)}>
-              <TableCell className={classes.tableCell}>
-                <Box component='div' display='flex' alignItems='center'>
-                  <Avatar alt={staff.name} src={staff.displayImage} className={classes.avatar}>
-                    {getInitials(staff.name)}
-                  </Avatar>
-                  <span className={classes.staffName}>{staff.name}</span>
-                </Box>
-              </TableCell>
-              <TableCell className={classes.tableCell} align='left'>{staff.email}</TableCell>
-              <TableCell className={classes.tableCell} align='left'>{staff.phone}</TableCell>
-              <TableCell className={classes.tableCell} align='left'>{STAFF_ROLES_LABEL[staff.role]}</TableCell>
-              <TableCell className={classes.tableCell} align='left'>
-                {
-                  <div className={classnames(classes.staffStatus, staff.disabled ? classes.staffDisabled : classes.staffEnabled)}>
-                    {staff.disabled ? 'Disabled' : 'Enabled'}
-                  </div>
-                }
-              </TableCell>
-              <TableCell align='left'>
-                <Box display='flex'>
-                  <Tooltip title='Edit staff' aria-label='Edit'>
-                    <div className={classnames(classes.iconWrapper, classes.editIcon)}>
-                      <EditOutlined onClick={() => handleOpen(staff)} />
-                    </div>
-                  </Tooltip>
-                  <div className={classnames(classes.iconWrapper, classes.disableIcon)}>
-                    {staff.disabled && (
-                      <Tooltip title='Enable staff' aria-label='Enable staff'>
-                        <CheckIcon disabled={staff.disabled} onClick={() => disableModal.openModal(staff)} />
-                      </Tooltip>
-                    )}
-                    {!staff.disabled && (
-                      <Tooltip title='Disable staff' aria-label='Disable staff'>
-                        <CrossIcon disabled={staff.disabled} onClick={() => disableModal.openModal(staff)} />
-                      </Tooltip>
-                    )}
-                  </div>
-                  <div className={classnames(classes.iconWrapper, classes.deleteIcon)}>
-                    <Tooltip title='Delete staff' aria-label='Delete'>
-                      <DeleteForeverOutlined onClick={() => deleteModal.openModal(staff)} />
-                    </Tooltip>
-                  </div>
-                </Box>
-              </TableCell>
+      <TableContainer elevation={0} component={Paper}>
+        <Table className={classes.table} aria-label='staffs table'>
+          <TableHead className={classes.tableHeader}>
+            <TableRow className={classes.paddedTableRow}>
+              {
+                tableHeaders.map((header) => (
+                  <TableCell className={classes.tableHeaderCell} key={header}>{header}</TableCell>
+                ))
+              }
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <ConfirmModal
-        isOpen={deleteModal.isOpen}
-        title='Delete staff'
-        closeModal={deleteModal.closeModal}
-        confirmAction={() => handleDeleteStaff(deleteModal.data._id)}
-        message={`Do you want to delete staff with name ${deleteModal.data && deleteModal.data.name}`}
-      />
-      <ConfirmModal
-        isOpen={disableModal.isOpen}
-        title={`${disableModal.data && disableModal.data.disabled ? 'Enable' : 'Disable'} staff`}
-        closeModal={disableModal.closeModal}
-        confirmAction={() => handleDisableStaff(disableModal.data)}
-        message={`Do you want to ${disableModal.data && disableModal.data.disabled ? 'enable' : 'disable'} staff with name ${disableModal.data && disableModal.data.name}`}
-      />
+          </TableHead>
+          <TableBody className={classes.tableBody}>
+            {staffs.map((staff) => (
+              <TableRow key={staff.name} className={classnames(classes.paddedTableRow, classes.tableRow)}>
+                <TableCell className={classes.tableCell}>
+                  <Box component='div' display='flex' alignItems='center'>
+                    <Avatar alt={staff.name} src={staff.displayImage} className={classes.avatar}>
+                      {getInitials(staff.name)}
+                    </Avatar>
+                    <span className={classes.staffName}>{staff.name}</span>
+                  </Box>
+                </TableCell>
+                <TableCell className={classes.tableCell} align='left'>{staff.email}</TableCell>
+                <TableCell className={classes.tableCell} align='left'>{staff.phone}</TableCell>
+                <TableCell className={classes.tableCell} align='left'>{STAFF_ROLES_LABEL[staff.role]}</TableCell>
+                <TableCell className={classes.tableCell} align='left'>
+                  {
+                    <div className={classnames(classes.staffStatus, staff.disabled ? classes.staffDisabled : classes.staffEnabled)}>
+                      {staff.disabled ? 'Disabled' : 'Enabled'}
+                    </div>
+                  }
+                </TableCell>
+                <TableCell align='left'>
+                  <Box display='flex'>
+                    <Tooltip title='Edit staff' aria-label='Edit'>
+                      <div className={classnames(classes.iconWrapper, classes.editIcon)}>
+                        <EditOutlined onClick={() => handleOpen(staff)} />
+                      </div>
+                    </Tooltip>
+                    <div className={classnames(classes.iconWrapper, classes.disableIcon)}>
+                      {staff.disabled && (
+                        <Tooltip title='Enable staff' aria-label='Enable staff'>
+                          <CheckIcon disabled={staff.disabled} onClick={() => disableModal.openModal(staff)} />
+                        </Tooltip>
+                      )}
+                      {!staff.disabled && (
+                        <Tooltip title='Disable staff' aria-label='Disable staff'>
+                          <CrossIcon disabled={staff.disabled} onClick={() => disableModal.openModal(staff)} />
+                        </Tooltip>
+                      )}
+                    </div>
+                    <div className={classnames(classes.iconWrapper, classes.deleteIcon)}>
+                      <Tooltip title='Delete staff' aria-label='Delete'>
+                        <DeleteForeverOutlined onClick={() => deleteModal.openModal(staff)} />
+                      </Tooltip>
+                    </div>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <ConfirmModal
+          isOpen={deleteModal.isOpen}
+          title='Delete staff'
+          closeModal={deleteModal.closeModal}
+          confirmAction={() => handleDeleteStaff(deleteModal.data._id)}
+          message={`Do you want to delete staff with name ${deleteModal.data && deleteModal.data.name}`}
+        />
+        <ConfirmModal
+          isOpen={disableModal.isOpen}
+          title={`${disableModal.data && disableModal.data.disabled ? 'Enable' : 'Disable'} staff`}
+          closeModal={disableModal.closeModal}
+          confirmAction={() => handleDisableStaff(disableModal.data)}
+          message={`Do you want to ${disableModal.data && disableModal.data.disabled ? 'enable' : 'disable'} staff with name ${disableModal.data && disableModal.data.name}`}
+        />
 
-    </TableContainer>
+      </TableContainer>
     </>
   )
 }
