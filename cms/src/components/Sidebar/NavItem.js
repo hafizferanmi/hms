@@ -1,45 +1,63 @@
 import React from 'react'
-import clsx from 'clsx'
-import PropTypes from 'prop-types'
 import NavLink from '../misc/NavLink'
 import {
-  ListItem,
   makeStyles,
   Box
 } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   item: {
-    display: 'flex',
     paddingTop: 0,
     paddingBottom: 0,
+    marginTop: 10,
+    width: '100%',
     '& .active': {
-      color: 'yellow',
+      position: 'relative',
       '& $title': {
-        fontWeight: 'bold',
-        color: 'yellow'
+        color: '#0066f5'
+      },
+      '& $iconWrapper': {
+        color: '#0066f5',
+        background: 'rgba(0, 102, 245, 0.1)',
+        borderRadius: '50%'
       },
       '& $icon': {
-        color: 'yellow'
+        color: '#0066f5'
+      },
+      '& > $iconTextWrapper::after': {
+        position: 'absolute',
+        content: "''",
+        width: 3,
+        height: 20,
+        top: 10,
+        background: '#0066f5',
+        right: 0,
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5
       }
     }
   },
-  box: {
-    color: theme.palette.text.secondary,
-    fontWeight: theme.typography.fontWeightMedium,
-    justifyContent: 'flex-start',
-    letterSpacing: 0,
-    padding: '10px 8px',
-    textTransform: 'none',
-    width: '100%'
+  iconTextWrapper: {
+    position: 'relative',
+    background: 'inherit'
+  },
+  iconWrapper: {
+    width: 40,
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 20
   },
   icon: {
-    marginRight: theme.spacing(1),
-    color: 'blue'
+    width: 16,
+    height: 16,
+    color: '#b5c0d0'
   },
   title: {
-    marginRight: 'auto',
-    color: 'blue'
+    color: '#b5c0d0',
+    fontSize: 12,
+    textTransform: 'uppercase'
   }
 }))
 
@@ -53,35 +71,31 @@ const NavItem = ({
   const classes = useStyles()
 
   return (
-    <ListItem
-      className={clsx(classes.item, className)}
-      disableGutters
-      {...rest}
-    >
-      <Box
-        className={classes.button}
-        component={NavLink}
+    <Box className={classes.item}>
+      <NavLink
+        className={classes.navLink}
         to={href}
       >
-        {Icon && (
-          <Icon
-            className={classes.icon}
-            size='20'
-          />
-        )}
-        <span className={classes.title}>
-          {title}
-        </span>
-      </Box>
-    </ListItem>
-  )
-}
+        <Box
+          display='flex'
+          alignItems='center'
+          className={classes.iconTextWrapper}
+        >
+          {Icon && (
+            <div className={classes.iconWrapper}>
+              <Icon
+                className={classes.icon}
+              />
+            </div>
+          )}
+          <div className={classes.title}>
+            {title}
+          </div>
+        </Box>
 
-NavItem.propTypes = {
-  className: PropTypes.string,
-  link: PropTypes.string,
-  icon: PropTypes.elementType,
-  label: PropTypes.string
+      </NavLink>
+    </Box>
+  )
 }
 
 export default NavItem

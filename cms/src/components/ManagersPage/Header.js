@@ -65,7 +65,7 @@ const ManagerHeader = ({ title }) => {
   const toggleMenu = () => setMenuOpen(!opened)
   return (
     <div className={styles.root}>
-      <Typography className={styles.headerText} variant='h3' component='div'>{title}</Typography>
+      <Typography className={styles.headerText} variant='header' component='div'>{title}</Typography>
       <div className={styles.imageSearchWrapper}>
         <Typography className={styles.date} variant='h3' component='div'>
           {date}

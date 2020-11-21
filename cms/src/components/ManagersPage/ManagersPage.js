@@ -20,9 +20,10 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     position: 'fixed',
     top: 0,
-    left: 0,
-    height: '100vh',
-    zIndex: 20
+    bottom: 0,
+    height: '100%',
+    zIndex: 20,
+    overflowY: 'auto'
   },
   content: {
     marginLeft: drawerWidth,

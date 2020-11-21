@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
   tableCell: {
     color: '#0c2e67',
     fontSize: 15,
-    textTransform: 'capitalize',
     letterSpacing: 0.1
   },
   tableRow: {

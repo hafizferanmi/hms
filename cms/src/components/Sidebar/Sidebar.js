@@ -1,39 +1,39 @@
 import React from 'react'
-import List from '@material-ui/core/List'
+import LogoImg from '../../assets/images/logo.png'
 import {
   Box,
   makeStyles
 } from '@material-ui/core'
-import {
-  AlertCircle as AlertCircleIcon,
-  BarChart as BarChartIcon,
-  Lock as LockIcon,
-  Key as KeyIcon,
-  Settings as SettingsIcon,
-  Users as UsersIcon
-} from 'react-feather'
+import ShowChartIcon from '@material-ui/icons/ShowChart'
+import GridOnIcon from '@material-ui/icons/GridOn'
+import MenuBookOutlinedIcon from '@material-ui/icons/MenuBookOutlined'
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined'
+import SupervisorAccountOutlinedIcon from '@material-ui/icons/SupervisorAccountOutlined'
+import HomeWorkIcon from '@material-ui/icons/HomeWork'
+import SubjectRoundedIcon from '@material-ui/icons/SubjectRounded'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import NavItem from './NavItem'
 
 const useStyles = makeStyles((theme) => ({
   menuWrapper: {
-    background: 'white',
-    paddingLeft: '20px',
-    paddingTop: '50px',
-    height: '100vh'
+    height: '100%',
+    paddingTop: 40,
+    paddingLeft: 25
   },
-  listItem: {
-    padding: '0 15px'
+  logoImg: {
+    width: 150,
+    height: 40
   }
 }))
 
 const routes = [
-  { link: '/secure/admin/', label: 'Dashboard', icon: BarChartIcon },
-  { link: '/secure/admin/rooms', label: 'Rooms', icon: LockIcon },
-  { link: '/secure/admin/roomtypes', label: 'Room types', icon: SettingsIcon },
-  { link: '/secure/admin/halls', label: 'Halls', icon: AlertCircleIcon },
-  { link: '/secure/admin/staffs', label: 'Staffs', icon: UsersIcon },
-  { link: '/secure/admin/checkin', label: 'Check In', icon: KeyIcon }
+  { link: '/secure/admin/', label: 'Reports', icon: ShowChartIcon },
+  { link: '/secure/admin/rooms', label: 'Rooms', icon: GridOnIcon },
+  { link: '/secure/admin/bookings', label: 'Bookings', icon: MenuBookOutlinedIcon },
+  { link: '/secure/admin/halls', label: 'Halls', icon: HomeWorkIcon },
+  { link: '/secure/admin/staffs', label: 'Staffs', icon: SupervisorAccountOutlinedIcon },
+  { link: '/secure/admin/checkin', label: 'Check In', icon: SubjectRoundedIcon },
+  { link: '/secure/admin/settings', label: 'Settings', icon: SettingsOutlinedIcon }
 ]
 
 const Sidebar = () => {
@@ -45,17 +45,21 @@ const Sidebar = () => {
       display='flex'
       flexDirection='column'
     >
-      <Box p={2}>
-        <List>
-          {routes.map((item) => (
-            <NavItem
-              href={item.link}
-              key={item.link}
-              title={item.label}
-              icon={item.icon}
-            />
-          ))}
-        </List>
+      <Box>
+        <img src={LogoImg} alt='Logo' className={classes.logoImg} />
+      </Box>
+      <Box
+        display='flex'
+        flexDirection='column'
+      >
+        {routes.map((item) => (
+          <NavItem
+            href={item.link}
+            key={item.link}
+            title={item.label}
+            icon={item.icon}
+          />
+        ))}
       </Box>
     </Box>
   )

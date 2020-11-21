@@ -1,6 +1,51 @@
 @font-face {
-  font-family: 'hello';
+  font-family: 'Avenir';
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/fonts/38F6FD_1_0.woff2') format('woff2');
+  src: url('./assets/fonts/hinted-AvenirLTStd-Roman.woff2') format('woff2');
 }
+
+@font-face {
+  font-family: 'ml';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/Montserrat-Bold.otf');
+}
+
+@font-face {
+  font-family: 'BRFirmaCW-Bold';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/BRFirmaCW-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'BRFirmaCW-Medium';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/BRFirmaCW-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'bk';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/37A0A7_3_0.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'ch';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/38F6FD_0_0.woff2') format('woff2');
+}
+
+
+@font-face {
+  font-family: 'so';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/sofiapro-light.otf') format('woff2');
+}
+
+
