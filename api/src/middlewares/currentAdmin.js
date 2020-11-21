@@ -14,8 +14,13 @@ const currentAdmin = async (req, res, next) => {
     return res.json(failed('Unauthorized'))
   }
 
-  const token = getTokenFromHeader(authToken)
-  const decodedToken = verifyAuthToken(token)
+  let decodedToken
+  try {
+    const token = getTokenFromHeader(authToken)
+    decodedToken = verifyAuthToken(token)
+  } catch (e) {
+    return res.status(403).json(failed('Unauthorized error!'))
+  }
 
   if (!decodedToken || !decodedToken.id) {
     return res.json(failed('Unauthorized'))

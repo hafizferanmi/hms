@@ -32,7 +32,7 @@ const LoginFormCantainer = () => {
       const staff = response.result.staff
       dispatch(setCurrentStaff(staff))
       setAuthToken(token)
-      navigateTo('/secure')
+      navigateTo('/secure/admin/staffs')
     }
 
     if (response && !response.success) {
