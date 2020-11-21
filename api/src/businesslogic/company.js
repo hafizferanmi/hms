@@ -36,7 +36,7 @@ export const createCompany = async (req, res) => {
       password: await hashPassword(password),
       email,
       role: STAFF_ROLES.GENERAL_MANAGER,
-      company: company._id
+      companyId: company._id
     })
     staff = await staff.save()
     staff = staff.toObject()
