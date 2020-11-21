@@ -1,5 +1,6 @@
 import React from 'react'
 import NavLink from '../misc/NavLink'
+import Typography from '@material-ui/core/Typography'
 import {
   makeStyles,
   Box
@@ -57,7 +58,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     color: '#b5c0d0',
     fontSize: 12,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    fontFamily: 'BRFirmaCW-Bold'
   }
 }))
 
@@ -89,7 +91,7 @@ const NavItem = ({
             </div>
           )}
           <div className={classes.title}>
-            {title}
+            <span className={classes.headerText}>{title}</span>
           </div>
         </Box>
 

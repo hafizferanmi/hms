@@ -16,7 +16,9 @@ const useStyles = makeStyles({
   headerText: {
     textTransform: 'uppercase',
     color: '#0c2e67',
-    letterSpacing: 0.05
+    letterSpacing: 0.05,
+    fontFamily: 'BRFirmaCW-Bold',
+    fontSize: 18
   },
   imageSearchWrapper: {
     display: 'flex',
@@ -65,7 +67,7 @@ const ManagerHeader = ({ title }) => {
   const toggleMenu = () => setMenuOpen(!opened)
   return (
     <div className={styles.root}>
-      <Typography className={styles.headerText} variant='header' component='div'>{title}</Typography>
+      <p className={styles.headerText}>{title}</p>
       <div className={styles.imageSearchWrapper}>
         <Typography className={styles.date} variant='h3' component='div'>
           {date}

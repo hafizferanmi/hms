@@ -1,25 +1,45 @@
 import React from 'react'
-import styled from 'styled-components'
-import CheckInButton from './CheckInButton'
-import CheckInTable from './CheckInTable'
+import PageLayout from '../ManagersPage/ManagersLayout'
+import CheckInLists from './CheckInLists'
+import CheckInDesc from './CheckInDesc'
+import { Grid, makeStyles } from '@material-ui/core'
 
-const PageTopWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
+const useStyles = makeStyles({
+  gridLayout: {
+    // background: 'yellow'
+  },
+  statGrid: {
+    // background: 'red'
+  },
+  checkInListGrid: {
+    // background: 'pink'
+  },
+  descGrid: {
+    // background: 'blue'
+  }
+})
 
 const CheckInPage = ({ checkIns }) => {
+  const classes = useStyles()
+  const [selectedCheckin, setSelectedCheckin] = React.useState()
+  const handleSelectCheckIn = (checkIn) => setSelectedCheckin(checkIn)
   return (
-    <>
-      <PageTopWrapper>
-        <h3>CheckIn's</h3>
-        <CheckInButton />
-      </PageTopWrapper>
-      <div>
-        {checkIns.length ? <CheckInTable checkIns={checkIns} /> : <div>You dont have a checkIn yet.</div>}
-      </div>
-    </>
+    <PageLayout title='Check In'>
+      <Grid container spacing={2}>
+        <Grid item className={classes.statGrid} xs={12} md={2} lg={2}>
+          This is the statgrid
+        </Grid>
+        <Grid item className={classes.checkInListGrid} xs={12} md={6} lg={3}>
+          <CheckInLists
+            checkIns={checkIns}
+            handleSelectCheckIn={handleSelectCheckIn}
+          />
+        </Grid>
+        <Grid item className={classes.descGrid} xs={12} md={6} lg={7}>
+          <CheckInDesc checkIn={selectedCheckin} />
+        </Grid>
+      </Grid>
+    </PageLayout>
   )
 }
 

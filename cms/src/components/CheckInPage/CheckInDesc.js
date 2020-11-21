@@ -3,7 +3,7 @@ import React from 'react'
 const CheckInDesc = ({ checkIn }) => {
   return (
     <div>
-      {checkIn.name}
+      {checkIn && checkIn.name}
     </div>
   )
 }
