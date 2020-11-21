@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA,WACE,mBAAoB,CACpB,iBAAkB,CAClB,eAAgB,CAChB,gEACF","file":"main.c0f72616.chunk.css","sourcesContent":["@font-face {\r\n  font-family: 'hello';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  src: url('./assets/fonts/38F6FD_1_0.woff2') format('woff2');\r\n}\r\n"]}
