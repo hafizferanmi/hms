@@ -11,6 +11,7 @@ import { blue, lightGreen, red, green, cyan, grey } from '@material-ui/core/colo
 import { getInitials } from '../../helpers/misc'
 import CheckIcon from '@material-ui/icons/CheckCircleOutline'
 import CrossIcon from '@material-ui/icons/HighlightOff'
+import useCurrentStaff from '../../hooks/useCurrentStaff'
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -108,6 +109,7 @@ const tableHeaders = ['Name', 'Email', 'Phone No', 'Job title', 'Status', '']
 
 const StaffTable = ({ staffs, handleOpen }) => {
   const classes = useStyles()
+  const { _id: staffId } = useCurrentStaff()
   const { dataInContext } = useDataProvider()
   const { handleDeleteStaff, handleDisableStaff } = dataInContext
   const deleteModal = useModal()
@@ -146,6 +148,7 @@ const StaffTable = ({ staffs, handleOpen }) => {
                     </div>
                   }
                 </TableCell>
+
                 <TableCell align='left'>
                   <Box display='flex'>
                     <Tooltip title='Edit staff' aria-label='Edit'>
@@ -161,13 +164,18 @@ const StaffTable = ({ staffs, handleOpen }) => {
                       )}
                       {!staff.disabled && (
                         <Tooltip title='Disable staff' aria-label='Disable staff'>
-                          <CrossIcon disabled={staff.disabled} onClick={() => disableModal.openModal(staff)} />
+                          <CrossIcon
+                            disabled={staff.disabled}
+                            onClick={staffId === staff._id ? () => window.alert('You cannot disable yourself.') : () => disableModal.openModal(staff)}
+                          />
                         </Tooltip>
                       )}
                     </div>
                     <div className={classnames(classes.iconWrapper, classes.deleteIcon)}>
                       <Tooltip title='Delete staff' aria-label='Delete'>
-                        <DeleteForeverOutlined onClick={() => deleteModal.openModal(staff)} />
+                        <DeleteForeverOutlined
+                          onClick={staffId === staff._id ? () => window.alert('You cannot delete yourself.') : () => deleteModal.openModal(staff)}
+                        />
                       </Tooltip>
                     </div>
                   </Box>

@@ -1,4 +1,6 @@
 import React from 'react'
+import * as R from 'ramda'
+import toRegex from 'to-regex'
 import PageLayout from '../ManagersPage/ManagersLayout'
 import StaffsTable from './StaffTable'
 import useModal from '../../hooks/useModal'
@@ -42,18 +44,35 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const sortByName = R.sortBy(R.compose(R.toLower, R.prop('name')))
+
+const filterStaffs = (searchText, staffs) => {
+  const searchWords = searchText.split(/\s+/)
+  const regExp = toRegex(searchWords, { contains: true, flags: 'i' })
+
+  return staffs.filter(({ name, email, phone, role }) => regExp.test(name) || regExp.test(email) || regExp.test(phone) || regExp.test(role))
+}
+
 const StaffsPage = ({ staffs }) => {
   const classes = useStyles()
   const { isOpen, openModal, closeModal, data: staff } = useModal()
   const openStaffFormModal = (data) => openModal(data)
   const closeStaffFormModal = () => closeModal()
+  const [searchString, setSearchString] = React.useState()
+  const filteredStaffs = searchString ? filterStaffs(searchString, staffs) : staffs
+
   return (
     <PageLayout title='staffs'>
       <div className={classes.pageWrapper}>
         <div className={classes.pageTopWrapper}>
           <div className={classes.searchBox}>
             <SearchOutlined />
-            <input type='text' name='search' placeholder='search staffs' />
+            <input
+              type='text'
+              name='search'
+              onChange={(e) => setSearchString(e.target.value)}
+              placeholder='search staffs'
+            />
           </div>
           <div className={classes.button}>
             <Button
@@ -65,7 +84,7 @@ const StaffsPage = ({ staffs }) => {
         </div>
         {staffs.length ? (
           <StaffsTable
-            staffs={staffs}
+            staffs={sortByName(filteredStaffs)}
             handleOpen={openStaffFormModal}
           />
         ) : <div>You have not added any staff yet.</div>}
@@ -77,7 +96,7 @@ const StaffsPage = ({ staffs }) => {
       >
         <StaffForm staff={staff} closeModal={closeStaffFormModal} />
       </Modal>
-      <Pagination />
+      {staffs.length >= 20 && <Pagination />}
     </PageLayout>
   )
 }

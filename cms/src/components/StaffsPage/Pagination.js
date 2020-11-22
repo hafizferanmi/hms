@@ -33,10 +33,10 @@ const useStyles = makeStyles((theme) => ({
   active: {
     color: '#0066f5'
   }
-}));
+}))
 
 const CustomPagination = () => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <div className={classes.root}>

@@ -3,15 +3,16 @@ import { makeStyles } from '@material-ui/styles'
 import { Typography, Badge } from '@material-ui/core'
 import DefaultImg from '../../assets/images/default.jpg'
 import dayjs from 'dayjs'
+import HeaderMenu from './HeaderMenu'
 import { NotificationImportant, ArrowDropDown, ArrowDropUp } from '@material-ui/icons'
 const useStyles = makeStyles({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    overflow: 'hidden',
     alignItems: 'center',
-    marginBottom: 10
+    marginBottom: 10,
+    position: 'relative'
   },
   headerText: {
     textTransform: 'uppercase',
@@ -65,6 +66,7 @@ const ManagerHeader = ({ title }) => {
   const date = dayjs().format('DD MMMM, YYYY')
   const [opened, setMenuOpen] = React.useState(false)
   const toggleMenu = () => setMenuOpen(!opened)
+  const handleClose = () => setMenuOpen(false)
   return (
     <div className={styles.root}>
       <p className={styles.headerText}>{title}</p>
@@ -80,6 +82,7 @@ const ManagerHeader = ({ title }) => {
         <img onClick={toggleMenu} className={styles.imageDp} src={DefaultImg} alt='DP' />
         <div onClick={toggleMenu} className={styles.dropdownIcon}> {opened ? <ArrowDropUp /> : <ArrowDropDown />} </div>
       </div>
+      {opened && <HeaderMenu handleClose={handleClose} />}
     </div>
   )
 }

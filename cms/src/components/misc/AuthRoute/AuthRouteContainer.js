@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 const AuthRouteContainer = () => {
   const navigateTo = useNavigate()
   const dispatch = useDispatch()
-  const location = useLocation()
+  // const location = useLocation()
   const classess = useStyles()
   const { error, loading, data: currentStaff } = useSelector(state => state.currentStaff)
   useEffect(() => {
@@ -31,7 +31,7 @@ const AuthRouteContainer = () => {
   }, [currentStaff])
 
   useEffect(() => {
-    console.log({ location })
+    // console.log({ location })
     // if (currentStaff && currentStaff.role && ADMINISTRATOR.includes(currentStaff.role)) {
     //   navigateTo(location.pathname)
     // } else if (currentStaff && currentStaff.role) {

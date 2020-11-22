@@ -1,6 +1,5 @@
 import React from 'react'
 import NavLink from '../misc/NavLink'
-import Typography from '@material-ui/core/Typography'
 import {
   makeStyles,
   Box
@@ -12,6 +11,14 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 0,
     marginTop: 10,
     width: '100%',
+    '&:hover': {
+      '& $title': {
+        color: '#0066f5'
+      },
+      '& $icon': {
+        color: '#0066f5'
+      }
+    },
     '& .active': {
       position: 'relative',
       '& $title': {
