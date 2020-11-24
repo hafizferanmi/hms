@@ -5,7 +5,7 @@ import ErrorMessage from '../components/misc/ErrorMessage'
 
 import { notify } from '../helpers/notification'
 
-const useNotify = ({ message, response, action, callback }) => {
+const useNotify = ({ message, response, action, callback, error }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -18,6 +18,12 @@ const useNotify = ({ message, response, action, callback }) => {
     }
     // eslint-disable-next-line
   }, [response])
+
+  useEffect(() => {
+    if (error) {
+      notification.error(...notify(<ErrorMessage message='An error occured, could not complete request.' />))
+    }
+  }, [error])
 
   return true
 }

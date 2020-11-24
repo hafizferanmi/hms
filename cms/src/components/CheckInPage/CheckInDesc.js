@@ -1,11 +1,13 @@
 import React from 'react'
+import cn from 'clsx'
 import PerfectScrollBar from 'react-perfect-scrollbar'
-import { Box, Fab, makeStyles, IconButton } from '@material-ui/core'
+import { Box, makeStyles } from '@material-ui/core'
 import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
-import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined'
-import DoneAllIcon from '@material-ui/icons/DoneAll'
 import CheckInTabs from './CheckInTabs'
+import { formatDate } from '../../helpers/misc'
+import { CheckOutButton, DeleteButton, EditButton } from './ChecInPageButtons'
+import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles({
   seletetedCheckinWrapper: {
@@ -57,48 +59,60 @@ const useStyles = makeStyles({
       textTransform: 'capitalize'
     }
   },
-  moreOptionIconButton: {
+  iconWrappers: {
     position: 'absolute',
-    top: 10,
-    right: 0
+    top: 2,
+    right: 0,
+    '& > div:last-of-type': {
+      marginTop: 10
+    }
+  },
+  checkedOutText: {
+    fontSize: 30,
+    fontWeight: 'bold'
   }
 })
 
-const CheckInDesc = ({ checkIn }) => {
+const CheckInDesc = ({ checkIn, clearSelectedCheckin }) => {
+  const { data: storeCheckins } = useSelector(state => state.checkIns)
+  const updatedCheckIn = checkIn && storeCheckins.find(storeCheckin => storeCheckin._id === checkIn._id)
   const classes = useStyles()
   return (
     <div className={classes.seletetedCheckinWrapper}>
       <PerfectScrollBar>
-        {checkIn && <CheckInSelected checkIn={checkIn} />}
+        {checkIn && <CheckInSelected clearSelectedCheckin={clearSelectedCheckin} checkIn={updatedCheckIn} />}
         {!checkIn && <NoCheckInSelected />}
       </PerfectScrollBar>
     </div>
   )
 }
 
-const CheckInSelected = ({ checkIn }) => {
+const CheckInSelected = ({ checkIn, clearSelectedCheckin }) => {
+  const { name } = checkIn.guest
+  const { dateOfArrival, room: { number: roomNumber } } = checkIn
+  const date = formatDate(dateOfArrival)
   const classes = useStyles()
-  const handleCheckOut = () => window.alert('Are you sure you want to checkout this guest.')
   return (
     <Box style={{ position: 'relative', height: '100%' }}>
-      <Fab onClick={handleCheckOut} className={classes.fab} color='primary' aria-label='checkout'>
-        <DoneAllIcon />
-      </Fab>
+      {!checkIn.checkedOut && <CheckOutButton checkIn={checkIn} className={classes.fab} />}
+      {checkIn.checkedOut && <p className={cn(classes.fab, classes.checkedOutText)}>Guest already checked out</p>}
       <Box
         display='flex'
         style={{ paddingBottom: '20px', position: 'relative' }}
       >
         <AccountCircleOutlinedIcon className={classes.guestIcon} />
         <div className={classes.topDescWrapper}>
-          <p>{checkIn.name}</p>
-          <p>Arrived 25th, October, 2020</p>
-          {/* <p>Checked in by: Tunji Kilani</p> */}
-          <p>Checked out on 26th, November, 2020</p>
-          {/* <p>Checked out by: AdeTutu Bimpe</p> */}
-          <p>Room <strong>A304</strong></p>
-          <IconButton className={classes.moreOptionIconButton}>
-            <MoreHorizOutlinedIcon className={classes.moreOptionIcon} />
-          </IconButton>
+          <p>{name}</p>
+          <p>Arrived {date}</p>
+          <p>Room <strong>{roomNumber}</strong></p>
+          {
+            !checkIn.checkedOut && (
+              <Box display='flex' flexDirection='column' className={classes.iconWrappers}>
+                <EditButton checkIn={checkIn} />
+                <DeleteButton checkIn={checkIn} clearSelectedCheckin={clearSelectedCheckin} />
+              </Box>
+            )
+          }
         </div>
       </Box>
       <Box>
@@ -114,7 +128,7 @@ const NoCheckInSelected = () => {
     <Box display='flex' justifyContent='center' alignItems='center' className={classes.noCheckinSelectedWrapper}>
       <div className={classes.centerAlign}>
         <CollectionsBookmarkIcon className={classes.emptyIcon} />
-        <p>Select a check in to display</p>
+        <p>Select guest to view details</p>
         <p>Try selecting a check in to display it in this window.</p>
       </div>
     </Box>

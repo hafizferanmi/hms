@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     height: '100vh',
     background: '#f4f8fc',
-    padding: 40
+    padding: '20px 40px'
   }
 }))
 

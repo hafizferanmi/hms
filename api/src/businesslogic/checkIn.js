@@ -180,12 +180,12 @@ export const updateCheckIn = async (req, res) => {
 export const checkOut = async (req, res) => {
   debug('checkOut()')
   const currentStaffId = req.staff._id
-  const currentStaffCompanyId = req.staff.companyId
+  const companyId = req.staff.companyId
   const checkInId = req.params.checkInId
 
   let checkIn
   try {
-    checkIn = await CheckIn.find({ _id: checkInId, companyId: currentStaffCompanyId })
+    checkIn = await CheckIn.findOne({ _id: checkInId, companyId })
   } catch (e) {
     return res.json(failed('Error occured. CheckIn not found.'))
   }
@@ -194,8 +194,8 @@ export const checkOut = async (req, res) => {
   if (checkIn.checkedOut) return res.json(failed('Already checkedout cannot proceed.'))
 
   const roomConditions = {
-    _id: checkIn.roomId,
-    companyId: currentStaffCompanyId
+    _id: checkIn.room,
+    companyId
   }
 
   const setRoom = {
@@ -204,19 +204,25 @@ export const checkOut = async (req, res) => {
 
   const findCheckInConditions = {
     _id: checkInId,
-    roomId: checkIn.roomId,
-    companyId: currentStaffCompanyId
+    companyId
   }
 
   const setCheckOut = {
     checkedOutBy: currentStaffId,
-    checkedOut: true
+    checkedOut: true,
+    checkedOutOn: new Date()
   }
 
   try {
-    const room = await Room.findOneAndUpdate(roomConditions, setRoom, { new: true })
-    const checkOut = await CheckIn.findOneAndUpdate(findCheckInConditions, setCheckOut, { new: true })
-    return res.json(success({ room, checkOut }))
+    let room = Room.findOneAndUpdate(roomConditions, setRoom, { new: true })
+    let checkOut = CheckIn.findOneAndUpdate(findCheckInConditions, setCheckOut, { new: true })
+      .populate('checkedInBy', 'name')
+      .populate('checkedOutBy', 'name')
+      .populate('room', ['number'])
+    const promises = await Promise.all([room, checkOut])
+    room = promises[0]
+    checkOut = promises[1]
+    return res.json(success(checkOut))
   } catch (e) {
     return res.json(failed('Error occured. Try again!'))
   }
@@ -231,7 +237,7 @@ export const getCheckIn = async (req, res) => {
     const checkIn = await CheckIn.find({ _id: checkInId, companyId })
       .populate('checkedInBy', 'name')
       .populate('checkedOutBy', 'name')
-      .populate('roomId', ['number', 'status'])
+      .populate('room', ['number'])
     return res.json(success(checkIn))
   } catch (e) {
     return res.json(failed('Error occured. Could not get checkIn.'))
@@ -259,7 +265,7 @@ export const getAllCheckIn = async (req, res) => {
     const checkIns = await CheckIn.find(conditions)
       .populate('checkedInBy', 'name')
       .populate('checkedOutBy', 'name')
-      .populate('roomId', ['number', 'status'])
+      .populate('room', ['number'])
     return res.json(success(checkIns))
   } catch (e) {
     return res.json(failed('Error occured. Could not get checkIns'))
@@ -274,7 +280,7 @@ export const deleteCheckIn = async (req, res) => {
 
   let checkIn
   try {
-    checkIn = await CheckIn.find({ _id: checkInId, companyId })
+    checkIn = await CheckIn.findOne({ _id: checkInId, companyId })
   } catch (e) {
     return res.json(failed('Error occured. Cannot delete checkIn.'))
   }

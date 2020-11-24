@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import notification from 'react-notifications-component'
 import CheckInPage from './CheckInPage'
 import useAsyncFn from '../../hooks/useAsyncFn'
+import useNotify from '../../hooks/useNotify'
+import useDataProvider from '../../hooks/useDataProvider'
 import {
-  deleteCheckIn as deleteCheckInAPI
+  deleteCheckIn as deleteCheckInAPI,
+  checkOut as checkOutAPI
 } from '../../helpers/api'
-import { notify } from '../../helpers/notification'
 import {
   fetchCheckIns,
-  deleteCheckIn as deleteCheckInAction
+  deleteCheckIn as deleteCheckInAction,
+  updateCheckIn as updateCheckInAction
 } from '../../redux/actions/checkIn'
 import Loading from '../misc/Loading'
 
-export const ChekinPageAPIMethods = React.createContext(null)
-
 const CheckInPageContainer = () => {
   const dispatch = useDispatch()
+  const { Provider: DataProvider } = useDataProvider()
   const reduxCheckIn = useSelector(state => state.checkIns)
   const { loading, error, data: checkIns } = reduxCheckIn
 
@@ -26,40 +27,51 @@ const CheckInPageContainer = () => {
   }, [])
 
   const {
-    error: deleteCheckInServerError,
-    loading: deleteCheckInProcessing,
+    error: deleteError,
     response: deleteCheckInResponse,
     executeFn: deleteCheckIn
   } = useAsyncFn(deleteCheckInAPI)
+
+  const {
+    error: checkOutError,
+    response: checkOutResponse,
+    executeFn: checkOut
+  } = useAsyncFn(checkOutAPI)
 
   const handleDeleteCheckIn = (CheckInId) => {
     deleteCheckIn(CheckInId)
   }
 
-  const deleteCheckInProps = {
-    deleteCheckInServerError,
-    deleteCheckInResponse,
-    deleteCheckInProcessing,
-    handleDeleteCheckIn
+  const handleCheckout = (CheckInId) => {
+    checkOut(CheckInId)
   }
 
-  useEffect(() => {
-    if (deleteCheckInResponse && deleteCheckInResponse.success) {
-      dispatch(deleteCheckInAction(deleteCheckInResponse.result))
-      notification.success(...notify('Checkin successfully deleted.'))
-    } else if (deleteCheckInResponse && !deleteCheckInResponse.success) {
-      notification.error(...notify(deleteCheckInResponse.message))
-    }
-    // eslint-disable-next-line
-  }, [deleteCheckInResponse])
+  const apiMethods = {
+    handleDeleteCheckIn,
+    handleCheckout
+  }
+
+  useNotify({
+    error: deleteError,
+    response: deleteCheckInResponse,
+    message: 'CheckIn successfully deleted',
+    action: deleteCheckInAction
+  })
+
+  useNotify({
+    response: checkOutResponse,
+    error: checkOutError,
+    message: 'Checkedout successfully!',
+    action: updateCheckInAction
+  })
 
   if (loading) return <Loading />
   if (error) return 'Error occured, we are on this issue.'
 
   return (
-    <ChekinPageAPIMethods.Provider value={deleteCheckInProps}>
+    <DataProvider value={apiMethods}>
       <CheckInPage checkIns={checkIns} />
-    </ChekinPageAPIMethods.Provider>
+    </DataProvider>
   )
 }
 

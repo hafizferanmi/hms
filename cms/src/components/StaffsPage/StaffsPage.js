@@ -50,7 +50,11 @@ const filterStaffs = (searchText, staffs) => {
   const searchWords = searchText.split(/\s+/)
   const regExp = toRegex(searchWords, { contains: true, flags: 'i' })
 
-  return staffs.filter(({ name, email, phone, role }) => regExp.test(name) || regExp.test(email) || regExp.test(phone) || regExp.test(role))
+  return staffs.filter((staff) => {
+    const { name, email, phone, role, disabled } = staff
+    const status = disabled ? 'disabled' : 'enabled'
+    return regExp.test(name) || regExp.test(email) || regExp.test(phone) || regExp.test(role) || regExp.test(status)
+  })
 }
 
 const StaffsPage = ({ staffs }) => {

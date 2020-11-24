@@ -66,7 +66,7 @@ export const deleteRoom = (roomId) => deleteResource(`/rooms/delete/${roomId}`)
 
 // CHECKIN API
 export const checkIn = (body) => sendData('/checkIn/add', body)
-export const checkOut = (checkInId) => sendData(`/checkIn/${checkInId}`)
+export const checkOut = (checkInId) => sendData(`/checkIn/checkOut/${checkInId}`)
 export const deleteCheckIn = (checkInId) => deleteResource(`/checkIn/delete/${checkInId}`)
 export const updateCheckIn = (checkInId) => modifyResource(`/checkIn/update/${checkInId}`)
 export const getCheckIns = () => fetchData('/checkIn/all')

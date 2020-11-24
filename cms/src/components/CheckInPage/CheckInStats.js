@@ -5,7 +5,7 @@ import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined'
 const useStyles = makeStyles({
   statsWrapper: {
     fontFamily: 'bk',
-    maxHeight: 'calc(100vh - 150px)',
+    maxHeight: 'calc(100vh - 50px)',
     overflow: 'hidden',
     userSelect: 'none'
   },

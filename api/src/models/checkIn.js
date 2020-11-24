@@ -90,6 +90,9 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'staff'
   },
+  checkedOutOn: {
+    type: Date
+  },
   createdBy: { type: Schema.Types.ObjectId },
   updatedBy: { type: Schema.Types.ObjectId }
 }, {

@@ -1,4 +1,5 @@
 import { values } from 'ramda'
+import dayjs from 'dayjs'
 
 export const buildSelectOptions = (titles, labels) => {
   const options = values(titles).map(title => ({ label: labels[title], value: title }))
@@ -16,3 +17,7 @@ export const getInitials = (name = '') =>
     .slice(0, 2)
     .map((v) => v && v[0].toUpperCase())
     .join('')
+
+export const formatDate = (date) => dayjs(date).format('DD MMMM, YYYY')
+
+export const formatTime = (date) => dayjs(date).format('hh:mm a')
