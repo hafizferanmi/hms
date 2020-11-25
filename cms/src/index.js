@@ -12,16 +12,14 @@ import { CssBaseline } from '@material-ui/core'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ReduxProvider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
+  <ReduxProvider store={store}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
 
-    </ReduxProvider>
-  </React.StrictMode>,
+  </ReduxProvider>,
   document.getElementById('root')
 )
 

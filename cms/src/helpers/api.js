@@ -16,8 +16,8 @@ const request = () => axios.create({
   headers: { Authorization: `Bearer: ${getAuthToken()}` }
 })
 
-export const fetchData = async (path) => {
-  const res = await request().get(path)
+export const fetchData = async (path, params) => {
+  const res = await request().get(path, { params })
   return res.data
 }
 
@@ -69,7 +69,7 @@ export const checkIn = (body) => sendData('/checkIn/add', body)
 export const checkOut = (checkInId) => sendData(`/checkIn/checkOut/${checkInId}`)
 export const deleteCheckIn = (checkInId) => deleteResource(`/checkIn/delete/${checkInId}`)
 export const updateCheckIn = (checkInId) => modifyResource(`/checkIn/update/${checkInId}`)
-export const getCheckIns = () => fetchData('/checkIn/all')
+export const getCheckIns = (startDate, endDate) => fetchData('/checkIn/all', { startDate, endDate })
 export const getCheckIn = (checkInId) => fetchData(`/hall/${checkInId}`)
 
 // HALL API

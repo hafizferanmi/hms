@@ -5,6 +5,7 @@ import useAsyncFn from '../../hooks/useAsyncFn'
 import useNotify from '../../hooks/useNotify'
 import useDataProvider from '../../hooks/useDataProvider'
 import {
+  getCheckIns as getCheckInsAPI,
   deleteCheckIn as deleteCheckInAPI,
   checkOut as checkOutAPI
 } from '../../helpers/api'
@@ -38,6 +39,13 @@ const CheckInPageContainer = () => {
     executeFn: checkOut
   } = useAsyncFn(checkOutAPI)
 
+  const {
+    error: filterError,
+    loading: filterLoading,
+    response: filterResponse,
+    executeFn: filterCheckInsByDate
+  } = useAsyncFn(getCheckInsAPI)
+
   const handleDeleteCheckIn = (CheckInId) => {
     deleteCheckIn(CheckInId)
   }
@@ -46,9 +54,14 @@ const CheckInPageContainer = () => {
     checkOut(CheckInId)
   }
 
+  const fetchDataByDate = (startDate, endDate) => {
+    filterCheckInsByDate(startDate, endDate)
+  }
+
   const apiMethods = {
     handleDeleteCheckIn,
-    handleCheckout
+    handleCheckout,
+    fetchDataByDate
   }
 
   useNotify({
@@ -65,12 +78,14 @@ const CheckInPageContainer = () => {
     action: updateCheckInAction
   })
 
-  if (loading) return <Loading />
-  if (error) return 'Error occured, we are on this issue.'
+  if (loading || filterLoading) return <Loading />
+  if (error || filterError) return 'Error occured, we are on this issue.'
+
+  const filterResults = filterResponse && filterResponse.result
 
   return (
     <DataProvider value={apiMethods}>
-      <CheckInPage checkIns={checkIns} />
+      <CheckInPage checkIns={filterResults || checkIns} />
     </DataProvider>
   )
 }

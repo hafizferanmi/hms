@@ -6,6 +6,7 @@ import CheckInRoomCard from './CheckInRoomCard'
 import PerfectScrollBar from 'react-perfect-scrollbar'
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined'
 import { formatDate } from '../../helpers/misc'
+import DatePickerButton from './CheckInDatePicker'
 
 const useStyles = makeStyles({
   listWrapper: {
@@ -22,7 +23,10 @@ const useStyles = makeStyles({
   },
   searchWrapper: {
     borderBottom: '2px solid whitesmoke',
-    padding: '5px 10px'
+    padding: '5px 10px',
+    '& > div': {
+      width: '50%'
+    }
   },
   searchIcon: {
     color: '#808e9b',
@@ -53,6 +57,12 @@ const useStyles = makeStyles({
   }
 })
 
+const CHECKIN_TYPE = Object.freeze({
+  ALL: 'ALL',
+  CHECKEDOUT: 'CHECKEDOUT',
+  CHECKEDIN: 'CHECKEDIN'
+})
+
 const filterCheckIns = (searchText, checkIns) => {
   const searchWords = searchText.split(/\s+/)
   const regExp = toRegex(searchWords, { contains: true, flags: 'i' })
@@ -64,10 +74,32 @@ const filterCheckIns = (searchText, checkIns) => {
   })
 }
 
+const filterByType = (checkIns, type) => {
+  switch (type) {
+    case CHECKIN_TYPE.ALL:
+      return checkIns
+
+    case CHECKIN_TYPE.CHECKEDIN:
+      return checkIns.filter(checkIn => !checkIn.checkedOut)
+
+    case CHECKIN_TYPE.CHECKEDOUT:
+      return checkIns.filter(checkIn => checkIn.checkedOut)
+
+    default:
+      return checkIns
+  }
+}
+
 const CheckInList = ({ checkIns, handleSelectCheckIn, selectedCheckIn }) => {
   const classes = useStyles()
   const [searchValue, setSearchString] = React.useState()
-  const filteredCheckIns = searchValue ? filterCheckIns(searchValue, checkIns) : checkIns
+  const [filterType, setFilterType] = React.useState()
+  const filteredSearchedCheckIns = searchValue ? filterCheckIns(searchValue, checkIns) : checkIns
+  const filteredCheckIns = filterByType(filteredSearchedCheckIns, filterType)
+
+  const handleCheckInSort = (e) => {
+    setFilterType(e.target.value)
+  }
 
   return (
     <div className={classes.listWrapper}>
@@ -76,14 +108,17 @@ const CheckInList = ({ checkIns, handleSelectCheckIn, selectedCheckIn }) => {
           <SearchOutlinedIcon className={classes.searchIcon} />
           <input placeholder='Search guest' className={classes.searchInput} onChange={(e) => setSearchString(e.target.value)} />
         </Box>
+        <Box className={classes.datePickerWrapper}>
+          <DatePickerButton />
+        </Box>
       </Box>
       <Box display='flex' alignItems='center' justifyContent='space-between' className={classes.guestWrapper}>
         <h3>Guests</h3>
         <div>
-          <select>
-            <option value='ALL'>All guest</option>
-            <option value='CHECKEDOUT'>Checkedin only</option>
-            <option value='CHECKEDIN'>Checkedout only</option>
+          <select onChange={handleCheckInSort}>
+            <option value={CHECKIN_TYPE.ALL}>All guest</option>
+            <option value={CHECKIN_TYPE.CHECKEDIN}>Checkedin only</option>
+            <option value={CHECKIN_TYPE.CHECKEDOUT}>Checkedout only</option>
           </select>
         </div>
       </Box>

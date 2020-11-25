@@ -122,11 +122,9 @@ export const CheckInButton = () => {
   const navigateTo = useNavigate()
   const handleButtonClick = () => navigateTo('/secure/admin/bookings')
   return (
-    <>
-      <Button
-        label='CheckIn guest'
-        onClick={handleButtonClick}
-      />
-    </>
+    <Button
+      label='CheckIn guest'
+      onClick={handleButtonClick}
+    />
   )
 }

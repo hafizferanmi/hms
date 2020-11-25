@@ -248,24 +248,26 @@ export const getAllCheckIn = async (req, res) => {
   debug('getAllCheckIn()')
   const companyId = req.staff.companyId
 
-  // Todo: query params to filter if all, checkedIn, checkedOut, From, To
-  const type = req.query.type
-  // const from  = req.query.from
-  // const to = req.query.to
+  const startDate = req.query.startDate
+  const endDate = req.query.endDate
 
   const conditions = {
     companyId
   }
 
-  if (type === 'CHECKEDOUT') {
-    conditions.checkedOut = true
+  if (startDate && endDate) {
+    conditions.dateOfArrival = { $gte: startDate, $lte: endDate }
   }
+
+  debug('Conditions', conditions)
 
   try {
     const checkIns = await CheckIn.find(conditions)
       .populate('checkedInBy', 'name')
       .populate('checkedOutBy', 'name')
       .populate('room', ['number'])
+      .sort({ dateOfArrival: 'desc' })
+      .limit(20)
     return res.json(success(checkIns))
   } catch (e) {
     return res.json(failed('Error occured. Could not get checkIns'))

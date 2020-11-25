@@ -13,7 +13,7 @@ const LoadingWrapper = styled.div`
 const Loading = () => {
   return (
     <LoadingWrapper>
-      <ReactLoading />
+      <ReactLoading color='blue' />
     </LoadingWrapper>
   )
 }
