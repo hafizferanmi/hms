@@ -16,7 +16,7 @@ import {
 } from '../../../redux/actions/checkIn'
 import CheckInForm from './CheckInForm'
 
-const CheckInFormContainer = ({ checkIn, closeModal }) => {
+const CheckInFormContainer = ({ checkIn }) => {
   const checkInId = checkIn && checkIn._id
   const API = checkInId ? updateCheckInAPI : addCheckInAPI
 
@@ -40,7 +40,6 @@ const CheckInFormContainer = ({ checkIn, closeModal }) => {
       checkIn ? dispatch(updateCheckInAction(newCheckIn)) : dispatch(addCheckInAction(newCheckIn))
       const notificationMessage = checkIn ? 'CheckIn updated successfully' : 'CheckIn added successfully'
       notification.success(...notify(notificationMessage))
-      closeModal()
     }
 
     if (response && !response.success) {
@@ -77,7 +76,6 @@ const CheckInFormContainer = ({ checkIn, closeModal }) => {
     if (deleteResponse && deleteResponse.success) {
       dispatch(deleteCheckInAction(checkIn))
       notification.success(...notify('CheckIn deleted successfully.'))
-      closeModal()
     }
 
     if (deleteResponse && !deleteResponse.success) {

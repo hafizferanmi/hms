@@ -9,6 +9,7 @@ import HallsPage from '../../HallsPage'
 import RoomsPage from '../../RoomsPage'
 import FrontDeskPage from '../../FrontDeskPage'
 import AdminLandingPage from '../../AdminLandingPage'
+import CheckinFormPage from '../../CheckInFormPage'
 
 const AuthRoute = () => {
   return (
@@ -20,8 +21,10 @@ const AuthRoute = () => {
         <StaffsPage path='/staffs' />
         <RoomsPage path='/rooms' />
         <RoomTypesPage path='/roomtypes' />
-        <CheckInPage path='/checkin' />
+        <CheckInPage path='/guest' />
         <HallsPage path='/halls' />
+        <CheckinFormPage path='/checkin' />
+        <CheckinFormPage path='/checkin/:checkInId/update' />
       </ManagersPage>
     </Router>
   )

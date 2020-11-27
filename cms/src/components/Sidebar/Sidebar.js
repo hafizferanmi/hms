@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
 const routes = [
   { link: '/secure/admin/', label: 'Reports', icon: ShowChartIcon },
   { link: '/secure/admin/rooms', label: 'Rooms', icon: GridOnIcon },
-  { link: '/secure/admin/bookings', label: 'Bookings', icon: MenuBookOutlinedIcon },
+  { link: '/secure/admin/checkin', label: 'Bookings', icon: MenuBookOutlinedIcon },
   { link: '/secure/admin/halls', label: 'Halls', icon: HomeWorkIcon },
   { link: '/secure/admin/staffs', label: 'Staffs', icon: FaceIcon },
-  { link: '/secure/admin/checkin', label: 'Check In', icon: SubjectRoundedIcon },
+  { link: '/secure/admin/guest', label: 'Guests', icon: SubjectRoundedIcon },
   { link: '/secure/admin/settings', label: 'Settings', icon: SettingsOutlinedIcon }
 ]
 

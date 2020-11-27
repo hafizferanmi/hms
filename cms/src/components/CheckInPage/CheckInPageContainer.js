@@ -58,12 +58,6 @@ const CheckInPageContainer = () => {
     filterCheckInsByDate(startDate, endDate)
   }
 
-  const apiMethods = {
-    handleDeleteCheckIn,
-    handleCheckout,
-    fetchDataByDate
-  }
-
   useNotify({
     error: deleteError,
     response: deleteCheckInResponse,
@@ -78,14 +72,31 @@ const CheckInPageContainer = () => {
     action: updateCheckInAction
   })
 
-  if (loading || filterLoading) return <Loading />
-  if (error || filterError) return 'Error occured, we are on this issue.'
+  const [filterResults, setFilterResult] = React.useState()
+  const removeDateFilter = () => setFilterResult(null)
 
-  const filterResults = filterResponse && filterResponse.result
+  useEffect(() => {
+    if (filterResponse && filterResponse.result) {
+      setFilterResult(filterResponse.result)
+    }
+  }, [filterResponse])
+
+  const apiMethods = {
+    handleDeleteCheckIn,
+    handleCheckout,
+    fetchDataByDate,
+    removeDateFilter,
+    showingDateFilter: !!filterResults
+  }
+
+  if (loading || filterLoading) return <Loading />
+  if (error || filterError) return 'Error occured, refresh page to continue'
 
   return (
     <DataProvider value={apiMethods}>
-      <CheckInPage checkIns={filterResults || checkIns} />
+      <CheckInPage
+        checkIns={filterResults || checkIns}
+      />
     </DataProvider>
   )
 }

@@ -7,6 +7,8 @@ import PerfectScrollBar from 'react-perfect-scrollbar'
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined'
 import { formatDate } from '../../helpers/misc'
 import DatePickerButton from './CheckInDatePicker'
+import { red } from '@material-ui/core/colors'
+import useDataProvider from '../../hooks/useDataProvider'
 
 const useStyles = makeStyles({
   listWrapper: {
@@ -54,6 +56,14 @@ const useStyles = makeStyles({
   checkInCardsContainer: {
     height: '100%',
     overflow: 'hidden'
+  },
+  resetButton: {
+    background: red[400],
+    color: 'white',
+    fontSize: 12,
+    padding: '2px 5px',
+    cursor: 'pointer',
+    borderRadius: 5
   }
 })
 
@@ -91,22 +101,37 @@ const filterByType = (checkIns, type) => {
 }
 
 const CheckInList = ({ checkIns, handleSelectCheckIn, selectedCheckIn }) => {
+  const { dataInContext } = useDataProvider()
+  const { removeDateFilter, showingDateFilter } = dataInContext
   const classes = useStyles()
   const [searchValue, setSearchString] = React.useState()
   const [filterType, setFilterType] = React.useState()
   const filteredSearchedCheckIns = searchValue ? filterCheckIns(searchValue, checkIns) : checkIns
   const filteredCheckIns = filterByType(filteredSearchedCheckIns, filterType)
 
+  const searchBoxRef = React.useRef()
+  const selectTypeRef = React.useRef()
+
   const handleCheckInSort = (e) => {
     setFilterType(e.target.value)
   }
+
+  const handleRemoveAllFilters = () => {
+    setSearchString(null)
+    setFilterType(null)
+    searchBoxRef.current.value = ''
+    selectTypeRef.current.value = ''
+    removeDateFilter()
+  }
+
+  const showResetButton = searchValue || filterType || showingDateFilter
 
   return (
     <div className={classes.listWrapper}>
       <Box display='flex' justifyContent='space-between' className={classes.searchWrapper}>
         <Box display='flex' alignItems='center'>
           <SearchOutlinedIcon className={classes.searchIcon} />
-          <input placeholder='Search guest' className={classes.searchInput} onChange={(e) => setSearchString(e.target.value)} />
+          <input ref={searchBoxRef} placeholder='Search guest' className={classes.searchInput} onChange={(e) => setSearchString(e.target.value)} />
         </Box>
         <Box className={classes.datePickerWrapper}>
           <DatePickerButton />
@@ -114,9 +139,10 @@ const CheckInList = ({ checkIns, handleSelectCheckIn, selectedCheckIn }) => {
       </Box>
       <Box display='flex' alignItems='center' justifyContent='space-between' className={classes.guestWrapper}>
         <h3>Guests</h3>
+        {showResetButton && <div className={classes.resetButton} onClick={handleRemoveAllFilters}>Reset</div>}
         <div>
-          <select onChange={handleCheckInSort}>
-            <option value={CHECKIN_TYPE.ALL}>All guest</option>
+          <select ref={selectTypeRef} onChange={handleCheckInSort}>
+            <option value=''>All guest</option>
             <option value={CHECKIN_TYPE.CHECKEDIN}>Checkedin only</option>
             <option value={CHECKIN_TYPE.CHECKEDOUT}>Checkedout only</option>
           </select>

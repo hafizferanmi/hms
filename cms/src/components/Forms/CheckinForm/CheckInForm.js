@@ -33,7 +33,6 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
   const { error, message } = serverFormState
   return (
     <ChecInFormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
-      <h3>New checkIn</h3>
       <FormInputWrapper>
         <div>
           <Input.TextInput

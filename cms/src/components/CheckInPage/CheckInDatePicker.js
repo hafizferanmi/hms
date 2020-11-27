@@ -30,13 +30,23 @@ const usePickerStyles = makeStyles({
     zIndex: 300,
     backgroundColor: '#fff',
     backgroundClip: 'padding-box',
-    border: ' 1px solid rgba(27,31,35,.15)',
+    border: '1px solid rgba(27,31,35,.15)',
     borderRadius: '3px',
     boxShadow: '0 3px 12px rgba(27,31,35,.15)'
   },
   datePickerWrapper: {
-    marginTop: 20,
-    borderBottom: '2px solid whitesmoke'
+    marginTop: 10,
+    borderBottom: '0.1px solid #24292e',
+    '& > .DateRangePicker .DateRangePicker__LegendItemColor--selection': {
+      backgroundColor: 'yellow !important'
+    }
+  },
+  guideText: {
+    textAlign: 'center',
+    color: '#24292e',
+    paddingBottom: 10,
+    marginTop: 10,
+    borderBottom: '0.2px solid #24292e'
   },
   pickerMenuButton: {
     padding: '5px 10px',
@@ -60,6 +70,10 @@ const usePickerStyles = makeStyles({
   }
 })
 
+const formatReadableDate = (date) => dayjs(date).format('DD MMM, YYYY')
+const formatDateWithDash = (date) => dayjs(date).format('YYYY-MM-DD')
+const formatWithSlash = (date) => dayjs(date).format('DD/MM/YYYY')
+
 const DatePickerButton = () => {
   const classes = usePickerStyles()
 
@@ -67,15 +81,25 @@ const DatePickerButton = () => {
   const handleClose = () => setPickerVisibility(false)
   const handlePickerToggle = () => setPickerVisibility(!pickerOpen)
 
+  const today = moment()
+  const [selectedDates, setSelectedDates] = React.useState({ dates: moment.range(today.clone().subtract(1, 'day'), today.clone()), default: true })
+  const { dates: actualSelectedDays, default: datepickerTouched } = selectedDates
+  const { start: firstSelectedDay, end: lastSelectedDay } = actualSelectedDays
+
   return (
     <>
       <Box className={classes.datePickerButton}>
         <Box onClick={handlePickerToggle} display='flex' className={classes.datePickerTextIconWrapper}>
-          <div>
-            Select date
-          </div>
+          {!datepickerTouched && <div>{formatWithSlash(firstSelectedDay)} - {formatWithSlash(lastSelectedDay)}</div>}
+          {datepickerTouched && <div>Select date</div>}
         </Box>
-        {pickerOpen && <DatePicker handleClose={handleClose} />}
+        {pickerOpen && (
+          <DatePicker
+            handleClose={handleClose}
+            selectedDates={actualSelectedDays}
+            setSelectedDates={setSelectedDates}
+          />
+        )}
       </Box>
     </>
   )
@@ -83,29 +107,24 @@ const DatePickerButton = () => {
 
 export default DatePickerButton
 
-const DatePicker = ({ handleClose }) => {
+const DatePicker = ({ selectedDates, setSelectedDates, handleClose }) => {
   const classes = usePickerStyles()
   const ref = React.useRef()
   useOutsideClick(ref, handleClose)
 
   const { dataInContext } = useDataProvider()
   const { fetchDataByDate } = dataInContext
-  const today = moment()
 
   const countDays = (firstDay, lastDay) => {
-    return (dayjs(lastDay).diff(dayjs(firstDay), 'day')) + 1 // add the last day since difference is calculated
+    return (dayjs(lastDay).diff(dayjs(firstDay), 'day')) + 1 // add the last day since only difference is calculated
   }
 
-  const formatDateWithSlash = (date) => dayjs(date).format('DD/MM/YYYY')
-  const formatDateWithDash = (date) => dayjs(date).format('YYYY-MM-DD')
-
-  const [selectedDates, setSelectedDates] = React.useState(moment.range(today.clone().subtract(1, 'month'), today.clone()))
   const { start: firstSelectedDay, end: lastSelectedDay } = selectedDates
   const [selectedDaysCount, setSelectedDaysCount] = React.useState(countDays(firstSelectedDay, lastSelectedDay))
 
   const handleDateSelect = (value) => {
     const { start, end } = value
-    setSelectedDates(moment.range(start, end))
+    setSelectedDates({ dates: moment.range(start, end), default: false })
     setSelectedDaysCount(countDays(start, end))
   }
 
@@ -128,6 +147,7 @@ const DatePicker = ({ handleClose }) => {
 
   return (
     <div ref={ref} className={classes.datePickerMenuWrapper}>
+      <Box className={classes.guideText}>Select a date to start filter and a date to stop filter, then click apply</Box>
       <div className={classes.datePickerWrapper}>
         <DateRangePicker
           value={selectedDates}
@@ -138,7 +158,9 @@ const DatePicker = ({ handleClose }) => {
         />
       </div>
       <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
-        <div className={classes.datePickerCounter}>{selectedDaysCount} days - From {formatDateWithSlash(firstSelectedDay)} to {formatDateWithSlash(lastSelectedDay)}</div>
+        <div className={classes.datePickerCounter}>
+          <strong>{selectedDaysCount} day{selectedDaysCount > 1 && 's'}</strong> - From <strong>{formatReadableDate(firstSelectedDay)}</strong> to <strong>{formatReadableDate(lastSelectedDay)}</strong>
+        </div>
         <Box display='flex' flexWrap='wrap'>
           <div onClick={() => handleLastDays(7)} className={classes.pickerMenuButton}>Last 7 days</div>
           <div onClick={() => handleLastDays(30)} className={classes.pickerMenuButton}>Last 30 days</div>
