@@ -10,6 +10,8 @@ import RoomsPage from '../../RoomsPage'
 import FrontDeskPage from '../../FrontDeskPage'
 import AdminLandingPage from '../../AdminLandingPage'
 import CheckinFormPage from '../../CheckInFormPage'
+import AccountPage from '../../AccountPage'
+import SettingsPage from '../../SettingsPage'
 
 const AuthRoute = () => {
   return (
@@ -25,6 +27,8 @@ const AuthRoute = () => {
         <HallsPage path='/halls' />
         <CheckinFormPage path='/checkin' />
         <CheckinFormPage path='/checkin/:checkInId/update' />
+        <AccountPage path='/profile' />
+        <SettingsPage path='/settings' />
       </ManagersPage>
     </Router>
   )
