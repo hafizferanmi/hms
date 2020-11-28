@@ -12,8 +12,8 @@ import { useSelector } from 'react-redux'
 const useStyles = makeStyles({
   seletetedCheckinWrapper: {
     background: 'white',
-    maxHeight: 'calc(100vh - 150px)',
-    height: 'calc(100vh - 150px)',
+    maxHeight: 'calc(100vh - 110px)',
+    height: 'calc(100vh - 110px)',
     overflow: 'hidden',
     padding: 20,
     borderRadius: 5

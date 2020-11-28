@@ -13,10 +13,11 @@ import useDataProvider from '../../hooks/useDataProvider'
 const useStyles = makeStyles({
   listWrapper: {
     background: 'white',
-    maxHeight: 'calc(100vh - 150px)',
-    height: 'calc(100vh - 150px)',
     width: '100%',
-    borderRadius: 5
+    borderRadius: 5,
+    height: 'calc(100vh - 110px)',
+    display: 'flex',
+    flexDirection: 'column'
   },
   emptyGuestText: {
     height: '100%',

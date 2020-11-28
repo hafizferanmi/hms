@@ -20,7 +20,6 @@ const useStyles = makeStyles({
     borderRadius: 5,
     minWidth: 250,
     background: 'white',
-    fontFamily: 'so',
     boxShadow: '0 3px 12px 0 rgba(0, 102, 245, 0.1)',
     padding: '20px 5px'
   },

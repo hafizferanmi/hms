@@ -48,4 +48,8 @@
   src: url('./assets/fonts/sofiapro-light.otf') format('woff2');
 }
 
+body {
+  font-family: bk;
+}
+
 
