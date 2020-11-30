@@ -8,7 +8,6 @@ import Password from './Password'
 import ManagersLayout from '../ManagersPage/ManagersLayout'
 
 const SettingsView = () => {
-
   return (
     <ManagersLayout
       title='Settings'

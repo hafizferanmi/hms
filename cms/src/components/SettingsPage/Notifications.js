@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
+import React from 'react'
+import PropTypes from 'prop-types'
+import clsx from 'clsx'
 import {
   Box,
   Button,
@@ -13,7 +13,7 @@ import {
   Grid,
   Typography,
   makeStyles
-} from '@material-ui/core';
+} from '@material-ui/core'
 
 const useStyles = makeStyles(({
   root: {},
@@ -21,10 +21,10 @@ const useStyles = makeStyles(({
     display: 'flex',
     flexDirection: 'column'
   }
-}));
+}))
 
 const Notifications = ({ className, ...rest }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <form
@@ -33,15 +33,15 @@ const Notifications = ({ className, ...rest }) => {
     >
       <Card>
         <CardHeader
-          subheader="Manage the notifications"
-          title="Notifications"
+          subheader='Manage the notifications'
+          title='Notifications'
         />
         <Divider />
         <CardContent>
           <Grid
             container
             spacing={6}
-            wrap="wrap"
+            wrap='wrap'
           >
             <Grid
               className={classes.item}
@@ -51,9 +51,9 @@ const Notifications = ({ className, ...rest }) => {
               xs={12}
             >
               <Typography
-                color="textPrimary"
+                color='textPrimary'
                 gutterBottom
-                variant="h6"
+                variant='h6'
               >
                 Notifications
               </Typography>
@@ -61,23 +61,23 @@ const Notifications = ({ className, ...rest }) => {
                 control={(
                   <Checkbox defaultChecked />
                 )}
-                label="Email"
+                label='Email'
               />
               <FormControlLabel
                 control={(
                   <Checkbox defaultChecked />
                 )}
-                label="Push Notifications"
+                label='Push Notifications'
               />
               <FormControlLabel
                 control={<Checkbox />}
-                label="Text Messages"
+                label='Text Messages'
               />
               <FormControlLabel
                 control={(
                   <Checkbox defaultChecked />
                 )}
-                label="Phone calls"
+                label='Phone calls'
               />
             </Grid>
             <Grid
@@ -88,9 +88,9 @@ const Notifications = ({ className, ...rest }) => {
               xs={12}
             >
               <Typography
-                color="textPrimary"
+                color='textPrimary'
                 gutterBottom
-                variant="h6"
+                variant='h6'
               >
                 Messages
               </Typography>
@@ -98,41 +98,41 @@ const Notifications = ({ className, ...rest }) => {
                 control={(
                   <Checkbox defaultChecked />
                 )}
-                label="Email"
+                label='Email'
               />
               <FormControlLabel
                 control={<Checkbox />}
-                label="Push Notifications"
+                label='Push Notifications'
               />
               <FormControlLabel
                 control={(
                   <Checkbox defaultChecked />
                 )}
-                label="Phone calls"
+                label='Phone calls'
               />
             </Grid>
           </Grid>
         </CardContent>
         <Divider />
         <Box
-          display="flex"
-          justifyContent="flex-end"
+          display='flex'
+          justifyContent='flex-end'
           p={2}
         >
           <Button
-            color="primary"
-            variant="contained"
+            color='primary'
+            variant='contained'
           >
             Save
           </Button>
         </Box>
       </Card>
     </form>
-  );
-};
+  )
+}
 
 Notifications.propTypes = {
   className: PropTypes.string
-};
+}
 
-export default Notifications;
+export default Notifications

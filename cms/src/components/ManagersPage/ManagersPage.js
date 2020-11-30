@@ -46,9 +46,7 @@ const ManagersPage = (props) => {
           <Sidebar />
         </aside>
         <main className={classes.content}>
-          <div className={classes.contentWrapper}>
-            {children}
-          </div>
+          {children}
         </main>
       </div>
     </>

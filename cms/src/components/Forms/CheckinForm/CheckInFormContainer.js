@@ -14,7 +14,7 @@ import {
   updateCheckIn as updateCheckInAction,
   deleteCheckIn as deleteCheckInAction
 } from '../../../redux/actions/checkIn'
-import CheckInForm from './CheckInForm'
+import CheckInForm from './ChecinFormNew'
 
 const CheckInFormContainer = ({ checkIn }) => {
   const checkInId = checkIn && checkIn._id

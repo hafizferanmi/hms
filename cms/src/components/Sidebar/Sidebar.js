@@ -31,6 +31,7 @@ const routes = [
   { link: '/secure/admin/rooms', label: 'Rooms', icon: GridOnIcon },
   { link: '/secure/admin/checkin', label: 'Bookings', icon: MenuBookOutlinedIcon },
   { link: '/secure/admin/halls', label: 'Halls', icon: HomeWorkIcon },
+  { link: '/secure/admin/mails-and-sms', label: 'Mails & SMS', icon: HomeWorkIcon },
   { link: '/secure/admin/staffs', label: 'Staffs', icon: FaceIcon },
   { link: '/secure/admin/guest', label: 'Guests', icon: SubjectRoundedIcon },
   { link: '/secure/admin/settings', label: 'Settings', icon: SettingsOutlinedIcon }
