@@ -11,8 +11,8 @@ import CheckInSchema from './CheckInSchema'
 
 const useStyles = makeStyles({
   formWrapper: {
-    width: '90%',
-    margin: '30px auto'
+    width: '70%',
+    margin: '50px auto'
   },
   formMenuWrapper: {
     width: '20%',
@@ -42,11 +42,11 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <Box display='flex' className={classes.formWrapper} justifyContent='space-between'>
         <Box className={classes.formMenuWrapper}>
-          <div onClick={() => setSelected(0)}>Guest information</div>
-          <div onClick={() => setSelected(1)}>Guest information</div>
-          <div onClick={() => setSelected(2)}>Guest information</div>
-          <div onClick={() => setSelected(3)}>Guest information</div>
-          <div onClick={() => setSelected(4)}>Guest information</div>
+          <div onClick={() => setSelected(0)}>Guest Details</div>
+          <div onClick={() => setSelected(1)}>Next of kin</div>
+          <div onClick={() => setSelected(2)}>Room info</div>
+          <div onClick={() => setSelected(3)}>Payment Details</div>
+          <div onClick={() => setSelected(4)}>View full info</div>
         </Box>
         <Box className={classes.formBox}>
           {selected === 0 && <GuestDetailsForm register={register} errors={errors} />}
@@ -72,6 +72,11 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
 }
 
 const GuestDetailsForm = ({ register, errors }) => {
+  React.useEffect(() => {
+    console.log('ade')
+
+    return () => console.log('Unmounted')
+  })
   return (
     <>
       <div>
