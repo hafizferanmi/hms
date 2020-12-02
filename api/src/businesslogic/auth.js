@@ -3,6 +3,7 @@ import Admin from '../models/admin'
 import helpers from '../helpers'
 import Debug from 'debug'
 import crypto from 'crypto'
+import sendMail from '../helpers/mail'
 
 const debug = Debug('API: businesslogic/auth.js')
 
@@ -104,7 +105,15 @@ export const recoverStaffPassword = async (req, res) => {
     }
 
     await Staff.findOneAndUpdate({ email }, set, { new: true })
-    // TODO: sendMail containing reset password token to the user
+
+    const mailConfig = {
+      from: 'no-reply@isuites.xyz',
+      to: email,
+      subject: 'Recover password',
+      text: 'Your link to recover the password is being sent to you. Click the button below to revover your password'
+    }
+
+    sendMail(mailConfig)
     return res.json(success())
   } catch (e) {
     return res.json(failed('Error occured. Try again'))
@@ -113,7 +122,6 @@ export const recoverStaffPassword = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
   debug('resetPassword()')
-  // extract token from url, send new password and confirm password to the server, store the new password
   const { token, email, password, confirmPassword } = req.body
 
   if (!token || !email || !password || !confirmPassword) return res.json(failed('Fill form properly to proceed'))
@@ -128,7 +136,15 @@ export const resetPassword = async (req, res) => {
       resetPasswordToken: null,
       resetPasswordTokenExpires: null
     }
-    // TODO: Send mail that password is reset successfully to staff.
+
+    const mailConfig = {
+      from: 'no-reply@isuites.xyz',
+      to: email,
+      subject: 'Reset password',
+      text: 'Your password has being reset successfully, you can now login with you new password. Thanks'
+    }
+
+    sendMail(mailConfig)
     await Staff.findOneAndUpdate({ email }, set)
     return res.json(success())
   } catch (e) {
