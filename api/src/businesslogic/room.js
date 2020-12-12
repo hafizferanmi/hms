@@ -3,7 +3,7 @@ import Room from '../models/room'
 import RoomType from '../models/roomTypes'
 import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
-import { ROOM_STATUS } from '../constants/room'
+import { ROOM_STATUS, ROOM_CLEAN_STATUS } from '../constants/room'
 
 const debug = Debug('API:businessLogic/room.js')
 
@@ -33,6 +33,7 @@ export const addRoom = async (req, res) => {
     number,
     desc,
     roomTypeId,
+    cleanStatus: ROOM_CLEAN_STATUS.CLEAN,
     companyId: companyId,
     createdBy: currentStaffId,
     updatedBy: currentStaffId

@@ -11,3 +11,15 @@ export const ROOM_STATUS_LABEL = Object.freeze({
   [ROOM_STATUS.NOT_AVAILABLE]: 'Not available',
   [ROOM_STATUS.BOOKED]: 'Booked'
 })
+
+export const ROOM_CLEAN_STATUS = Object.freeze({
+  CLEAN: 'CLEAN',
+  DIRTY: 'DIRTY',
+  CLEANING: 'CLEANING'
+})
+
+export const ROOM_CLEAN_STATUS_LABEL = Object.freeze({
+  [ROOM_CLEAN_STATUS.CLEAN]: 'Clean',
+  [ROOM_CLEAN_STATUS.CLEANING]: 'Cleaning',
+  [ROOM_CLEAN_STATUS.DIRTY]: 'Dirty'
+})

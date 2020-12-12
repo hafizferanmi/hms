@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import { ROOM_STATUS } from '../constants/room'
+import { ROOM_STATUS, ROOM_CLEAN_STATUS } from '../constants/room'
 import R from 'ramda'
 
 const schema = new Schema({
@@ -15,6 +15,12 @@ const schema = new Schema({
     required: true,
     default: ROOM_STATUS.EMPTY,
     enum: R.values(ROOM_STATUS)
+  },
+  cleanStatus: {
+    type: String,
+    required: true,
+    default: ROOM_CLEAN_STATUS.CLEAN,
+    enum: R.values(ROOM_CLEAN_STATUS)
   },
   roomTypeId: {
     type: Schema.Types.ObjectId,
