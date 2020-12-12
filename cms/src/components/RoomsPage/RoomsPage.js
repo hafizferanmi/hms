@@ -4,12 +4,15 @@ import { Grid, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import useModal from '../../hooks/useModal'
 import Modal from '../misc/Modal'
+import ConfirmModal from '../misc/ConfirmModal'
 import RoomsPageTop, { SORT_ROOM_STATUS, SORT_ROOM_STATUS_LABEL } from './RoomsPageTop'
 import RoomTypeForm from '../Forms/RoomTypesForm'
+import RoomForm from '../Forms/RoomForm'
 import { blue } from '@material-ui/core/colors'
 import { RoomCard, RoomTypeCard } from './RoomsPageCards'
 import ManagersLayout from '../ManagersPage/ManagersLayout'
 import { ROOM_STATUS, ROOM_CLEAN_STATUS } from '../../constants/room'
+import useDataProvider from '../../hooks/useDataProvider'
 
 const useStyles = makeStyles((theme) => ({
   headerBox: {
@@ -79,7 +82,13 @@ export const VIEW = {
 
 const RoomsPage = ({ rooms, roomTypes }) => {
   const classes = useStyles()
-  const { isOpen, openModal, closeModal, data: selectedRoomType } = useModal()
+  const roomTypeFormModal = useModal()
+  const roomFormModal = useModal()
+  const deleteRoomTypeconfirmModal = useModal()
+  const deleteRoomconfirmModal = useModal()
+  const { dataInContext } = useDataProvider()
+  const { handleDeleteRoomType, handleDeleteRoom } = dataInContext
+
   const [sortStatus, setSortStatus] = React.useState()
   const handleSortStatus = (status) => setSortStatus(status)
 
@@ -138,7 +147,7 @@ const RoomsPage = ({ rooms, roomTypes }) => {
     <ManagersLayout title='Rooms'>
       <RoomsPageTop
         handleSortStatus={handleSortStatus}
-        handleOpenFormModal={() => openModal()}
+        handleOpenFormModal={() => roomTypeFormModal.openModal()}
       />
       <Box className={classes.roomsDataWrapper} display='flex' justifyContent='space-between' alignItems='center'>
         <div className={classes.statCount}>Booked rooms: <span>{bookedRooms.length}</span></div>
@@ -152,14 +161,23 @@ const RoomsPage = ({ rooms, roomTypes }) => {
         <Box className={classes.listViewWrapper}>
           {roomsWithType.map((roomWithType) => (
             <Box key={roomWithType._id}>
-              <RoomTypeCard roomType={roomWithType} />
+              <RoomTypeCard
+                roomType={roomWithType}
+                handleAddRoom={() => roomFormModal.openModal({ roomType: roomWithType._id })}
+                handleUpdate={() => roomTypeFormModal.openModal(roomWithType)}
+                handleDelete={() => deleteRoomTypeconfirmModal.openModal(roomWithType)}
+              />
               {!roomWithType.rooms && sortStatus && <div>No room currently <span style={{ textTransform: 'lowercase' }}>{SORT_ROOM_STATUS_LABEL[sortStatus]}</span></div>}
               {!roomWithType.rooms && !sortStatus && <div>No rooms added yet</div>}
               {roomWithType.rooms && (
                 <Grid container spacing={2}>
                   {roomWithType.rooms.map((room) => (
                     <Grid key={room._id} item xs={12} md={2}>
-                      <RoomCard room={room} />
+                      <RoomCard
+                        room={room}
+                        handleUpdate={() => roomFormModal.openModal(room)}
+                        handleDelete={() => deleteRoomconfirmModal.openModal(room)}
+                      />
                     </Grid>
                   ))}
                 </Grid>
@@ -169,14 +187,37 @@ const RoomsPage = ({ rooms, roomTypes }) => {
         </Box>
 
         <Modal
-          open={isOpen}
-          handleClose={closeModal}
+          open={roomTypeFormModal.isOpen}
+          handleClose={roomTypeFormModal.closeModal}
         >
           <RoomTypeForm
-            roomType={selectedRoomType}
-            closeModal={closeModal}
+            roomType={roomTypeFormModal.data}
+            closeModal={roomTypeFormModal.closeModal}
           />
         </Modal>
+        <Modal
+          open={roomFormModal.isOpen}
+          handleClose={roomFormModal.closeModal}
+        >
+          <RoomForm
+            room={roomFormModal.data}
+            closeModal={roomFormModal.closeModal}
+          />
+        </Modal>
+        <ConfirmModal
+          isOpen={deleteRoomTypeconfirmModal.isOpen}
+          title='Delete Roomtype?'
+          closeModal={deleteRoomTypeconfirmModal.closeModal}
+          message={`Are you sure you want to delete room type with name - ${deleteRoomTypeconfirmModal.data && deleteRoomTypeconfirmModal.data.name}`}
+          confirmAction={() => handleDeleteRoomType(deleteRoomTypeconfirmModal.data && deleteRoomTypeconfirmModal.data._id)}
+        />
+        <ConfirmModal
+          isOpen={deleteRoomconfirmModal.isOpen}
+          title='Delete Room?'
+          closeModal={deleteRoomconfirmModal.closeModal}
+          message={`Are you sure you want to delete room with number - ${deleteRoomconfirmModal.data && deleteRoomconfirmModal.data.number}`}
+          confirmAction={() => handleDeleteRoom(deleteRoomconfirmModal.data && deleteRoomconfirmModal.data._id)}
+        />
       </div>
     </ManagersLayout>
   )

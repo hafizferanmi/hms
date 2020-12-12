@@ -3,6 +3,7 @@ import { makeStyles, IconButton, Box } from '@material-ui/core'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import cn from 'clsx'
 import { RoomCardMenu, RoomTypeCardMenu } from './RoomPageMenu'
+import { ROOM_STATUS, ROOM_CLEAN_STATUS } from '../../constants/room'
 
 const useStyles = makeStyles({
   roomCardWrapper: {
@@ -15,7 +16,35 @@ const useStyles = makeStyles({
   },
   statusWrapper: {
     marginTop: 15,
-    marginBottom: 10
+    marginBottom: 10,
+    '& > .empty': {
+      color: 'white',
+      background: 'grey'
+    },
+    '& > .booked': {
+      background: 'orange',
+      color: 'white'
+    },
+    '& > .reserved': {
+      color: 'white',
+      background: 'lightblue'
+    },
+    '& > .notAvailable': {
+      color: 'white',
+      background: 'pink'
+    },
+    '& > .clean': {
+      color: 'black',
+      background: 'lightgreen'
+    },
+    '& > .dirty': {
+      color: 'white',
+      background: 'red'
+    },
+    '& > .cleaning': {
+      color: 'white',
+      background: 'black'
+    }
   },
   statuses: {
     padding: 5,
@@ -27,8 +56,6 @@ const useStyles = makeStyles({
     background: 'rgba(0, 102, 245, 0.1)'
   },
   emptyStatus: {
-    background: '#ff623a',
-    color: 'white',
     marginLeft: 5
   },
   roomNumer: {
@@ -59,7 +86,20 @@ const useStyles = makeStyles({
   }
 })
 
-export const RoomCard = ({ room }) => {
+const ROOM_STATUS_CLASSES = {
+  [ROOM_STATUS.BOOKED]: 'booked',
+  [ROOM_STATUS.EMPTY]: 'empty',
+  [ROOM_STATUS.RESERVED]: 'reserved',
+  [ROOM_STATUS.NOT_AVAILABLE]: 'notAvailable'
+}
+
+const ROOM_CLEAN_STATUS_CLASSES = {
+  [ROOM_CLEAN_STATUS.CLEAN]: 'clean',
+  [ROOM_CLEAN_STATUS.DIRTY]: 'dirty',
+  [ROOM_CLEAN_STATUS.CLEANING]: 'cleaning'
+}
+
+export const RoomCard = ({ room, handleUpdate, handleDelete }) => {
   const { number, status, cleanStatus } = room
   const classes = useStyles()
   const [showMenu, setMenuVisible] = React.useState(false)
@@ -68,8 +108,8 @@ export const RoomCard = ({ room }) => {
     <div className={classes.roomCardWrapper}>
       <div className={classes.roomNumer}>Room {number}</div>
       <div className={classes.statusWrapper}>
-        <span className={cn(classes.cleanStatus, classes.statuses)}>{cleanStatus}</span>
-        <span className={cn(classes.statuses, classes.emptyStatus)}>{status}</span>
+        <span className={cn(ROOM_CLEAN_STATUS_CLASSES[cleanStatus], classes.statuses)}>{cleanStatus}</span>
+        <span className={cn(ROOM_STATUS_CLASSES[status], classes.statuses, classes.emptyStatus)}>{status}</span>
       </div>
       <div className={classes.dotIconWrapper}>
         <IconButton onClick={() => setMenuVisible(true)}>
@@ -79,7 +119,10 @@ export const RoomCard = ({ room }) => {
       {showMenu && (
         <div className={cn(classes.menuWrapper)}>
           <RoomCardMenu
+            roomStatus={room.status}
             handleClose={handleClose}
+            handleUpdate={handleUpdate}
+            handleDelete={handleDelete}
           />
         </div>
       )}
@@ -100,7 +143,7 @@ const useTypeClasses = makeStyles({
   }
 })
 
-export const RoomTypeCard = ({ roomType }) => {
+export const RoomTypeCard = ({ roomType, handleAddRoom, handleUpdate, handleDelete }) => {
   const { name } = roomType
   const classes = useTypeClasses()
   const [showRoomTypeMenu, setMenuVisible] = React.useState(false)
@@ -112,7 +155,16 @@ export const RoomTypeCard = ({ roomType }) => {
       <IconButton onClick={() => setMenuVisible(true)}>
         <MoreVertIcon className={classes.moreIcon} />
       </IconButton>
-      {showRoomTypeMenu && <div className={classes.roomTypeMenu}><RoomTypeCardMenu handleClose={handleCloseMenu} /></div>}
+      {showRoomTypeMenu && (
+        <div className={classes.roomTypeMenu}>
+          <RoomTypeCardMenu
+            handleClose={handleCloseMenu}
+            handleAddRoom={handleAddRoom}
+            handleUpdate={handleUpdate}
+            handleDelete={handleDelete}
+          />
+        </div>
+      )}
     </Box>
 
   )

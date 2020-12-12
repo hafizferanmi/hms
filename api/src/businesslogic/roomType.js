@@ -65,6 +65,8 @@ export const deleteRoomType = async (req, res) => {
   const roomTypeId = req.params.roomTypeId
   const companyId = req.staff.companyId
 
+  if (!roomTypeId) return res.json(failed('Error occured. Invalid roomtype'))
+
   try {
     const deletedRoomType = RoomType.findOneAndDelete({ _id: roomTypeId, companyId })
     const deleteRoomsOfRoomTypes = Room.deleteMany({ roomTypeId: roomTypeId, companyId })
