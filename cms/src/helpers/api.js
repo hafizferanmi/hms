@@ -85,3 +85,10 @@ export const getBooking = (bookingId) => fetchData(`/booking/${bookingId}`)
 export const addBooking = (body) => sendData('/booking/add', body)
 export const updateBooking = (bookingId, body) => modifyResource(`/booking/update/${bookingId}`, body)
 export const deleteBooking = (bookingId) => deleteResource(`/booking/delete/${bookingId}`)
+
+// TODOS API
+export const getTodos = () => fetchData('/todos/all')
+export const getTodo = (todoId) => fetchData(`/todos/${todoId}`)
+export const addTodo = (body) => sendData('/todos/add', body)
+export const updateTodo = (todoId, body) => modifyResource(`/todos/update/${todoId}`, body)
+export const deleteTodo = (todoId) => deleteResource(`/todos/delete/${todoId}`)

@@ -22,7 +22,8 @@ export const checkIn = async (req, res) => {
 
   const {
     title,
-    name,
+    firstName,
+    lastName,
     email,
     phone,
     occupation,
@@ -43,7 +44,8 @@ export const checkIn = async (req, res) => {
     room: roomId,
     guest: {
       title,
-      name,
+      firstName,
+      lastName,
       email,
       phone,
       occupation,
@@ -111,7 +113,8 @@ export const updateCheckIn = async (req, res) => {
 
   const {
     title,
-    name,
+    firstName,
+    lastName,
     email,
     phone,
     occupation,
@@ -132,7 +135,8 @@ export const updateCheckIn = async (req, res) => {
     room: roomId,
     guest: {
       title,
-      name,
+      firstName,
+      lastName,
       email,
       phone,
       occupation,

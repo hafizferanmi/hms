@@ -29,7 +29,6 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
     defaultValues: checkIn
   })
   const { isSubmitting } = formState
-  // const { handleDeleteRoomType } = deleteRoomTypeProps
   const { error, message } = serverFormState
   return (
     <ChecInFormWrapper onSubmit={handleSubmit(handleFormSubmit)}>

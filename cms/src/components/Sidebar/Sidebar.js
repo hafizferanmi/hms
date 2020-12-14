@@ -6,13 +6,13 @@ import {
 } from '@material-ui/core'
 import ShowChartIcon from '@material-ui/icons/ShowChart'
 import GridOnIcon from '@material-ui/icons/GridOn'
-import MenuBookOutlinedIcon from '@material-ui/icons/MenuBookOutlined'
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined'
 import FaceIcon from '@material-ui/icons/Face'
-import HomeWorkIcon from '@material-ui/icons/HomeWork'
 import SubjectRoundedIcon from '@material-ui/icons/SubjectRounded'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import NavItem from './NavItem'
+// import MenuBookOutlinedIcon from '@material-ui/icons/MenuBookOutlined'
+// import HomeWorkIcon from '@material-ui/icons/HomeWork'
 
 const useStyles = makeStyles((theme) => ({
   menuWrapper: {
@@ -28,12 +28,12 @@ const useStyles = makeStyles((theme) => ({
 
 const routes = [
   { link: '/secure/admin/', label: 'Reports', icon: ShowChartIcon },
-  { link: '/secure/admin/rooms', label: 'Rooms', icon: GridOnIcon },
-  { link: '/secure/admin/checkin', label: 'Bookings', icon: MenuBookOutlinedIcon },
-  { link: '/secure/admin/halls', label: 'Halls', icon: HomeWorkIcon },
-  { link: '/secure/admin/mails-and-sms', label: 'Mails & SMS', icon: HomeWorkIcon },
-  { link: '/secure/admin/staffs', label: 'Staffs', icon: FaceIcon },
   { link: '/secure/admin/guest', label: 'Guests', icon: SubjectRoundedIcon },
+  { link: '/secure/admin/rooms', label: 'Rooms', icon: GridOnIcon },
+  // { link: '/secure/admin/checkin', label: 'Bookings', icon: MenuBookOutlinedIcon },
+  // { link: '/secure/admin/halls', label: 'Halls', icon: HomeWorkIcon },
+  // { link: '/secure/admin/mails-and-sms', label: 'Mails & SMS', icon: HomeWorkIcon },
+  { link: '/secure/admin/staffs', label: 'Staffs', icon: FaceIcon },
   { link: '/secure/admin/settings', label: 'Settings', icon: SettingsOutlinedIcon }
 ]
 

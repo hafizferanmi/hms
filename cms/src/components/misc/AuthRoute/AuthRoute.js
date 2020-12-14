@@ -25,8 +25,8 @@ const AuthRoute = () => {
         <RoomTypesPage path='/roomtypes' />
         <CheckInPage path='/guest' />
         <HallsPage path='/halls' />
-        <CheckinFormPage path='/checkin' />
-        <CheckinFormPage path='/checkin/:checkInId/update' />
+        <CheckinFormPage path='/checkin/*' />
+        {/* <CheckinFormPage path='/checkin/:checkInId/update' /> */}
         <AccountPage path='/profile' />
         <SettingsPage path='/settings' />
       </ManagersPage>
