@@ -14,13 +14,15 @@ import {
   updateCheckIn as updateCheckInAction,
   deleteCheckIn as deleteCheckInAction
 } from '../../../redux/actions/checkIn'
+import { fetchRooms } from '../../../redux/actions/rooms'
 import CheckInForm from './ChecinFormNew'
 
 const CheckInFormContainer = ({ checkIn }) => {
   const checkInId = checkIn && checkIn._id
   const API = checkInId ? updateCheckInAPI : addCheckInAPI
-
   const dispatch = useDispatch()
+
+  // FORMS SUBMISSION STARTS HERE
   const {
     error: serverError,
     loading: submitting,
@@ -53,7 +55,18 @@ const CheckInFormContainer = ({ checkIn }) => {
     submitting,
     message: response && response.message
   }
+  // FORM SUBMISSION ENDS HERE
 
+  // ROOMS FETCHING STARTS HERE
+
+  useEffect(() => {
+    dispatch(fetchRooms())
+    // eslint-disable-next-line
+  }, [])
+
+  // ROOMS FETCHING ENDS HERE
+
+  // DELETES STARTS HERE
   const {
     error: deleteServerError,
     loading: deleteProcessing,
@@ -83,6 +96,8 @@ const CheckInFormContainer = ({ checkIn }) => {
     }
     // eslint-disable-next-line
   }, [deleteResponse])
+
+  // DELETE ENDS HERE
   return (
     <div>
       <CheckInForm

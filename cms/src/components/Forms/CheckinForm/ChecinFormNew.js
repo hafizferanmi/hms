@@ -1,58 +1,89 @@
 import React from 'react'
-import { Box, makeStyles } from '@material-ui/core'
+import { Box, Grid, makeStyles } from '@material-ui/core'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
+import cn from 'clsx'
+import { Router, useNavigate } from '@reach/router'
 
-import Input from '../../Inputs'
 import Button from '../../misc/Button'
 import ErrorMessage from '../../misc/ErrorMessage'
 import CheckInSchema from './CheckInSchema'
+import GuestDetailsForm from './GuestDetailsForm'
+import RoomDetailsForm from './RoomDetailsForm'
 
 const useStyles = makeStyles({
   formWrapper: {
     width: '70%',
-    margin: '50px auto'
+    margin: '30px auto'
   },
   formMenuWrapper: {
-    width: '20%',
+    width: '30%',
+    marginTop: 30,
+    marginRight: 10,
     '& > div': {
       cursor: 'pointer',
-      padding: 5
+      padding: 5,
+      textTransform: 'uppercase',
+      fontWeight: 'bold'
     }
   },
+  activeMenu: {
+    fontWeight: 'bold',
+    color: 'red',
+    textTransform: 'uppercase'
+  },
   formBox: {
-    background: 'white',
-    width: '75%'
+    width: '95%',
+    background: 'white'
   }
 })
 
 const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
   const classes = useStyles()
-  const [selected, setSelected] = React.useState(0)
+  const navigateTo = useNavigate()
 
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, errors, formState, trigger, control } = useForm({
     resolver: yupResolver(CheckInSchema),
     defaultValues: checkIn
   })
   const { isSubmitting } = formState
-  // const { handleDeleteRoomType } = deleteRoomTypeProps
   const { error, message } = serverFormState
+
+  const handleValidateClientDetails = async () => {
+    const clientDetailsValid = await trigger(['title', 'firstName', 'lastName', 'email', 'phone', 'occupation', 'arrivingFrom', 'purpose', 'meansOfTravel', 'nextOfKin', 'nextOfKinPhoneNo'])
+    if (clientDetailsValid) navigateTo('/secure/admin/checkin/room-details')
+  }
+
+  const handleValidateRoomDetails = async () => {
+    const roomDetailsValid = await trigger(['room', 'dateOfArrival', 'dateOfDeparture', 'note'])
+    if (roomDetailsValid) handleSubmit(handleFormSubmit)
+  }
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <Box display='flex' className={classes.formWrapper} justifyContent='space-between'>
-        <Box className={classes.formMenuWrapper}>
-          <div onClick={() => setSelected(0)}>Guest Details</div>
-          <div onClick={() => setSelected(1)}>Next of kin</div>
-          <div onClick={() => setSelected(2)}>Room info</div>
-          <div onClick={() => setSelected(3)}>Payment Details</div>
-          <div onClick={() => setSelected(4)}>View full info</div>
-        </Box>
-        <Box className={classes.formBox}>
-          {selected === 0 && <GuestDetailsForm register={register} errors={errors} />}
-          {selected === 1 && <GuestNextOfKinForm register={register} errors={errors} />}
-          {selected === 2 && <GuestPaymentDetailsForm register={register} errors={errors} />}
-        </Box>
+        <Grid className={classes.formMenuWrapper}>
+          <div className={cn(classes.activeMenu)}>Guest information</div>
+          <div className={cn(classes.activeMenu)}>Payment info</div>
+          <div className={cn(classes.activeMenu)}>ID </div>
+        </Grid>
+        <Grid item xs={8} md={8} className={classes.formBox}>
+          <Router>
+            <GuestDetailsForm
+              path='/guest-details'
+              handleValidateClientDetails={handleValidateClientDetails}
+              register={register}
+              errors={errors}
+            />
+            <RoomDetailsForm
+              path='/room-details'
+              handleValidateRoomDetails={handleValidateRoomDetails}
+              register={register}
+              errors={errors}
+              control={control}
+            />
+          </Router>
+        </Grid>
       </Box>
 
       <div>
@@ -68,94 +99,6 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
       />
     </form>
 
-  )
-}
-
-const GuestDetailsForm = ({ register, errors }) => {
-  React.useEffect(() => {
-    console.log('ade')
-
-    return () => console.log('Unmounted')
-  })
-  return (
-    <>
-      <div>
-        <Input.TextInput
-          name='title'
-          required
-          register={register}
-          error={errors.title}
-          label='Title'
-          autoFocus
-        />
-        <Input.TextInput
-          name='name'
-          required
-          register={register}
-          error={errors.name}
-          label='Guest name'
-        />
-      </div>
-      <div>
-        <Input.TextInput
-          name='email'
-          type='email'
-          required
-          register={register}
-          error={errors.email}
-          label='Guest email'
-        />
-        <Input.TextInput
-          name='phone'
-          required
-          register={register}
-          error={errors.phone}
-          label='Guest Phone No.'
-        />
-      </div>
-    </>
-  )
-}
-
-const GuestNextOfKinForm = ({ errors, register }) => {
-  return (
-    <div>
-      <Input.TextInput
-        name='nextOfKin'
-        register={register}
-        error={errors.nextOfKin}
-        label='Next of kin'
-      />
-      <Input.TextInput
-        name='nextOfKinPhoneNo'
-        required
-        register={register}
-        error={errors.nextOfKinPhoneNo}
-        label='Next of kin Phone No.'
-      />
-    </div>
-  )
-}
-
-const GuestPaymentDetailsForm = ({ register, errors }) => {
-  return (
-    <div>
-      <Input.TextInput
-        name='paymentMethod'
-        required
-        register={register}
-        error={errors.paymentMethod}
-        label='Payment method'
-      />
-      <Input.TextInput
-        name='note'
-        label='Note'
-        register={register}
-        multiline
-        rows={4}
-        error={errors.note}
-      />
-    </div>
   )
 }
 

@@ -17,7 +17,11 @@ const schema = new Schema({
     title: {
       type: String
     },
-    name: {
+    firstName: {
+      type: String,
+      required: true
+    },
+    lastName: {
       type: String,
       required: true
     },

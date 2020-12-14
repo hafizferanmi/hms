@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate, useLocation } from '@reach/router'
+import { useNavigate } from '@reach/router'
 import ReactLoading from 'react-loading'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
-import { STAFF_ROLE_ROUTE, ADMINISTRATOR } from '../../../constants/staff'
 
 import { fetchCurrentStaff } from '../../../redux/actions/staff'
 import AuthRoute from './AuthRoute'

@@ -13,8 +13,12 @@ const schema = Joi.object()
       .label('Title')
       .required(),
 
-    name: stringSchema()
-      .label('Client name')
+    firstName: stringSchema()
+      .label('Client first name')
+      .required(),
+
+    lastName: stringSchema()
+      .label('Client last name')
       .required(),
 
     email: stringSchema()

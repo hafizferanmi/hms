@@ -9,8 +9,8 @@ const TextInput = ({ register, error, ...props }) => {
       inputRef={register}
       fullWidth
       size='small'
-      error={error}
-      // InputLabelProps={{ shrink: true }}
+      error={!!error}
+      InputLabelProps={{ shrink: true }}
       helperText={error && error.message}
       {...props}
     />

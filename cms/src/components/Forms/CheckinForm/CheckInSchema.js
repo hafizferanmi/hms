@@ -6,10 +6,14 @@ const schema = yup.object().shape({
     .label('Guest title')
     .required(),
 
-  name: yup.string()
+  firstName: yup.string()
     .trim()
-    .label('Guest name')
-    .min(4)
+    .label('Guest first name')
+    .required(),
+
+  lastName: yup.string()
+    .trim()
+    .label('Guest last name')
     .required(),
 
   email: yup.string()
@@ -35,9 +39,11 @@ const schema = yup.object().shape({
 
   purpose: yup.string()
     .trim()
+    .required()
     .label('Purpose of visit'),
 
   meansOfTravel: yup.string()
+    .required()
     .label('Means of travel'),
 
   nextOfKin: yup.string()
@@ -45,7 +51,7 @@ const schema = yup.object().shape({
     .required(),
 
   nextOfKinPhoneNo: yup.string()
-    .label('Next of kin')
+    .label('Next of kin phone no')
     .required(),
 
   dateOfArrival: yup.string()
