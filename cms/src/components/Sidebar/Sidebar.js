@@ -46,9 +46,9 @@ const Sidebar = () => {
       display='flex'
       flexDirection='column'
     >
-      <Box>
+      {/* <Box>
         <img src={LogoImg} alt='Logo' className={classes.logoImg} />
-      </Box>
+      </Box> */}
       <Box
         display='flex'
         flexDirection='column'
