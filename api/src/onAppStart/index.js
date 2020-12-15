@@ -2,8 +2,12 @@ import createDefaultAdmin from './createDefaultAdmin'
 import connectDB from './db'
 import runCronJobs from './cron'
 
-export default () => {
+const isProduction = process.env.NODE_ENV === 'production'
+
+const runOnAppStart = () => {
   connectDB()
-  createDefaultAdmin()
+  if (!isProduction) createDefaultAdmin()
   runCronJobs()
 }
+
+export default runOnAppStart

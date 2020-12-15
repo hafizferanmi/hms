@@ -1,5 +1,4 @@
 import React from 'react'
-import LogoImg from '../../assets/images/logo.png'
 import {
   Box,
   makeStyles
@@ -27,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const routes = [
+  { link: '/secure/laundpad/', label: 'Launchpad', icon: ShowChartIcon },
   { link: '/secure/admin/', label: 'Reports', icon: ShowChartIcon },
   { link: '/secure/admin/guest', label: 'Guests', icon: SubjectRoundedIcon },
   { link: '/secure/admin/rooms', label: 'Rooms', icon: GridOnIcon },
@@ -46,9 +46,6 @@ const Sidebar = () => {
       display='flex'
       flexDirection='column'
     >
-      {/* <Box>
-        <img src={LogoImg} alt='Logo' className={classes.logoImg} />
-      </Box> */}
       <Box
         display='flex'
         flexDirection='column'

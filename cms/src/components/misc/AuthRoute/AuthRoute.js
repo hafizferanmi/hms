@@ -12,6 +12,7 @@ import AdminLandingPage from '../../AdminLandingPage'
 import CheckinFormPage from '../../CheckInFormPage'
 import AccountPage from '../../AccountPage'
 import SettingsPage from '../../SettingsPage'
+import OnboardingPage from '../../OnboardingPage'
 
 const AuthRoute = () => {
   return (
@@ -20,6 +21,7 @@ const AuthRoute = () => {
       <FrontDeskPage path='/frontdesk' />
       <ManagersPage path='admin'>
         <DashboardPage path='/' />
+        <OnboardingPage path='/onboarding' />
         <StaffsPage path='/staffs' />
         <RoomsPage path='/rooms' />
         <RoomTypesPage path='/roomtypes' />
