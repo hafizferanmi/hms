@@ -9,9 +9,21 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     required: true
   },
+  itemsCount: {
+    type: Number,
+    default: 0
+  },
+  content: {
+    type: Array,
+    required: true
+  },
+  fileSize: {
+    type: Number,
+    required: true
+  },
   bulkUploadType: {
     type: String,
-    enum: ['EMAIL', 'PHONE'],
+    enum: ['EMAIL', 'PHONE', 'CUSTOMERS'],
     required: true
   },
   uploadedBy: {

@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
   uploadBulkEmailCSV,
   uploadBulkPhoneCSV,
+  uploadBulkCustomerDataCSV,
   deleteBulkFileUpload,
   getBulkFile,
   getBulkFiles
@@ -16,6 +17,7 @@ router.get('/', (req, res) => {
 })
 router.post('/uploadEmailCSV', currentStaff, uploadBulkEmailCSV)
 router.post('/uploadPhoneCSV', currentStaff, uploadBulkPhoneCSV)
+router.post('/uploadCustomersCSV', currentStaff, uploadBulkCustomerDataCSV)
 router.delete('/delete/:fileId', currentStaff, deleteBulkFileUpload)
 router.get('/all', currentStaff, getBulkFiles)
 router.get('/:fileId', currentStaff, getBulkFile)

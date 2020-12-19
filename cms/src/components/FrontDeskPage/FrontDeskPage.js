@@ -12,10 +12,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const FrontDeskHeader = () => {
+  return (<div>This is the frontdesk header page</div>)
+}
+
+const FrontDeskBody = () => {
+  return (
+    <div>This is the frontdesk body</div>
+  )
+}
+
 const FrontDeskPage = () => {
   const classes = useStyles()
   return (
     <div className={classes.frontDeskPageWrapper}>
+
+      <FrontDeskHeader />
+      <FrontDeskBody />
       <Link to='/secure/admin/staffs'>
         Let see sha
       </Link>
