@@ -15,7 +15,7 @@ import {
   deleteCheckIn as deleteCheckInAction
 } from '../../../redux/actions/checkIn'
 import { fetchRooms } from '../../../redux/actions/rooms'
-import CheckInForm from './ChecinFormNew'
+import CheckInForm from './CheckInForm'
 
 const CheckInFormContainer = ({ checkIn }) => {
   const checkInId = checkIn && checkIn._id

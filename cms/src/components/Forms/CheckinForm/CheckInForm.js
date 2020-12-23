@@ -36,32 +36,34 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
         <div>
           <Input.TextInput
             name='title'
-            required
             register={register}
             error={errors.title}
             label='Title'
             autoFocus
           />
           <Input.TextInput
-            name='name'
-            required
+            name='firstName'
             register={register}
-            error={errors.name}
-            label='Guest name'
+            error={errors.firstName}
+            label='First Name'
+          />
+          <Input.TextInput
+            name='lastName'
+            register={register}
+            error={errors.lastName}
+            label='Last Name'
           />
         </div>
         <div>
           <Input.TextInput
             name='email'
             type='email'
-            required
             register={register}
             error={errors.email}
             label='Guest email'
           />
           <Input.TextInput
             name='phone'
-            required
             register={register}
             error={errors.phone}
             label='Guest Phone No.'
@@ -71,13 +73,11 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
           <Input.TextInput
             name='occupation'
             register={register}
-            required
             error={errors.occupation}
             label='Occupation'
           />
           <Input.TextInput
             name='arrivingFrom'
-            required
             register={register}
             error={errors.arrivingFrom}
             label='Arriving from'
@@ -86,14 +86,12 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
         <div>
           <Input.TextInput
             name='purpose'
-            required
             register={register}
             error={errors.purpose}
             label='Purpose'
           />
           <Input.TextInput
             name='meansOfTravel'
-            required
             register={register}
             error={errors.meansOfTravel}
             label='Means of travel'
@@ -109,7 +107,6 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
           />
           <Input.TextInput
             name='nextOfKinPhoneNo'
-            required
             register={register}
             error={errors.nextOfKinPhoneNo}
             label='Next of kin Phone No.'
@@ -118,7 +115,6 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
         <div>
           <Input.TextInput
             name='dateOfArrival'
-            required
             type='date'
             register={register}
             error={errors.dateOfArrival}
@@ -126,7 +122,6 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
           />
           <Input.TextInput
             name='dateOfDeparture'
-            required
             type='date'
             register={register}
             error={errors.dateOfDeparture}
@@ -137,7 +132,6 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
         <div>
           <Input.TextInput
             name='paymentMethod'
-            required
             register={register}
             error={errors.paymentMethod}
             label='Payment method'
@@ -153,7 +147,6 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
         </div>
         <Input.TextInput
           name='room'
-          required
           register={register}
           error={errors.room}
           label='Room'
