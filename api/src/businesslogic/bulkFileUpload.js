@@ -5,6 +5,7 @@ import fs from 'fs'
 import helpers from '../helpers'
 import BulkUpload from '../models/bulkUpload'
 import { storage, csvFilter, validateFileUpload } from '../helpers/multer'
+import { CSV_TYPE } from '../constants/misc'
 
 const debug = Debug('API:businesslogic/bulkFileUpload.js')
 
@@ -15,6 +16,7 @@ const uploadEmailCSV = multer({ storage, fileFilter: csvFilter }).single('emailC
 const uploadCustomerCSV = multer({ storage, fileFilter: csvFilter }).single('customerCSV')
 const { failed, success } = helpers.response
 const emailExpression = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+const phoneExpression = /(^[0]\d{10}$)|(^[+]?[234]\d{12}$)/
 
 export const uploadBulkPhoneCSV = async (req, res) => {
   debug('uploadBulkPhoneCSV()')
@@ -27,14 +29,27 @@ export const uploadBulkPhoneCSV = async (req, res) => {
     if (errorMsg === 'NO_FILE_UPLOADED') return res.json(failed('You need to upload a CSV file containing phone numbers to proceed.'))
     if (errorMsg) return res.json(failed(errorMsg))
     const filename = req.file && req.file.filename
+    const path = req.file && req.file.path
+    const fileSize = req.file && req.file.size
 
-    // Todo: open file to check if the file uploaded is a valid csv file and it contains validated phone numbers
-    // Todo: count numbers of email addressess uploaded in the file.
+    let content
+    try {
+      content = fs.readFileSync(path, 'utf8')
+    } catch (e) {
+      if (err) return res.json(failed('Error occured, could not read file content'))
+    }
+
+    content = content.trim().replace(/ /g, '').split(',')
+    content = content.filter(phone => phoneExpression.test(phone))
+    content = [...new Set(content)]
 
     const uploadDetails = {
       filename,
       companyId,
-      bulkUploadType: 'PHONE',
+      content,
+      fileSize,
+      itemsCount: content.length,
+      bulkUploadType: CSV_TYPE.PHONE,
       uploadedBy: currentstaff
     }
 
@@ -80,7 +95,7 @@ export const uploadBulkEmailCSV = async (req, res) => {
       content,
       fileSize,
       itemsCount: content.length,
-      bulkUploadType: 'EMAIL',
+      bulkUploadType: CSV_TYPE.EMAIL,
       uploadedBy: currentstaff
     }
 
@@ -120,7 +135,7 @@ export const uploadBulkCustomerDataCSV = async (req, res) => {
       content,
       fileSize,
       itemsCount: content.length,
-      bulkUploadType: 'CUSTOMERS',
+      bulkUploadType: CSV_TYPE.CUSTOMERS,
       uploadedBy: currentstaff
     }
 

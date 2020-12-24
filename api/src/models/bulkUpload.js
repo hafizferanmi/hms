@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import { CSV_TYPE } from '../constants/misc'
 
 const schema = new Schema({
   filename: {
@@ -23,7 +24,7 @@ const schema = new Schema({
   },
   bulkUploadType: {
     type: String,
-    enum: ['EMAIL', 'PHONE', 'CUSTOMERS'],
+    enum: Object.values(CSV_TYPE),
     required: true
   },
   uploadedBy: {
