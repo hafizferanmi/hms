@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-const JWT_SECRET = 'HMSJWT'
+const JWT_SECRET = process.env.JWTSECRET
 
 const generateAuthToken = id => jwt.sign({ id }, JWT_SECRET)
 

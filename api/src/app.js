@@ -1,16 +1,16 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import dotenv from 'dotenv'
 import Debug from 'debug'
 import cors from 'cors'
+// eslint-disable-next-line
+import _ from './helpers/env'
 import onAppStart from './onAppStart'
 import routes from './routes'
 
 onAppStart()
-dotenv.config()
 const debug = Debug('API:app.js')
 const app = express()
-const port = 3001
+const port = process.env.PORT
 const {
   adminRoutes,
   companyRoutes,

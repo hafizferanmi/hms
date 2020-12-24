@@ -3,8 +3,8 @@ import Debug from 'debug'
 
 const debug = Debug('API: mail.js')
 
-const apiKey = 'de8f89d118c565ffa367cf37230c6358-ea44b6dc-8d20755f'
-const domain = 'mg.isuites.xyz'
+const apiKey = process.env.MAILGUN_API_KEY
+const domain = process.env.MAILGUN_DOMAIN
 const mg = mailgun({ apiKey, domain })
 
 const sendMail = async (mailConfig) => { // mailConfig = { from, to, subject, text }

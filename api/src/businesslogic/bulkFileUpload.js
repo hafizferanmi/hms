@@ -57,6 +57,7 @@ export const uploadBulkEmailCSV = async (req, res) => {
     if (errorMsg === 'ERROR_OCCURED') return res.json(failed('Slight issue with the emails file upload. Try again'))
     if (errorMsg === 'NO_FILE_UPLOADED') return res.json(failed('You need to upload a CSV file containing emails to proceed.'))
     if (errorMsg) return res.json(failed(errorMsg))
+
     const filename = req.file && req.file.filename
     const path = req.file && req.file.path
 
@@ -91,6 +92,7 @@ export const uploadBulkCustomerDataCSV = async (req, res) => {
     if (errorMsg === 'ERROR_OCCURED') return res.json(failed('Slight issue with the customer data file upload. Try again'))
     if (errorMsg === 'NO_FILE_UPLOADED') return res.json(failed('You need to upload a CSV file containing customers data to proceed.'))
     if (errorMsg) return res.json(failed(errorMsg))
+
     const filename = req.file && req.file.filename
     const path = req.file && req.file.path
     const fileSize = req.file && req.file.size
