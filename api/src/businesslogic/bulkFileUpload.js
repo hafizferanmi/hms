@@ -14,6 +14,7 @@ const uploadPhoneCSV = multer({ storage, fileFilter: csvFilter }).single('phoneC
 const uploadEmailCSV = multer({ storage, fileFilter: csvFilter }).single('emailCSV')
 const uploadCustomerCSV = multer({ storage, fileFilter: csvFilter }).single('customerCSV')
 const { failed, success } = helpers.response
+const emailExpression = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 export const uploadBulkPhoneCSV = async (req, res) => {
   debug('uploadBulkPhoneCSV()')
@@ -60,13 +61,24 @@ export const uploadBulkEmailCSV = async (req, res) => {
 
     const filename = req.file && req.file.filename
     const path = req.file && req.file.path
+    const fileSize = req.file && req.file.size
 
-    const content = await csv(fs.createReadStream(path))
+    let content
+    try {
+      content = fs.readFileSync(path, 'utf8')
+    } catch (e) {
+      if (err) return res.json(failed('Error occured, could not read file content'))
+    }
+
+    content = content.trim().replace(/ /g, '').split(',')
+    content = content.filter(email => emailExpression.test(email))
+    content = [...new Set(content)]
 
     const uploadDetails = {
       filename,
       companyId,
       content,
+      fileSize,
       itemsCount: content.length,
       bulkUploadType: 'EMAIL',
       uploadedBy: currentstaff
@@ -77,6 +89,7 @@ export const uploadBulkEmailCSV = async (req, res) => {
       upload = await upload.save()
       return res.json(success(upload))
     } catch (e) {
+      debug(e)
       return res.json(failed('Error occured, try again.'))
     }
   })
