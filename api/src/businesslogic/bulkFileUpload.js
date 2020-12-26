@@ -17,6 +17,7 @@ const uploadCustomerCSV = multer({ storage, fileFilter: csvFilter }).single('cus
 const { failed, success } = helpers.response
 const emailExpression = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 const phoneExpression = /(^[0]\d{10}$)|(^[+]?[234]\d{12}$)/
+const FILE_ENCODING = 'utf8'
 
 export const uploadBulkPhoneCSV = async (req, res) => {
   debug('uploadBulkPhoneCSV()')
@@ -32,34 +33,41 @@ export const uploadBulkPhoneCSV = async (req, res) => {
     const path = req.file && req.file.path
     const fileSize = req.file && req.file.size
 
-    let content
-    try {
-      content = fs.readFileSync(path, 'utf8')
-    } catch (e) {
+    fs.readFile(path, FILE_ENCODING, async (err, data) => {
       if (err) return res.json(failed('Error occured, could not read file content'))
-    }
 
-    content = content.trim().replace(/ /g, '').split(',')
-    content = content.filter(phone => phoneExpression.test(phone))
-    content = [...new Set(content)]
+      let content = data.toString().trim().replace(/ /g, '').split(',')
+      content = content
+        .filter(phone => phoneExpression.test(phone))
+        .map((phoneNo) => {
+          if (phoneNo.startsWith('+234')) {
+            return phoneNo.replace('+234', '0')
+          } else if (phoneNo.startsWith('234')) {
+            return phoneNo.replace('234', '0')
+          } else {
+            return phoneNo
+          }
+        })
+      content = [...new Set(content)]
 
-    const uploadDetails = {
-      filename,
-      companyId,
-      content,
-      fileSize,
-      itemsCount: content.length,
-      bulkUploadType: CSV_TYPE.PHONE,
-      uploadedBy: currentstaff
-    }
+      const uploadDetails = {
+        filename,
+        companyId,
+        content,
+        fileSize,
+        itemsCount: content.length,
+        bulkUploadType: CSV_TYPE.PHONE,
+        uploadedBy: currentstaff
+      }
 
-    try {
-      let upload = new BulkUpload(uploadDetails)
-      upload = await upload.save()
-      return res.json(success(upload))
-    } catch (e) {
-      return res.json(failed('Error occured, try again.'))
-    }
+      try {
+        let upload = new BulkUpload(uploadDetails)
+        upload = await upload.save()
+        return res.json(success(upload))
+      } catch (e) {
+        return res.json(failed('Error occured, try again.'))
+      }
+    })
   })
 }
 
@@ -78,35 +86,32 @@ export const uploadBulkEmailCSV = async (req, res) => {
     const path = req.file && req.file.path
     const fileSize = req.file && req.file.size
 
-    let content
-    try {
-      content = fs.readFileSync(path, 'utf8')
-    } catch (e) {
+    fs.readFile(path, FILE_ENCODING, async (err, data) => {
       if (err) return res.json(failed('Error occured, could not read file content'))
-    }
 
-    content = content.trim().replace(/ /g, '').split(',')
-    content = content.filter(email => emailExpression.test(email))
-    content = [...new Set(content)]
+      let content = data.toString().trim().replace(/ /g, '').split(',')
+      content = content.filter(email => emailExpression.test(email))
+      content = [...new Set(content)]
 
-    const uploadDetails = {
-      filename,
-      companyId,
-      content,
-      fileSize,
-      itemsCount: content.length,
-      bulkUploadType: CSV_TYPE.EMAIL,
-      uploadedBy: currentstaff
-    }
+      const uploadDetails = {
+        filename,
+        companyId,
+        content,
+        fileSize,
+        itemsCount: content.length,
+        bulkUploadType: CSV_TYPE.EMAIL,
+        uploadedBy: currentstaff
+      }
 
-    try {
-      let upload = new BulkUpload(uploadDetails)
-      upload = await upload.save()
-      return res.json(success(upload))
-    } catch (e) {
-      debug(e)
-      return res.json(failed('Error occured, try again.'))
-    }
+      try {
+        let upload = new BulkUpload(uploadDetails)
+        upload = await upload.save()
+        return res.json(success(upload))
+      } catch (e) {
+        debug(e)
+        return res.json(failed('Error occured, try again.'))
+      }
+    })
   })
 }
 
@@ -196,5 +201,22 @@ export const deleteBulkFileUpload = async (req, res) => {
     return res.json(success(file))
   } catch (e) {
     return res.json(failed('Error occured. Could not delete file. Try again'))
+  }
+}
+
+export const downloadCSV = async (req, res) => {
+  debug('downloadCSV')
+  const companyId = req.staff.companyId
+  const fileId = req.params.fileId
+
+  try {
+    const file = await BulkUpload.findOne({ companyId, _id: fileId })
+    const filePath = './uploads'
+    const fileName = file.fileName
+
+    return res.download(filePath, fileName)
+  } catch (e) {
+    debug('Problem occured with file upload.')
+    return res.json(failed('Error occured, try again.'))
   }
 }

@@ -13,6 +13,7 @@ import CheckinFormPage from '../../CheckInFormPage'
 import AccountPage from '../../AccountPage'
 import SettingsPage from '../../SettingsPage'
 import OnboardingPage from '../../OnboardingPage'
+import LaunchPadPage from '../../LaunchPadPage'
 
 const AuthRoute = () => {
   return (
@@ -22,13 +23,13 @@ const AuthRoute = () => {
       <ManagersPage path='admin'>
         <DashboardPage path='/' />
         <OnboardingPage path='/onboarding' />
+        <LaunchPadPage path='/launchpad' />
         <StaffsPage path='/staffs' />
         <RoomsPage path='/rooms' />
         <RoomTypesPage path='/roomtypes' />
         <CheckInPage path='/guest' />
         <HallsPage path='/halls' />
         <CheckinFormPage path='/checkin/*' />
-        {/* <CheckinFormPage path='/checkin/:checkInId/update' /> */}
         <AccountPage path='/profile' />
         <SettingsPage path='/settings' />
       </ManagersPage>
