@@ -88,7 +88,7 @@ const CheckInDesc = ({ checkIn, clearSelectedCheckin }) => {
 }
 
 const CheckInSelected = ({ checkIn, clearSelectedCheckin }) => {
-  const { guest: { title, firstName, lastName } } = checkIn.guest
+  const { title, firstName, lastName } = checkIn.guest
   const { dateOfArrival, room: { number: roomNumber } } = checkIn
   const date = formatDate(dateOfArrival)
   const classes = useStyles()

@@ -17,7 +17,7 @@ import {
 import { fetchRooms } from '../../../redux/actions/rooms'
 import CheckInForm from './CheckInForm'
 
-const CheckInFormContainer = ({ checkIn }) => {
+const CheckInFormContainer = ({ checkIn, closeDrawer }) => {
   const checkInId = checkIn && checkIn._id
   const API = checkInId ? updateCheckInAPI : addCheckInAPI
   const dispatch = useDispatch()
@@ -36,12 +36,12 @@ const CheckInFormContainer = ({ checkIn }) => {
 
   useEffect(() => {
     if (response && response.success) {
-      const bookedRoom = response.result.bookedRoom
-      console.log(bookedRoom)
+      // const bookedRoom = response.result.bookedRoom //Use variable bookedroom later
       const newCheckIn = response.result.checkIn
       checkIn ? dispatch(updateCheckInAction(newCheckIn)) : dispatch(addCheckInAction(newCheckIn))
       const notificationMessage = checkIn ? 'CheckIn updated successfully' : 'CheckIn added successfully'
       notification.success(...notify(notificationMessage))
+      closeDrawer()
     }
 
     if (response && !response.success) {

@@ -7,6 +7,7 @@ import ManagersLayout from '../ManagersPage/ManagersLayout'
 const LaunchPadPage = () => {
   const modal = useModal()
   const handleOpenDrawer = () => modal.openModal()
+  const handleCloseDrawer = () => modal.closeModal()
   return (
     <ManagersLayout title='Launchpad'>
       <button onClick={handleOpenDrawer}>Open form Drawer</button>
@@ -15,7 +16,7 @@ const LaunchPadPage = () => {
         close={modal.closeModal}
         title='Guest form'
       >
-        <CheckInForm />
+        <CheckInForm closeDrawer={handleCloseDrawer} />
       </FormDrawer>
     </ManagersLayout>
 

@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 })
 
 const CheckInRoomCard = ({ checkIn, handleSelectCheckIn, selectedCheckIn }) => {
-  const { name } = checkIn.guest
+  const { firstName, lastName, title } = checkIn.guest
   const { dateOfArrival, _id: checkInId, room: { number } } = checkIn
   const selectedCheckInId = selectedCheckIn && selectedCheckIn._id
   const selected = checkInId === selectedCheckInId
@@ -50,7 +50,7 @@ const CheckInRoomCard = ({ checkIn, handleSelectCheckIn, selectedCheckIn }) => {
     <Box display='flex' className={cn(classes.checkInCard, selected && classes.active)} onClick={() => handleCardClick(checkIn)}>
       <AccountCircleOutlinedIcon className={classes.avatar} />
       <div className={classes.cardContent}>
-        <div className={classes.guestName}>{name}</div>
+        <div className={classes.guestName}>{`${title} ${firstName} ${lastName}`}</div>
         <div className={classes.guestArrival}> Arrived {date} </div>
         <div> Room <strong>{number}</strong> </div>
       </div>

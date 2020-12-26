@@ -146,6 +146,8 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
         type='submit'
         disabled={isSubmitting}
       />
+
+      {/* Todo : Add save and add new button */}
     </form>
   )
 }

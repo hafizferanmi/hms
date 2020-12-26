@@ -60,9 +60,11 @@ const CheckInTabs = ({ checkIn }) => {
   }
 
   const { expenses = [] } = checkIn
+  const { title, firstName, lastName } = checkIn.guest
+  const name = `${title} ${firstName} ${lastName}`
 
   const guestInfo = [
-    { title: 'Name', value: checkIn.guest.name },
+    { title: 'Name', value: name },
     { title: 'Email', value: checkIn.guest.email },
     { title: 'Phone', value: checkIn.guest.phone },
     { title: 'Occupation', value: checkIn.guest.occupation },
