@@ -1,8 +1,8 @@
-const Typography = {
+const typography = {
   // fontFamily: 'Avenir',
   header: {
     fontFamily: 'BRFirmaCW-Bold'
   }
 }
 
-export default Typography
+export default typography

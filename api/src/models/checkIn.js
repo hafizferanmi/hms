@@ -54,12 +54,10 @@ const schema = new Schema({
   },
   payment: {
     ammount: {
-      type: Number,
-      required: true
+      type: Number
     },
     method: {
       type: String,
-      required: true,
       default: PAYMENT_METHOD.CASH,
       enum: R.values(PAYMENT_METHOD)
     },

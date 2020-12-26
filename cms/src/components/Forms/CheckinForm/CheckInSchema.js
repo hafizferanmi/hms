@@ -62,9 +62,9 @@ const schema = yup.object().shape({
     .label('Date of departure')
     .required(),
 
-  paymentMethod: yup.string()
-    .label('Payment method')
-    .required(),
+  // paymentMethod: yup.string()
+  //   .label('Payment method')
+  //   .required(),
 
   notes: yup.string()
     .label('Notes')

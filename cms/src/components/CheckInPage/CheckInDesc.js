@@ -88,7 +88,7 @@ const CheckInDesc = ({ checkIn, clearSelectedCheckin }) => {
 }
 
 const CheckInSelected = ({ checkIn, clearSelectedCheckin }) => {
-  const { name } = checkIn.guest
+  const { guest: { title, firstName, lastName } } = checkIn.guest
   const { dateOfArrival, room: { number: roomNumber } } = checkIn
   const date = formatDate(dateOfArrival)
   const classes = useStyles()
@@ -102,7 +102,7 @@ const CheckInSelected = ({ checkIn, clearSelectedCheckin }) => {
       >
         <AccountCircleOutlinedIcon className={classes.guestIcon} />
         <div className={classes.topDescWrapper}>
-          <p>{name}</p>
+          <p>{`${title} ${firstName} ${lastName}`}</p>
           <p>Arrived {date}</p>
           <p>Room <strong>{roomNumber}</strong></p>
           {

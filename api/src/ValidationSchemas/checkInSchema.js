@@ -1,7 +1,7 @@
 import Joi from 'joi'
-import R from 'ramda'
+// import R from 'ramda'
 import { stringSchema } from './helpers'
-import { PAYMENT_METHOD } from '../constants/misc'
+// import { PAYMENT_METHOD } from '../constants/misc'
 
 const schema = Joi.object()
   .keys({
@@ -61,15 +61,15 @@ const schema = Joi.object()
       .label('Departure date')
       .required(),
 
-    ammount: stringSchema()
-      .label('Ammount')
-      .required(),
+    // ammount: stringSchema()
+    //   .label('Ammount')
+    //   .required(),
 
-    paymentMethod: stringSchema()
-      .label('Payment method')
-      .default(PAYMENT_METHOD.CASH)
-      .valid(...R.values(PAYMENT_METHOD))
-      .required(),
+    // paymentMethod: stringSchema()
+    //   .label('Payment method')
+    //   .default(PAYMENT_METHOD.CASH)
+    //   .valid(...R.values(PAYMENT_METHOD))
+    //   .required(),
 
     note: stringSchema()
       .label('Note')

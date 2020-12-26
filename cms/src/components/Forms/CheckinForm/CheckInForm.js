@@ -114,12 +114,12 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
       </div>
 
       <div>
-        <Input.TextInput
+        {/* <Input.TextInput
           name='paymentMethod'
           register={register}
           error={errors.paymentMethod}
           label='Payment method'
-        />
+        /> */}
         <Input.TextInput
           name='note'
           label='Note'
