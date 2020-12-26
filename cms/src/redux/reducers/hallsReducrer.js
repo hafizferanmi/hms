@@ -13,7 +13,7 @@ const initialState = {
   data: []
 }
 
-export default (state = initialState, action) => {
+const HallReducer = (state = initialState, action) => {
   const { type, payload } = action
 
   switch (type) {
@@ -66,3 +66,5 @@ export default (state = initialState, action) => {
       return state
   }
 }
+
+export default HallReducer

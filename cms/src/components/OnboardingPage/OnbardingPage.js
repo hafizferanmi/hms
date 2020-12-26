@@ -12,7 +12,7 @@ const OnbardingPage = () => {
       <FormDrawer
         isOpen={modal.isOpen}
         close={modal.closeModal}
-        title='Guest form'
+        title='Guest form now'
       >
         <CheckInForm />
       </FormDrawer>

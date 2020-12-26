@@ -1,4 +1,4 @@
-export default {
+const Overrides = {
   MuiTypography: {
     root: {
       fontFamily: 'ml',
@@ -23,3 +23,5 @@ export default {
     }
   }
 }
+
+export default Overrides

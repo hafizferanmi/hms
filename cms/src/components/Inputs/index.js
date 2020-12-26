@@ -2,8 +2,10 @@ import TextInput from './TextInput'
 import SelectInput from './SelectInput'
 import TextArea from './TextArea'
 
-export default {
+const Inputs = {
   TextInput,
   SelectInput,
   TextArea
 }
+
+export default Inputs
