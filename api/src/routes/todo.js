@@ -4,7 +4,9 @@ import {
   updateTodo,
   getTodo,
   getAllTodo,
-  deleteTodo
+  deleteTodo,
+  pinTodo,
+  completeTodo
 } from '../businesslogic/todo'
 import currentStaff from '../middlewares/currentStaff'
 import allow from '../middlewares/allowAccess'
@@ -18,6 +20,8 @@ router.get('/', currentStaff, (req, res) => {
 router.get('/all', currentStaff, getAllTodo)
 router.get('/add', currentStaff, addTodo)
 router.get('/:todoId', currentStaff, allow(), getTodo)
+router.post('pin/:todoId', currentStaff, allow(), pinTodo)
+router.post('complete/:todoId', currentStaff, allow(), completeTodo)
 router.put('/update/:todoId', currentStaff, updateTodo)
 router.delete('/delete/:todoId', currentStaff, deleteTodo)
 

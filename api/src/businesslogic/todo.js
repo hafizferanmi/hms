@@ -56,6 +56,49 @@ export const updateTodo = async (req, res) => {
   }
 }
 
+export const pinTodo = async (req, res) => {
+  debug('pinTodo()')
+  const companyId = req.staff.companyId
+  const staffId = req.staff._id
+  const todoId = req.params.todoId
+  const { pinned } = req.body
+
+  const conditions = { companyId, todoId, createdBy: staffId }
+
+  const set = {
+    pinned
+  }
+
+  try {
+    const todo = await Todo.findOneAndUpdate(conditions, set, { new: true })
+    return res.json(success(todo))
+  } catch (e) {
+    return res.json(failed('Error occured. Could not pin todo'))
+  }
+}
+
+export const completeTodo = async (req, res) => {
+  debug('completeTodo()')
+  const companyId = req.staff.companyId
+  const staffId = req.staff._id
+  const todoId = req.params.todoId
+  const { completed } = req.body
+
+  const conditions = { companyId, todoId, createdBy: staffId }
+
+  const set = {
+    completed,
+    completedAt: completed ? Date.now() : null
+  }
+
+  try {
+    const todo = await Todo.findOneAndUpdate(conditions, set, { new: true })
+    return res.json(success(todo))
+  } catch (e) {
+    return res.json(failed('Error occured. Could not complete todo'))
+  }
+}
+
 export const getAllTodo = async (req, res) => {
   debug('getAllTodo()')
   const companyId = req.staff.companyId
