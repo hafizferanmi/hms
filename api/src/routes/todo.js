@@ -18,10 +18,10 @@ router.get('/', currentStaff, (req, res) => {
 })
 
 router.get('/all', currentStaff, getAllTodo)
-router.get('/add', currentStaff, addTodo)
+router.post('/add', currentStaff, addTodo)
 router.get('/:todoId', currentStaff, allow(), getTodo)
-router.post('pin/:todoId', currentStaff, allow(), pinTodo)
-router.post('complete/:todoId', currentStaff, allow(), completeTodo)
+router.put('pin/:todoId', currentStaff, allow(), pinTodo)
+router.put('complete/:todoId', currentStaff, allow(), completeTodo)
 router.put('/update/:todoId', currentStaff, updateTodo)
 router.delete('/delete/:todoId', currentStaff, deleteTodo)
 
