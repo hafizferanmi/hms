@@ -58,14 +58,14 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 20
   },
   icon: {
-    width: 16,
-    height: 16,
+    width: 20,
+    height: 20,
     color: '#b5c0d0'
   },
   title: {
     color: '#b5c0d0',
-    fontSize: 12,
-    textTransform: 'uppercase',
+    fontSize: 14,
+    // textTransform: 'uppercase',
     fontFamily: 'BRFirmaCW-Bold'
   }
 }))

@@ -6,7 +6,7 @@ import Sidebar from '../Sidebar'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
-const drawerWidth = 240
+const drawerWidth = 260
 
 const useStyles = makeStyles((theme) => ({
   root: {
