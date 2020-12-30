@@ -21,7 +21,8 @@ const {
   hallsRoute,
   hallBookingRoute,
   settingsRoute,
-  bulkUploadRoute
+  bulkUploadRoute,
+  emailTemplate
 } = routes
 
 app.use(cors())
@@ -39,6 +40,7 @@ app.use('/hall', hallsRoute)
 app.use('/booking', hallBookingRoute)
 app.use('/settings', settingsRoute)
 app.use('/bulkUpload', bulkUploadRoute)
+app.use('/emailTemplate', emailTemplate)
 
 app.get('/', (req, res) => res.json({ message: 'Welcome!' }))
 

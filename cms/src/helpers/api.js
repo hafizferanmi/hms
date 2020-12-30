@@ -92,3 +92,10 @@ export const getTodo = (todoId) => fetchData(`/todos/${todoId}`)
 export const addTodo = (body) => sendData('/todos/add', body)
 export const updateTodo = (todoId, body) => modifyResource(`/todos/update/${todoId}`, body)
 export const deleteTodo = (todoId) => deleteResource(`/todos/delete/${todoId}`)
+
+// EMAIL TEMPLATE API
+export const getEmailTemplates = () => fetchData('/emailTemplate/all')
+export const getEmailTemplate = (templateId) => fetchData(`/emailTemplate/${templateId}`)
+export const addEmailTemplate = (body) => sendData('/emailTemplate/add', body)
+export const updateEmailTemplate = (templateId, body) => modifyResource(`/emailTemplate/update/${templateId}`, body)
+export const deleteEmailTemplate = (templateId) => deleteResource(`emailTemplate/delete/${templateId}`)

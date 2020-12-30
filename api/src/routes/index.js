@@ -8,6 +8,7 @@ import hallsRoute from './hall'
 import hallBookingRoute from './hallBooking'
 import settingsRoute from './settings'
 import bulkUploadRoute from './bulkUpload'
+import emailTemplate from './emailTemplates'
 
 export default {
   adminRoutes,
@@ -19,5 +20,6 @@ export default {
   hallsRoute,
   hallBookingRoute,
   settingsRoute,
-  bulkUploadRoute
+  bulkUploadRoute,
+  emailTemplate
 }
