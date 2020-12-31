@@ -90,6 +90,8 @@ export const deleteBooking = (bookingId) => deleteResource(`/booking/delete/${bo
 export const getTodos = () => fetchData('/todos/all')
 export const getTodo = (todoId) => fetchData(`/todos/${todoId}`)
 export const addTodo = (body) => sendData('/todos/add', body)
+export const pinTodo = (todoId) => modifyResource(`/todos/pin/${todoId}`)
+export const completeTodo = (todoId) => modifyResource(`/todos/complete/${todoId}`)
 export const updateTodo = (todoId, body) => modifyResource(`/todos/update/${todoId}`, body)
 export const deleteTodo = (todoId) => deleteResource(`/todos/delete/${todoId}`)
 
