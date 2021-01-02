@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import MongooseDelete from 'mongoose-delete'
+import { COMPANY_SIZE } from '../constants/misc'
 
 const schema = new Schema({
   name: {
@@ -8,30 +9,27 @@ const schema = new Schema({
   },
   logo: String,
   email: String,
-  sendMailDuringCheckIn: {
-    type: Boolean,
-    default: true
+  phone: String,
+  website: String,
+  size: {
+    type: String,
+    enum: Object.values(COMPANY_SIZE)
   },
-  sendSMSDuringCheckIn: {
-    type: Boolean,
-    default: false
+  idNumber: String,
+  taxNumber: String,
+  address: {
+    street: String,
+    suite: String,
+    city: String,
+    state: String,
+    postalCode: String,
+    country: String
   },
-  sendMailDuringCheckOut: {
-    type: Boolean,
-    default: true
+  currency: {
+    type: String,
+    default: 'NGN'
   },
-  sendSMSDuringCheckOut: {
-    type: Boolean,
-    default: false
-  },
-  smsContent: {
-    checkIn: String,
-    checkOut: String
-  },
-  mailContent: {
-    checkIn: String,
-    checkOut: String
-  },
+  slogan: String,
   subdomain: {
     type: String,
     required: true,

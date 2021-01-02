@@ -226,6 +226,7 @@ export const checkOut = async (req, res) => {
     const promises = await Promise.all([room, checkOut])
     room = promises[0]
     checkOut = promises[1]
+    // ;([room, checkOut] = promises) // a way to destructure into an already existing variable
     return res.json(success(checkOut))
   } catch (e) {
     return res.json(failed('Error occured. Try again!'))

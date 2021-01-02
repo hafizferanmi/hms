@@ -6,7 +6,7 @@ import CheckInSchema from './checkInSchema'
 import HallSchema from './hallSchema'
 import HallBookingSchema from './hallBookingSchema'
 import GuestExpensesSchema from './guestExpensesSchema'
-import SettingsSchema from './settingSchema'
+import CompanySettingsSchema from './companySettingsSchema'
 import TodoSchema from './todoSchema'
 import EmailTemplateSchema from './emailTemplateSchema'
 
@@ -19,7 +19,7 @@ export default {
   HallSchema,
   HallBookingSchema,
   GuestExpensesSchema,
-  SettingsSchema,
+  CompanySettingsSchema,
   TodoSchema,
   EmailTemplateSchema
 }

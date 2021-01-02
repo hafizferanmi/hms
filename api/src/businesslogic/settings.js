@@ -7,7 +7,7 @@ import { storage, imageFilter, validateFileUpload } from '../helpers/multer'
 
 const debug = Debug('API:businessLogic/settings.js')
 
-const { RoomSchema } = ValidationSchemas
+const { CompanySettingsSchema } = ValidationSchemas
 const { success, failed } = helpers.response
 const { validateRequestBody } = helpers.misc
 const upload = multer({ storage, fileFilter: imageFilter }).single('logo')
@@ -17,12 +17,27 @@ export const updateCompanyInfo = async (req, res) => {
   const companyId = req.staff.companyId
   const staffId = req.staff._id
 
-  const { errorMsg, value } = validateRequestBody(RoomSchema, req.body)
+  const { errorMsg, value } = validateRequestBody(CompanySettingsSchema, req.body)
 
   if (errorMsg) return res.json(failed(errorMsg))
 
+  const { street, suite, city, state, postalCode, country } = value
+
+  const companyAddress = {
+    street,
+    suite,
+    city,
+    state,
+    postalCode,
+    country
+  }
+
+  // TODO: Select currency with respect to selected country
+  // TODO: Select country with user IP address
+
   const companyDetails = {
     ...value,
+    address: companyAddress,
     updatedBy: staffId
   }
 
