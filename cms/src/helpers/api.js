@@ -101,3 +101,8 @@ export const getEmailTemplate = (templateId) => fetchData(`/emailTemplate/${temp
 export const addEmailTemplate = (body) => sendData('/emailTemplate/add', body)
 export const updateEmailTemplate = (templateId, body) => modifyResource(`/emailTemplate/update/${templateId}`, body)
 export const deleteEmailTemplate = (templateId) => deleteResource(`emailTemplate/delete/${templateId}`)
+
+// COMPANY SETTINGS API
+export const uploadCompanyLogo = (body) => sendData('/settings/uploadLogo', body)
+export const updateCompanyInfo = (companyId, body) => modifyResource(`/settings/update/${companyId}`, body)
+export const updateCompanyCurrency = (companyId, body) => modifyResource(`/settings/update/currency/${companyId}`, body)

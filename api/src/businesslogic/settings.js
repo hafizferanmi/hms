@@ -2,6 +2,7 @@ import Company from '../models/company'
 import Debug from 'debug'
 import multer from 'multer'
 import helpers from '../helpers'
+import { countries } from 'countries-list'
 import ValidationSchemas from '../ValidationSchemas'
 import { storage, imageFilter, validateFileUpload } from '../helpers/multer'
 
@@ -12,6 +13,29 @@ const { success, failed } = helpers.response
 const { validateRequestBody } = helpers.misc
 const upload = multer({ storage, fileFilter: imageFilter }).single('logo')
 
+export const updateCompanyCurrency = async (req, res) => {
+  debug('updateCompanyCurrency')
+  const companyId = req.staff.companyId
+  const staffId = req.staff._id
+
+  const currency = req.body.currency
+  const currencies = Object.values(countries).map(country => country.currency)
+
+  if (!currencies.includes(currency)) return res.json(failed('Invalid currency.'))
+
+  const companyDetails = {
+    currency,
+    updatedBy: staffId
+  }
+
+  try {
+    const company = await Company.findOneAndUpdate({ _id: companyId }, companyDetails, { new: true })
+    return res.json(success(company))
+  } catch (e) {
+    return res.json(failed('Error occured, try again.'))
+  }
+}
+
 export const updateCompanyInfo = async (req, res) => {
   debug('updateCompanyInfo()')
   const companyId = req.staff.companyId
@@ -21,7 +45,9 @@ export const updateCompanyInfo = async (req, res) => {
 
   if (errorMsg) return res.json(failed(errorMsg))
 
-  const { street, suite, city, state, postalCode, country } = value
+  const { street, suite, city, state, postalCode, country: countryCode } = value
+
+  const country = countries[countryCode]
 
   const companyAddress = {
     street,
@@ -32,11 +58,11 @@ export const updateCompanyInfo = async (req, res) => {
     country
   }
 
-  // TODO: Select currency with respect to selected country
   // TODO: Select country with user IP address
 
   const companyDetails = {
     ...value,
+    currency: country && country.currency,
     address: companyAddress,
     updatedBy: staffId
   }

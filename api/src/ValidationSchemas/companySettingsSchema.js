@@ -1,5 +1,6 @@
 import Joi from 'joi'
 import { COMPANY_SIZE } from '../constants/misc'
+import { countries } from 'countries-list'
 
 import { stringSchema } from './helpers'
 
@@ -13,7 +14,7 @@ const schema = Joi.object()
       .label('Company ID number'),
 
     taxNumber: stringSchema()
-      .label('Tax identification nunber'),
+      .label('Tax identification number'),
 
     street: stringSchema()
       .label('Company street'),
@@ -34,6 +35,7 @@ const schema = Joi.object()
 
     country: stringSchema()
       .label('Country')
+      .valid(...Object.keys(countries))
       .required(),
 
     slogan: stringSchema()

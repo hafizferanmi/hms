@@ -23,12 +23,11 @@ const schema = new Schema({
     city: String,
     state: String,
     postalCode: String,
-    country: String
+    country: {
+      type: Object
+    }
   },
-  currency: {
-    type: String,
-    default: 'NGN'
-  },
+  currency: String,
   slogan: String,
   subdomain: {
     type: String,
