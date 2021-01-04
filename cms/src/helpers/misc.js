@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import dayjs from 'dayjs'
 import { countries } from 'countries-list'
 

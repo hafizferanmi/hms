@@ -1,7 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
-import { makeStyles, Grid, Box } from '@material-ui/core'
 
 import Input from '../../Inputs'
 import Button from '../../misc/Button'

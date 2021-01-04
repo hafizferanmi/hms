@@ -18,7 +18,7 @@ const schema = yup.object().shape({
     .max(13)
     .min(11),
 
-  role: yup.string()
+  role: yup.object()
     .required()
     .label('Staff role')
 })
