@@ -56,6 +56,7 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
           options={buildSelectOptions(GUEST_TITLE, GUEST_TITLE_LABEL)}
           control={control}
           error={errors.title}
+          register={register}
           label='Title'
           autoFocus
         />
@@ -119,6 +120,7 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
           options={buildSelectOptions(NEXT_OF_KIN_RELATIONSHIP, NEXT_OF_KIN_RELATIONSHIP_LABEL)}
           control={control}
           error={errors.nextOfKinRelationship}
+          register={register}
           label='Next of kin relationship'
           placeholde='Select next of kin relationship'
         />
@@ -174,8 +176,8 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
       <Input.SelectInput
         name='room'
         control={control}
+        register={register}
         options={buildSelectOptions(GUEST_TITLE, GUEST_TITLE_LABEL)}
-        loading
         error={errors.room}
         label='Room'
       />
