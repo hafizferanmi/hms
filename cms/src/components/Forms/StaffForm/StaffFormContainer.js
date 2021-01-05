@@ -24,11 +24,7 @@ const StaffFormContainer = ({ closeModal, staff }) => {
   const staffId = staff && staff._id
 
   const handleFormSubmit = data => {
-    const dataToSend = {
-      ...data,
-      role: data.role.value
-    }
-    staff ? submitForm(staffId, dataToSend) : submitForm(dataToSend)
+    staff ? submitForm(staffId, data) : submitForm(data)
   }
 
   const notificationMessage = staff ? 'Staff details updated successfully.' : 'Staff added successfully.'

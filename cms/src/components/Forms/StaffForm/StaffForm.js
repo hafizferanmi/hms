@@ -25,14 +25,13 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
   const title = staff ? 'Edit staff' : 'Add staff'
   return (
     <StaffFormWrapper onSubmit={handleSubmit(handleFormSubmit)}>
-      <p>{title}</p>
+      <h3>{title}</h3>
       <Input.TextInput
         name='name'
         register={register}
         error={errors.name}
         label='Name'
         autoFocus
-        required
       />
       <Input.TextInput
         name='email'
@@ -40,23 +39,20 @@ const StaffForm = ({ serverFormState, handleFormSubmit, staff }) => {
         label='Email'
         register={register}
         error={errors.email}
-        required
       />
       <Input.TextInput
         register={register}
         name='phone'
         label='Phone No.'
         error={errors.phone}
-        required
       />
       <Input.SelectInput
-        control={control}
-        name='role'
+        register={register}
         label='Staff Role'
-        placeholder='Select staff role'
-        defaultValue={staff && staff.role && staffRoleOptions.find(role => role.value === staff.role)}
         options={staffRoleOptions}
         error={errors.role}
+        name='role'
+        control={control}
       />
       <div>
         <ErrorMessage
