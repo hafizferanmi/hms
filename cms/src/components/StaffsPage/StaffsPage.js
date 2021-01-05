@@ -81,7 +81,7 @@ const StaffsPage = ({ staffs }) => {
           <div className={classes.button}>
             <Button
               label='Add staff'
-              endIcon={<PlusIcon />}
+              icon={PlusIcon}
               onClick={() => openStaffFormModal()}
             />
           </div>

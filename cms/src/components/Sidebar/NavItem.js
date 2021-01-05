@@ -64,9 +64,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     color: '#b5c0d0',
-    fontSize: 14,
+    fontSize: 14
     // textTransform: 'uppercase',
-    fontFamily: 'BRFirmaCW-Bold'
   }
 }))
 

@@ -18,8 +18,8 @@ const useStyles = makeStyles({
     textTransform: 'uppercase',
     color: '#0c2e67',
     letterSpacing: 0.05,
-    fontFamily: 'BRFirmaCW-Bold',
-    fontSize: 18
+    fontWeight: 'bold',
+    fontSize: 16
   },
   imageSearchWrapper: {
     display: 'flex',

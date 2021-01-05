@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import store from './redux'
@@ -14,8 +13,8 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 ReactDOM.render(
   <ReduxProvider store={store}>
     <ThemeProvider theme={theme}>
-      <CssBaseline />
       <GlobalStyle />
+      <CssBaseline />
       <App />
     </ThemeProvider>
 

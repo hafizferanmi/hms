@@ -17,23 +17,28 @@ const useStyles = makeStyles({
     left: 0,
     width: '100%',
     height: '100%',
-    background: 'rgba(0, 0, 0, 0.5)',
+    background: 'rgba(0, 0, 25, 0.5)',
     zIndex: 300,
     transition: 'background 2s'
   },
   formWrapper: {
     width: '50%',
+    // transform: 'translate(100%)',
     background: 'white',
     height: '100vh',
-    float: 'right'
+    float: 'right',
+    transition: 'transform 1.2s ease-in 1s'
+  },
+  formWrapperOpened: {
+    transform: 'translate(-50%)'
   },
   drawerHeader: {
     padding: 20,
-    borderBottom: '1px solid whitesmoke'
+    borderBottom: '2px solid whitesmoke'
   },
   drawerFooter: {
     padding: 10,
-    borderTop: '1px solid whitesmoke'
+    borderTop: '2px solid whitesmoke'
   },
   drawerBody: {
     flexGrow: 1,
@@ -49,7 +54,7 @@ const FormDrawer = ({ isOpen, close, children, title }) => {
   return (
     <div className={cn(styles.drawerWrapper, isOpen && styles.isOpened)}>
       <div className={cn(isOpen && styles.fixedDrawerWrapper)}>
-        <Box display='flex' flexDirection='column' justifyContent='space-between' className={styles.formWrapper}>
+        <Box display='flex' flexDirection='column' justifyContent='space-between' className={cn(styles.formWrapper)}>
           <Box display='flex' justifyContent='space-between' className={styles.drawerHeader}>
             <h3>{title}</h3>
             <CloseButton onClick={close} />
