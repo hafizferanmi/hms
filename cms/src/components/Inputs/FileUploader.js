@@ -1,18 +1,35 @@
 import React from 'react'
-import { TextField } from '@material-ui/core'
-import { useController } from 'react-hook-form'
+import { makeStyles } from '@material-ui/core'
 
-export const FileUploader = ({ control, name }) => {
-  const {
-    field: { ref, ...inputProps }
-  } = useController({
-    name,
-    control,
-    rules: { required: true },
-    defaultValue: ''
-  })
+const useStyles = makeStyles({
+  fileUploadLabel: {
+    background: 'rgba(0, 0, 0, .3)',
+    color: 'white',
+    width: '100%',
+    padding: '10px 5px'
+  },
+  inputLabel: {
+    fontWeight: 'bold',
+    color: 'rgba(0, 0, 0, 0.7)',
+    textTransform: 'uppercase',
+    marginTop: 20,
+    fontSize: 10,
+    marginBottom: 5
+  },
+  fileInput: {
+    display: 'none'
+  }
+})
 
-  console.log({ inputProps })
+export const FileUploader = ({ register, name, label }) => {
+  const classes = useStyles()
 
-  return <TextField {...inputProps} inputRef={ref} />
+  return (
+    <>
+      <label htmlFor='file' className={classes.inputLabel}>
+        {label}
+      </label>
+      <input type='file' id='file' name={name} ref={register} />
+    </>
+  )
 }

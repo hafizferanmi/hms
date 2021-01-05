@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { groupCodeWithCountry, buildFromArrayOfObject } from '../../../helpers/misc'
 
 const FunnyForm = () => {
-  const { handleSubmit, errors, formState, control } = useForm()
+  const { handleSubmit, errors, formState, control, register } = useForm()
   const { isSubmitting } = formState
   // const { error, message } = serverFormState
 
@@ -17,7 +17,7 @@ const FunnyForm = () => {
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <Input.FileUploader
         name='firstName'
-        control={control}
+        register={register}
         error={errors.firstName}
         label='First Name'
       />

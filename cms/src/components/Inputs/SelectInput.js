@@ -25,7 +25,7 @@ const SelectInput = ({ control, name, error, label, defaultValue, ...props }) =>
   })
 
   return (
-    <>
+    <div>
       <div className={classes.inputLabel}>{label}</div>
       <ReactSelect
         defaultValue={{ defaultValue }}
@@ -33,7 +33,7 @@ const SelectInput = ({ control, name, error, label, defaultValue, ...props }) =>
         {...inputProps}
         inputRef={ref}
       />
-    </>
+    </div>
   )
 }
 

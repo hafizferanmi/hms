@@ -6,20 +6,55 @@ import Input from '../../Inputs'
 import Button from '../../misc/Button'
 import ErrorMessage from '../../misc/ErrorMessage'
 import CheckInSchema from './CheckInSchema'
+import { GUEST_TITLE, GUEST_TITLE_LABEL, NEXT_OF_KIN_RELATIONSHIP, NEXT_OF_KIN_RELATIONSHIP_LABEL, MEANS_OF_TRAVEL, MEANS_OF_TRAVEL_LABEL } from '../../../constants/guest'
+import { buildSelectOptions } from '../../../helpers/misc'
+import { makeStyles, Box } from '@material-ui/core'
+import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined'
+
+const useStyles = makeStyles({
+  topDetailsWrapper: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    '& > div': {
+      flexBasis: '38%'
+    },
+    '& > div:first-child': {
+      flexBasis: '20%'
+    }
+  },
+  detailsWrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    '& > div': {
+      flexBasis: '48%'
+    }
+  },
+  formSeperator: {
+    marginTop: 40,
+    position: 'relative',
+    background: '#f6f9fd',
+    padding: '10px 0',
+    textTransform: 'uppercase'
+  }
+})
 
 const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, errors, formState, control } = useForm({
     resolver: yupResolver(CheckInSchema),
     defaultValues: checkIn
   })
   const { isSubmitting } = formState
   const { error, message } = serverFormState
+  const classes = useStyles()
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
-      <div>
-        <Input.TextInput
+      <p>Guest details</p>
+      <Box className={classes.topDetailsWrapper}>
+        <Input.SelectInput
           name='title'
-          register={register}
+          options={buildSelectOptions(GUEST_TITLE, GUEST_TITLE_LABEL)}
+          control={control}
           error={errors.title}
           label='Title'
           autoFocus
@@ -36,8 +71,8 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
           error={errors.lastName}
           label='Last Name'
         />
-      </div>
-      <div>
+      </Box>
+      <div className={classes.detailsWrapper}>
         <Input.TextInput
           name='email'
           type='email'
@@ -51,42 +86,21 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
           error={errors.phone}
           label='Guest Phone No.'
         />
-      </div>
-      <div>
         <Input.TextInput
           name='occupation'
           register={register}
           error={errors.occupation}
           label='Occupation'
         />
-        <Input.TextInput
-          name='arrivingFrom'
-          register={register}
-          error={errors.arrivingFrom}
-          label='Arriving from'
-        />
-      </div>
-      <div>
-        <Input.TextInput
-          name='purpose'
-          register={register}
-          error={errors.purpose}
-          label='Purpose'
-        />
-        <Input.TextInput
-          name='meansOfTravel'
-          register={register}
-          error={errors.meansOfTravel}
-          label='Means of travel'
-        />
       </div>
 
-      <div>
+      <p className={classes.formSeperator}>Next of kin details</p>
+      <div className={classes.detailsWrapper}>
         <Input.TextInput
           name='nextOfKin'
           register={register}
           error={errors.nextOfKin}
-          label='Next of kin'
+          label='Next of kin name'
         />
         <Input.TextInput
           name='nextOfKinPhoneNo'
@@ -94,8 +108,44 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
           error={errors.nextOfKinPhoneNo}
           label='Next of kin Phone No.'
         />
+        <Input.TextInput
+          name='nextOfKinEmail'
+          register={register}
+          error={errors.nextOfKinEmail}
+          label='Next of kin email address'
+        />
+        <Input.SelectInput
+          name='nextOfKinRelationship'
+          options={buildSelectOptions(NEXT_OF_KIN_RELATIONSHIP, NEXT_OF_KIN_RELATIONSHIP_LABEL)}
+          control={control}
+          error={errors.nextOfKinRelationship}
+          label='Next of kin relationship'
+          placeholde='Select next of kin relationship'
+        />
       </div>
-      <div>
+
+      <p className={classes.formSeperator}>Others</p>
+      <div className={classes.detailsWrapper}>
+        <Input.TextInput
+          name='purpose'
+          register={register}
+          error={errors.purpose}
+          label='Purpose of visit'
+        />
+        <Input.SelectInput
+          name='meansOfTravel'
+          control={control}
+          options={buildSelectOptions(MEANS_OF_TRAVEL, MEANS_OF_TRAVEL_LABEL)}
+          error={errors.meansOfTravel}
+          label='Means of travel'
+          placeholder='Select means of travel'
+        />
+        <Input.TextInput
+          name='arrivingFrom'
+          register={register}
+          error={errors.arrivingFrom}
+          label='Arriving from'
+        />
         <Input.TextInput
           name='dateOfArrival'
           type='date'
@@ -111,14 +161,7 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
           label='Date of departure'
         />
       </div>
-
       <div>
-        {/* <Input.TextInput
-          name='paymentMethod'
-          register={register}
-          error={errors.paymentMethod}
-          label='Payment method'
-        /> */}
         <Input.TextInput
           name='note'
           label='Note'
@@ -128,9 +171,11 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
           error={errors.note}
         />
       </div>
-      <Input.TextInput
+      <Input.SelectInput
         name='room'
-        register={register}
+        control={control}
+        options={buildSelectOptions(GUEST_TITLE, GUEST_TITLE_LABEL)}
+        loading
         error={errors.room}
         label='Room'
       />
@@ -141,7 +186,9 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
         />
       </div>
       <Button
-        label={`${checkIn ? 'Edit' : 'Add'} CheckIn`}
+        icon={SaveOutlinedIcon}
+        label='save'
+        // label={`${checkIn ? 'Edit' : 'Add'} CheckIn`}
         type='submit'
         disabled={isSubmitting}
       />

@@ -4,26 +4,26 @@ import MaterialButton from '@material-ui/core/Button'
 
 const useStyles = makeStyles({
   root: {
-    background: '#0066f5',
-    border: 0,
-    borderRadius: 40,
-    boxShadow: 'none',
+    background: '#177488',
     color: 'white',
-    height: 42,
-    padding: '0 30px',
-    outline: 0,
+    borderRadius: 5,
+    '& .MuiButton-text': {
+      fontSize: 10
+    },
     '&:hover': {
-      background: '#0066f5'
+      background: '#177488'
     }
   }
 })
 
-const Button = ({ label, ...props }) => {
+const Button = ({ label, icon: Icon, ...props }) => {
   const classes = useStyles()
   return (
     <MaterialButton
       variant='outlined'
       color='primary'
+      disableElevation
+      startIcon={Icon && <Icon />}
       className={classes.root}
       {...props}
     >

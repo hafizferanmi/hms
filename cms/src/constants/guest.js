@@ -30,12 +30,26 @@ export const NEXT_OF_KIN_RELATIONSHIP = Object.freeze({
   PARENT: 'PARENT',
   FRIEND: 'FRIEND',
   CHILD: 'CHILD',
-  SPOUSE: 'SPOUSE'
+  SPOUSE: 'SPOUSE',
+  COLLEAGUE: 'COLLEAGUE'
 })
 
 export const NEXT_OF_KIN_RELATIONSHIP_LABEL = Object.freeze({
   [NEXT_OF_KIN_RELATIONSHIP.PARENT]: 'Parent',
   [NEXT_OF_KIN_RELATIONSHIP.FRIEND]: 'Friend',
   [NEXT_OF_KIN_RELATIONSHIP.CHILD]: 'Child',
-  [NEXT_OF_KIN_RELATIONSHIP.SPOUSE]: 'Spouse'
+  [NEXT_OF_KIN_RELATIONSHIP.SPOUSE]: 'Spouse',
+  [NEXT_OF_KIN_RELATIONSHIP.COLLEAGUE]: 'Colleauge'
+})
+
+export const MEANS_OF_TRAVEL = Object.freeze({
+  ROAD: 'ROAD',
+  AIR: 'AIR',
+  WATER: 'WATER'
+})
+
+export const MEANS_OF_TRAVEL_LABEL = Object.freeze({
+  [MEANS_OF_TRAVEL.AIR]: 'Air',
+  [MEANS_OF_TRAVEL.ROAD]: 'Road',
+  [MEANS_OF_TRAVEL.WATER]: 'Water'
 })

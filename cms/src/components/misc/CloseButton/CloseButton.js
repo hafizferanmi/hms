@@ -1,7 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Close as CloseIcon } from '@material-ui/icons'
-import { grey } from '@material-ui/core/colors'
 import cn from 'clsx'
 
 const useStyles = makeStyles((theme) => ({
@@ -9,12 +8,9 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     padding: 5,
     borderRadius: '50%',
-    background: grey[100],
-    color: grey[500],
-    '&:hover': {
-      background: grey[300],
-      color: grey[800]
-    }
+    border: '1px solid #9baabd',
+    color: '#9baabd',
+    background: '#f6f9fd'
   }
 }))
 

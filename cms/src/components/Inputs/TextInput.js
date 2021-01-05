@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 const TextInput = ({ register, error, label, ...props }) => {
   const classes = useStyles()
   return (
-    <>
+    <div>
       <div className={classes.inputLabel}>{label}</div>
       <TextField
         variant='outlined'
@@ -28,7 +28,7 @@ const TextInput = ({ register, error, label, ...props }) => {
         helperText={error && error.message}
         {...props}
       />
-    </>
+    </div>
   )
 }
 

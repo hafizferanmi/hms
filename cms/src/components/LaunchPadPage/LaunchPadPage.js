@@ -2,7 +2,6 @@ import React from 'react'
 import FormDrawer from '../misc/FormDrawer'
 import useModal from '../../hooks/useModal'
 import CheckInForm from '../Forms/CheckinForm'
-import FunnyForm from '../Forms/TestForm'
 import ManagersLayout from '../ManagersPage/ManagersLayout'
 
 const LaunchPadPage = () => {
@@ -17,8 +16,8 @@ const LaunchPadPage = () => {
         close={modal.closeModal}
         title='Guest form'
       >
-        {/* <CheckInForm closeDrawer={handleCloseDrawer} /> */}
-        <FunnyForm closeDrawer={handleCloseDrawer} />
+        <CheckInForm closeDrawer={handleCloseDrawer} />
+        {/* <FunnyForm closeDrawer={handleCloseDrawer} /> */}
       </FormDrawer>
     </ManagersLayout>
 
