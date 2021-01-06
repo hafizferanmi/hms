@@ -22,6 +22,7 @@
     "countries-list": "^2.5.6",
     "csv": "^5.3.2",
     "csv-parser": "^3.0.0",
+    "date-fns": "^2.16.1",
     "dayjs": "^1.9.5",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",

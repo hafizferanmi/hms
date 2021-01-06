@@ -9,16 +9,12 @@ const schema = Joi.object()
       .required(),
 
     type: stringSchema()
-      .label('Mail type')
+      .label('SMS type')
       .valid(...Object.values(TEMPLATES_TYPE))
       .required(),
 
-    subject: stringSchema()
-      .label('Mail Subject')
-      .required(),
-
     body: stringSchema()
-      .label('Mail body')
+      .label('SMS body')
       .required()
   })
 

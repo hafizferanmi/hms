@@ -9,6 +9,7 @@ import GuestExpensesSchema from './guestExpensesSchema'
 import CompanySettingsSchema from './companySettingsSchema'
 import TodoSchema from './todoSchema'
 import EmailTemplateSchema from './emailTemplateSchema'
+import SMSTemplateSchema from './smsTemplateSchema'
 
 export default {
   CompanySchema,
@@ -21,5 +22,6 @@ export default {
   GuestExpensesSchema,
   CompanySettingsSchema,
   TodoSchema,
-  EmailTemplateSchema
+  EmailTemplateSchema,
+  SMSTemplateSchema
 }

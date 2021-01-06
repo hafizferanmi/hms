@@ -6,6 +6,14 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     required: true
   },
+  name: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    enum: ['GUEST', 'INVOICE', 'ESTIMATE', 'EVENT']
+  },
   subject: {
     type: String,
     required: true
@@ -22,4 +30,4 @@ const schema = new Schema({
 
 schema.plugin(MongooseDelete, { deletedBy: true, deletedAt: true })
 
-export default mongoose.model('guestExpenses', schema)
+export default mongoose.model('emailTemplate', schema)

@@ -1,5 +1,5 @@
 import Debug from 'debug'
-import EmailTemplate from '../models/emailTemplate'
+import EmailTemplate from '../models/emailTemplates'
 import helpers from '../helpers'
 import ValidationSchemas from '../ValidationSchemas'
 
@@ -91,7 +91,6 @@ export const getEmailTemplates = async (req, res) => {
 
 export const deleteEmailTemplate = async (req, res) => {
   debug('deleteEmailTemplate()')
-  debug('getEmailTemplates()')
   const companyId = req.staff.companyId
   const templateId = req.params.templateId
 
