@@ -6,10 +6,12 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 
 const useStyles = makeStyles({
   drawerWrapper: {
-    display: 'none'
+    visibility: 'hidden',
+    opacity: 0
   },
   isOpened: {
-    display: 'block'
+    visibility: 'visible',
+    opacity: 1
   },
   fixedDrawerWrapper: {
     position: 'fixed',
@@ -19,7 +21,7 @@ const useStyles = makeStyles({
     height: '100%',
     background: 'rgba(0, 0, 25, 0.5)',
     zIndex: 300,
-    transition: 'background 2s'
+    transition: 'background .2s'
   },
   formWrapper: {
     width: '50%',
@@ -27,10 +29,12 @@ const useStyles = makeStyles({
     background: 'white',
     height: '100vh',
     float: 'right',
-    transition: 'transform 1.2s ease-in 1s'
+    opacity: 0.5,
+    transition: 'all 0.2s ease-in'
   },
   formWrapperOpened: {
-    transform: 'translate(-50%)'
+    opacity: 1
+    // transform: 'translate(0%)'
   },
   drawerHeader: {
     padding: 20,
@@ -54,7 +58,7 @@ const FormDrawer = ({ isOpen, close, children, title }) => {
   return (
     <div className={cn(styles.drawerWrapper, isOpen && styles.isOpened)}>
       <div className={cn(isOpen && styles.fixedDrawerWrapper)}>
-        <Box display='flex' flexDirection='column' justifyContent='space-between' className={cn(styles.formWrapper)}>
+        <Box display='flex' flexDirection='column' justifyContent='space-between' className={cn(styles.formWrapper, isOpen && styles.formWrapperOpened)}>
           <Box display='flex' justifyContent='space-between' className={styles.drawerHeader}>
             <h3>{title}</h3>
             <CloseButton onClick={close} />

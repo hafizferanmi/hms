@@ -34,8 +34,17 @@ const useStyles = makeStyles({
     marginTop: 40,
     position: 'relative',
     background: '#f6f9fd',
-    padding: '10px 0',
-    textTransform: 'uppercase'
+    padding: '10px 20px',
+    fontSize: 10,
+    fontWeight: 700,
+    marginLeft: '-20px',
+    marginRight: '-20px',
+    marginBottom: 20,
+    textTransform: 'uppercase',
+
+    '&:first-of-type': {
+      marginTop: '-20px'
+    }
   }
 })
 
@@ -49,7 +58,7 @@ const CheckInForm = ({ serverFormState, handleFormSubmit, checkIn }) => {
   const classes = useStyles()
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
-      <p>Guest details</p>
+      <p className={classes.formSeperator}>Guest details</p>
       <Box className={classes.topDetailsWrapper}>
         <Input.SelectInput
           name='title'

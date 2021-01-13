@@ -102,6 +102,7 @@ const useStyles = makeStyles({
     marginTop: 10
   },
   error: {
+    fontSize: 12,
     color: 'rgba(214, 10, 46)'
   }
 })
@@ -122,7 +123,7 @@ const Loginform = ({ serverState, submitForm }) => {
   return (
     <form className={classes.loginFormWrapper} onSubmit={handleSubmit(submitForm)}>
       <p className={classes.signInText}>Sign in</p>
-      <span className={classes.signInDesc}>Enter your credentials to login into our beautiful app</span>
+      <span className={classes.signInDesc}>Enter your credentials to sign in</span>
       <div>
         <div className={classes.iconInputWrapper}>
           <div className={classes.iconWrapper}><Person /></div>
