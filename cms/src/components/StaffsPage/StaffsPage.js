@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '10px 40px'
+    padding: '10px 40px',
+    paddingRight: 10
   },
   searchBox: {
     display: 'flex',
@@ -78,7 +79,7 @@ const StaffsPage = ({ staffs }) => {
               placeholder='search staffs'
             />
           </div>
-          <div className={classes.button}>
+          <div className={classes.addStaffButton}>
             <Button
               label='Add staff'
               icon={PlusIcon}

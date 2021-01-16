@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#b5c0d0'
   },
   statCount: {
-    color: 'white',
+    color: '#111111',
     '& > span': {
       color: '#0c2e67'
     }
@@ -201,6 +201,7 @@ const RoomsPage = ({ rooms, roomTypes }) => {
         >
           <RoomForm
             room={roomFormModal.data}
+            roomTypeId={roomFormModal.data && roomFormModal.data.roomType}
             closeModal={roomFormModal.closeModal}
           />
         </Modal>

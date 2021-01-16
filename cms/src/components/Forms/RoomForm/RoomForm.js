@@ -35,12 +35,6 @@ const RoomForm = ({ serverFormState, handleFormSubmit, room }) => {
           rows={4}
           error={errors.desc}
         />
-        <Input.TextInput
-          name='roomType'
-          label='Room type'
-          register={register}
-          error={errors.roomType}
-        />
         <div>
           <ErrorMessage
             networkError={error}

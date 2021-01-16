@@ -1,7 +1,6 @@
 import React from 'react'
 import Modal from '../Modal'
 import Button from '../Button'
-import { red, green } from '@material-ui/core/colors'
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles({
@@ -13,10 +12,7 @@ const useStyles = makeStyles({
     marginTop: 40
   },
   yesButton: {
-    background: red[400]
-  },
-  noButton: {
-    background: green[400]
+    marginRight: 10
   }
 })
 
@@ -39,11 +35,13 @@ const ConfirmModal = ({ isOpen, title, closeModal, message, confirmAction }) => 
           <Button
             className={classes.yesButton}
             label='Yes'
+            variant='none'
             onClick={handleConfirmAction}
           />
           <Button
             className={classes.noButton}
             label='No'
+            variant='none'
             onClick={() => closeModal()}
           />
         </div>

@@ -6,11 +6,6 @@ const schema = yup.object().shape({
     .label('Room number')
     .required(),
 
-  roomType: yup.string()
-    .trim()
-    .required()
-    .label('Room type'),
-
   desc: yup.string()
     .trim()
     .label('Description')

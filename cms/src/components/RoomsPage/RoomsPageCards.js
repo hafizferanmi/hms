@@ -139,7 +139,16 @@ const useTypeClasses = makeStyles({
     top: -40,
     left: 140,
     zIndex: 200,
-    boxShadow: '0 2px 4px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.16);'
+    boxShadow: '0px 0px 0px 0px rgba(0, 0, 0, 0.31), 0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
+    visibility: 'hidden',
+    opacity: 0,
+    transform: 'scale(0.5)',
+    transition: 'all 200ms ease-in-out'
+  },
+  roomTypeMenuOpened: {
+    visibility: 'visible',
+    opacity: 1,
+    transform: 'scale(1)'
   }
 })
 
@@ -147,24 +156,23 @@ export const RoomTypeCard = ({ roomType, handleAddRoom, handleUpdate, handleDele
   const { name } = roomType
   const classes = useTypeClasses()
   const [showRoomTypeMenu, setMenuVisible] = React.useState(false)
-  const handleCloseMenu = () => setMenuVisible(false)
+  const handleCloseMenu = () => { setMenuVisible(false); console.log('Closed') }
+  const handleOpenMenu = () => { setMenuVisible(true); console.log('Clicked') }
 
   return (
     <Box style={{ position: 'relative', width: 'fit-content' }}>
       <span className={classes.roomTypeName}>{name}</span>
-      <IconButton onClick={() => setMenuVisible(true)}>
+      <IconButton onClick={handleOpenMenu}>
         <MoreVertIcon className={classes.moreIcon} />
       </IconButton>
-      {showRoomTypeMenu && (
-        <div className={classes.roomTypeMenu}>
-          <RoomTypeCardMenu
-            handleClose={handleCloseMenu}
-            handleAddRoom={handleAddRoom}
-            handleUpdate={handleUpdate}
-            handleDelete={handleDelete}
-          />
-        </div>
-      )}
+      <div className={cn(classes.roomTypeMenu, showRoomTypeMenu && classes.roomTypeMenuOpened)}>
+        <RoomTypeCardMenu
+          handleClose={handleCloseMenu}
+          handleAddRoom={handleAddRoom}
+          handleUpdate={handleUpdate}
+          handleDelete={handleDelete}
+        />
+      </div>
     </Box>
 
   )

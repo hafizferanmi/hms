@@ -11,7 +11,7 @@ import {
 } from '../../../redux/actions/rooms'
 import RoomForm from './RoomForm'
 
-const RoomFormContainer = ({ room, closeModal }) => {
+const RoomFormContainer = ({ room, closeModal, roomTypeId }) => {
   const roomId = room && room._id
   const API = roomId ? updateRoomAPI : addRoomAPI
 
@@ -23,7 +23,7 @@ const RoomFormContainer = ({ room, closeModal }) => {
   } = useAsyncFn(API)
 
   const handleFormSubmit = data => {
-    roomId ? submitForm(roomId, data) : submitForm(data)
+    roomId ? submitForm(roomId, data) : submitForm({ ...data, roomType: roomTypeId })
   }
 
   useNotify({

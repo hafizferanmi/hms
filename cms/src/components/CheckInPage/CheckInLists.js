@@ -9,6 +9,11 @@ import { formatDate } from '../../helpers/misc'
 import DatePickerButton from './CheckInDatePicker'
 import { red } from '@material-ui/core/colors'
 import useDataProvider from '../../hooks/useDataProvider'
+import Button from '../misc/Button'
+import FormDrawer from '../misc/FormDrawer'
+import CheckinForm from '../Forms/CheckinForm'
+import useModal from '../../hooks/useModal'
+import PlusIcon from '@material-ui/icons/Add'
 
 const useStyles = makeStyles({
   listWrapper: {
@@ -26,10 +31,7 @@ const useStyles = makeStyles({
   },
   searchWrapper: {
     borderBottom: '2px solid whitesmoke',
-    padding: '5px 10px',
-    '& > div': {
-      width: '50%'
-    }
+    padding: '5px 10px'
   },
   searchIcon: {
     color: '#808e9b',
@@ -102,6 +104,7 @@ const filterByType = (checkIns, type) => {
 }
 
 const CheckInList = ({ checkIns, handleSelectCheckIn, selectedCheckIn }) => {
+  const formModal = useModal()
   const { dataInContext } = useDataProvider()
   const { removeDateFilter, showingDateFilter } = dataInContext
   const classes = useStyles()
@@ -128,55 +131,70 @@ const CheckInList = ({ checkIns, handleSelectCheckIn, selectedCheckIn }) => {
   const showResetButton = searchValue || filterType || showingDateFilter
 
   return (
-    <div className={classes.listWrapper}>
-      <Box display='flex' justifyContent='space-between' className={classes.searchWrapper}>
-        <Box display='flex' alignItems='center'>
-          <SearchOutlinedIcon className={classes.searchIcon} />
-          <input ref={searchBoxRef} placeholder='Search guest' className={classes.searchInput} onChange={(e) => setSearchString(e.target.value)} />
+    <>
+      <div className={classes.listWrapper}>
+        <Box display='flex' justifyContent='space-between' alignItems='center' className={classes.searchWrapper}>
+          <Box display='flex' alignItems='center'>
+            <SearchOutlinedIcon className={classes.searchIcon} />
+            <input ref={searchBoxRef} placeholder='Search guest' className={classes.searchInput} onChange={(e) => setSearchString(e.target.value)} />
+          </Box>
+          <Box className={classes.datePickerWrapper}>
+            {/* <DatePickerButton /> */}
+            <Button
+              label='New guest'
+              icon={PlusIcon}
+              size='small'
+              onClick={() => formModal.openModal()}
+            />
+          </Box>
         </Box>
-        <Box className={classes.datePickerWrapper}>
-          <DatePickerButton />
+        <Box display='flex' alignItems='center' justifyContent='space-between' className={classes.guestWrapper}>
+          <h3>Guests</h3>
+          {showResetButton && <div className={classes.resetButton} onClick={handleRemoveAllFilters}>Reset</div>}
+          <div>
+            <DatePickerButton />
+            {/* <select ref={selectTypeRef} onChange={handleCheckInSort}>
+              <option value=''>All guest</option>
+              <option value={CHECKIN_TYPE.CHECKEDIN}>Checkedin only</option>
+              <option value={CHECKIN_TYPE.CHECKEDOUT}>Checkedout only</option>
+            </select> */}
+          </div>
         </Box>
-      </Box>
-      <Box display='flex' alignItems='center' justifyContent='space-between' className={classes.guestWrapper}>
-        <h3>Guests</h3>
-        {showResetButton && <div className={classes.resetButton} onClick={handleRemoveAllFilters}>Reset</div>}
-        <div>
-          <select ref={selectTypeRef} onChange={handleCheckInSort}>
-            <option value=''>All guest</option>
-            <option value={CHECKIN_TYPE.CHECKEDIN}>Checkedin only</option>
-            <option value={CHECKIN_TYPE.CHECKEDOUT}>Checkedout only</option>
-          </select>
-        </div>
-      </Box>
-      <Box className={classes.checkInCardsContainer}>
-        {searchValue && !filteredCheckIns.length && <div className={classes.emptyGuestText}>No search result found</div>}
-        <PerfectScrollBar>
-          {
-            checkIns.length
-              ? filteredCheckIns.map(checkIn => (
-                <CheckInRoomCard
-                  key={checkIn._id}
-                  handleSelectCheckIn={handleSelectCheckIn}
-                  selectedCheckIn={selectedCheckIn}
-                  checkIn={checkIn}
-                />
-              ))
-              : (
-                <Box
-                  display='flex'
-                  justifyContent='center'
-                  alignItems='center'
-                  className={classes.emptyGuestText}
-                >
-                  You dont have any guest yet
-                </Box>
-              )
-          }
-        </PerfectScrollBar>
-      </Box>
-
-    </div>
+        <Box className={classes.checkInCardsContainer}>
+          {searchValue && !filteredCheckIns.length && <div className={classes.emptyGuestText}>No search result found</div>}
+          <PerfectScrollBar>
+            {
+              checkIns.length
+                ? filteredCheckIns.map(checkIn => (
+                  <CheckInRoomCard
+                    key={checkIn._id}
+                    handleSelectCheckIn={handleSelectCheckIn}
+                    selectedCheckIn={selectedCheckIn}
+                    checkIn={checkIn}
+                  />
+                ))
+                : (
+                  <Box
+                    display='flex'
+                    justifyContent='center'
+                    alignItems='center'
+                    className={classes.emptyGuestText}
+                  >
+                    You dont have any guest yet
+                  </Box>
+                )
+            }
+          </PerfectScrollBar>
+        </Box>
+      </div>
+      <FormDrawer
+        isOpen={formModal.isOpen}
+        close={formModal.closeModal}
+        title='Guest form'
+      >
+        <CheckinForm closeDrawer={() => formModal.closeModal()} />
+      </FormDrawer>
+    </>
   )
 }
 

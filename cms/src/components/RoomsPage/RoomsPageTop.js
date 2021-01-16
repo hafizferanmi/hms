@@ -5,6 +5,7 @@ import { Box, makeStyles } from '@material-ui/core'
 // import IconButton from '@material-ui/core/IconButton'
 // import { VIEW } from './RoomsPage'
 import Button from '../misc/Button'
+import PlusIcon from '@material-ui/icons/Add'
 import { ROOM_STATUS, ROOM_STATUS_LABEL, ROOM_CLEAN_STATUS, ROOM_CLEAN_STATUS_LABEL } from '../../constants/room'
 import { buildSelectOptions } from '../../helpers/misc'
 
@@ -88,7 +89,7 @@ const RoomsPageTop = ({ handleSortStatus, selectedStatus, handleOpenFormModal })
           </IconButton>
         </Box> */}
         <Box>
-          <Button onClick={handleOpenFormModal} label='Add roomtype' />
+          <Button onClick={handleOpenFormModal} icon={PlusIcon} size='small' label='Add roomtype' />
         </Box>
       </Box>
     </Box>
