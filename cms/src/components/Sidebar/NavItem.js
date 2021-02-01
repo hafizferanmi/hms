@@ -60,10 +60,10 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     width: 20,
     height: 20,
-    color: '#b5c0d0'
+    color: '#0c2e67'
   },
   title: {
-    color: '#b5c0d0',
+    color: '#0c2e67',
     fontSize: 14
     // textTransform: 'uppercase',
   }

@@ -5,7 +5,6 @@ import {
   makeStyles
 } from '@material-ui/core'
 import Profile from './Profile'
-import ProfileDetails from './ProfileDetails'
 import ManagersLayout from '../ManagersPage/ManagersLayout'
 
 const useStyles = makeStyles((theme) => ({
@@ -37,14 +36,6 @@ const Account = () => {
             xs={12}
           >
             <Profile />
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            md={6}
-            xs={12}
-          >
-            <ProfileDetails />
           </Grid>
         </Grid>
       </Container>
