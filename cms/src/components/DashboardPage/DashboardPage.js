@@ -1,17 +1,71 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
+import ManagersLayout from '../ManagersPage/ManagersLayout'
+import {
+  Grid,
+  makeStyles
+} from '@material-ui/core'
 
-const DashboardPage = () => {
+const useStyles = makeStyles((theme) => ({
+  statWrapper: {
+    minHeight: '100%',
+    marginTop: 20,
+    marginRight: 5,
+    borderRadius: 5,
+    background: 'white',
+    border: '1px solid lightblue'
+  },
+  statLabel: {
+    fontSize: 18
+  },
+  statValue: {
+    fontSize: 25,
+    marginTop: 20,
+    fontWeight: 'bold'
+  }
+}))
+
+const Dashboard = ({ analytics }) => {
+  const classes = useStyles()
+  const { guests, halls, roomTypes, rooms } = analytics
+
+  const data = [
+    { label: 'Number of rooms', count: rooms },
+    { label: 'Number of halls', count: halls },
+    { label: 'Number of room types', count: roomTypes },
+    { label: 'Number of guests', count: guests }
+  ]
+
   return (
-    <Box>
-      <h1>This is going to be interesting</h1>
-      <h1 className='see'>This is going to be interesting</h1>
-      <h1 className='show'>This is going to be interesting</h1>
-      <h1 className='rale'>This is going to be interesting</h1>
-      <h1 className='ch'>This is going to be interesting</h1>
-      <h1 className='so'>This is going to be interesting</h1>
-    </Box>
+    <ManagersLayout title='Reports'>
+      <div
+        className={classes.root}
+        title='Dashboard'
+      >
+        <Grid
+          container
+          spacing={3}
+        >
+          {
+            data.map(data => (
+              <Grid
+                className={classes.statWrapper}
+                key={data.label}
+                item
+                lg={3}
+                sm={6}
+                xl={3}
+                xs={12}
+              >
+                <div className={classes.statLabel}>{data.label}</div>
+                <p className={classes.statValue}>{data.count}</p>
+              </Grid>
+            ))
+          }
+
+        </Grid>
+      </div>
+    </ManagersLayout>
   )
 }
 
-export default DashboardPage
+export default Dashboard

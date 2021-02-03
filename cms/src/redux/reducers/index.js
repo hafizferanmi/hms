@@ -5,6 +5,7 @@ import roomTypeReducer from './roomTypeReducer'
 import roomReducer from './roomsReducer'
 import checkInReducer from './checkInReducer'
 import hallsReducer from './hallsReducrer'
+import dashboardReducer from './dashboardReducer'
 
 export default combineReducers({
   staffs: staffReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   roomTypes: roomTypeReducer,
   rooms: roomReducer,
   checkIns: checkInReducer,
-  halls: hallsReducer
+  halls: hallsReducer,
+  analytics: dashboardReducer
 })

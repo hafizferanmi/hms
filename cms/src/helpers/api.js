@@ -41,6 +41,9 @@ export const forgotPassword = (body) => sendData('/staff/recover-password', body
 export const resetPassword = (body) => sendData('/staff/reset-password', body)
 export const changePassword = (body) => sendData('/staff/change-password', body)
 
+// DASHBOARD API
+export const getAnalytics = () => fetchData('/dashboard/analytics')
+
 // STAFF API
 export const getCurrentStaff = () => fetchData('staff/currentStaff')
 export const addStaff = (body) => sendData('/staff/add', body)
