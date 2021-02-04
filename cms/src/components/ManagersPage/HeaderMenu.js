@@ -7,9 +7,6 @@ import { Link, useNavigate } from '@reach/router'
 import { removeToken } from '../../helpers/auth'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
-import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded'
-// import { useDispatch } from 'react-redux'
-// import { logout } from '../../redux/actions/staff'
 
 const useStyles = makeStyles({
   headerMenuContainer: {
@@ -18,10 +15,10 @@ const useStyles = makeStyles({
     right: 0,
     zIndex: 10,
     borderRadius: 5,
-    minWidth: 250,
+    minWidth: 200,
     background: 'white',
     boxShadow: '0 3px 12px 0 rgba(0, 102, 245, 0.1)',
-    padding: '20px 5px'
+    padding: '20px 5px 0px'
   },
   detailsWrapper: {
     fontSize: 13,
@@ -39,6 +36,8 @@ const useStyles = makeStyles({
     display: 'flex',
     fontWeight: 'bold',
     alignItems: 'center',
+    marginLeft: '-5px',
+    marginRight: '-5px',
     '&:hover': {
       background: 'whitesmoke'
     },
@@ -56,11 +55,9 @@ const HeaderMenu = ({ handleClose }) => {
   const staff = useCurrentStaff()
   useOutsideClick(ref, handleClose)
   const navigateTo = useNavigate()
-  // const dispatch = useDispatch()
 
   const handleLogout = () => {
     removeToken()
-    // dispatch(logout())
     navigateTo('/')
   }
   return (
@@ -72,7 +69,6 @@ const HeaderMenu = ({ handleClose }) => {
         <p>{staff.company}</p>
       </div>
       <Link className={classes.menuItem} to='/secure/admin/profile'><AccountBoxIcon />  Profile</Link>
-      <Link className={classes.menuItem} to='/secure/admin/settings'> <SettingsRoundedIcon /> Settings</Link>
       <div className={classes.menuItem} onClick={handleLogout}><PowerSettingsNewIcon /> Logout</div>
     </div>
   )

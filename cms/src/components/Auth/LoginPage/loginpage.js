@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Loginform from './LoginFormContainer'
 import { makeStyles } from '@material-ui/styles'
 import { Typography } from '@material-ui/core'
+import { getAuthToken } from '../../../helpers/auth'
+import { useNavigate } from '@reach/router'
 
 import loginformbackground from '../../../assets/images/loginformbackground.jpg'
 
@@ -58,6 +60,18 @@ const useStyles = makeStyles({
 
 const Loginpage = () => {
   const classes = useStyles()
+  const navigateTo = useNavigate()
+  // if (getAuthToken()) {
+  //   return navigateTo('/secure/admin')
+  // }
+
+  useEffect(() => {
+    if (getAuthToken()) {
+      navigateTo('/secure/admin')
+    }
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <div className={classes.loginPageWrapper}>
       <div className={classes.loginPageBackgroundFade}>

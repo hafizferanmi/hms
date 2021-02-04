@@ -8,6 +8,7 @@ import {
   FETCH_CURRENT_STAFF_ERROR,
   FETCH_CURRENT_STAFF_LOADING,
   FETCH_CURRENT_STAFF_SUCCESS,
+  SET_PROFILE_IMAGE,
   LOGOUT
 } from '../types/staff'
 
@@ -63,6 +64,11 @@ export const fetchCurrentStaff = () => async (dispatch) => {
 
 export const setCurrentStaff = (payload) => ({
   type: FETCH_CURRENT_STAFF_SUCCESS,
+  payload
+})
+
+export const setProfileImage = (payload) => ({
+  type: SET_PROFILE_IMAGE,
   payload
 })
 

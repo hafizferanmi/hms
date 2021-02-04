@@ -27,7 +27,7 @@ const AuthRouteContainer = () => {
   useEffect(() => {
     if (!currentStaff) dispatch(fetchCurrentStaff())
     // eslint-disable-next-line
-  }, [currentStaff])
+  }, [])
 
   useEffect(() => {
     // console.log({ location })
@@ -39,6 +39,7 @@ const AuthRouteContainer = () => {
     //   navigateTo('/')
     // }
     // eslint-disable-next-line
+    console.log({currentStaff})
   }, [currentStaff])
 
   if (loading) {

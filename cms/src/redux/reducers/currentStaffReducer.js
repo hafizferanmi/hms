@@ -2,6 +2,7 @@ import {
   FETCH_CURRENT_STAFF_ERROR,
   FETCH_CURRENT_STAFF_SUCCESS,
   FETCH_CURRENT_STAFF_LOADING,
+  SET_PROFILE_IMAGE,
   LOGOUT
 } from '../types/staff'
 
@@ -34,6 +35,16 @@ const CurrentStaffReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: 'Error Occured, could not fetch current staff.'
+      }
+
+    case SET_PROFILE_IMAGE:
+      console.log('Reducer payload', payload)
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          displayImage: payload.displayImage
+        }
       }
 
     case LOGOUT:

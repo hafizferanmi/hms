@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-let BASE_URL
+export let API_BASE_URL
 
-if (process.env.NODE_ENV === 'development') BASE_URL = 'http://localhost:3001'
-if (process.env.NODE_ENV === 'test') BASE_URL = 'https://.api.isuites.xyz'
-if (process.env.NODE_ENV === 'production') BASE_URL = 'https://api.isuites.xyz'
+if (process.env.NODE_ENV === 'development') API_BASE_URL = 'http://localhost:3001'
+if (process.env.NODE_ENV === 'test') API_BASE_URL = 'https://.api.isuites.xyz'
+if (process.env.NODE_ENV === 'production') API_BASE_URL = 'https://api.isuites.xyz'
 
 const AUTH_TOKEN_KEY = '__token'
 
@@ -12,7 +12,7 @@ export const saveAuthToken = token => window.localStorage.setItem(AUTH_TOKEN_KEY
 const getAuthToken = () => window.localStorage.getItem(AUTH_TOKEN_KEY)
 
 const request = () => axios.create({
-  baseURL: BASE_URL,
+  baseURL: API_BASE_URL,
   headers: { Authorization: `Bearer: ${getAuthToken()}` }
 })
 
@@ -109,3 +109,6 @@ export const deleteEmailTemplate = (templateId) => deleteResource(`emailTemplate
 export const uploadCompanyLogo = (body) => sendData('/settings/uploadLogo', body)
 export const updateCompanyInfo = (companyId, body) => modifyResource(`/settings/update/${companyId}`, body)
 export const updateCompanyCurrency = (companyId, body) => modifyResource(`/settings/update/currency/${companyId}`, body)
+
+// MISC API
+export const uploadProfileImage = body => sendData('/staff/upload-dp', body)

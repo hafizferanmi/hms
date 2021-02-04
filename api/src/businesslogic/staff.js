@@ -181,8 +181,8 @@ export const updateDisplayPicture = (req, res) => {
     const displayImage = req.file && req.file.filename
 
     try {
-      const company = await Staff.findOneAndUpdate({ _id: staffId, companyId }, { displayImage }, { new: true })
-      return res.json(success(company))
+      const staff = await Staff.findOneAndUpdate({ _id: staffId, companyId }, { displayImage }, { new: true })
+      return res.json(success(staff))
     } catch (e) {
       return res.json(failed('Error occured, try again.'))
     }

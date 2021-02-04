@@ -1,10 +1,11 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { Typography, Badge } from '@material-ui/core'
-import DefaultImg from '../../assets/images/default.jpg'
+import { Typography, Badge, Avatar } from '@material-ui/core'
 import dayjs from 'dayjs'
 import HeaderMenu from './HeaderMenu'
 import { NotificationImportant, ArrowDropDown, ArrowDropUp } from '@material-ui/icons'
+// import { API_BASE_URL } from '../../helpers/api'
+// import useCurrentStaff from '../../hooks/useCurrentStaff'
 const useStyles = makeStyles({
   root: {
     display: 'flex',
@@ -63,6 +64,7 @@ const useStyles = makeStyles({
 
 const ManagerHeader = ({ title }) => {
   const styles = useStyles()
+  // const staff = useCurrentStaff()
   const date = dayjs().format('DD MMMM, YYYY')
   const [opened, setMenuOpen] = React.useState(false)
   const toggleMenu = () => setMenuOpen(!opened)
@@ -79,7 +81,11 @@ const ManagerHeader = ({ title }) => {
             <NotificationImportant />
           </Badge>
         </div>
-        <img onClick={toggleMenu} className={styles.imageDp} src={DefaultImg} alt='DP' />
+        <Avatar
+          className={styles.imageDp}
+          onClick={toggleMenu}
+          // src={`${API_BASE_URL}/${staff.displayImage}`}
+        />
         <div onClick={toggleMenu} className={styles.dropdownIcon}> {opened ? <ArrowDropUp /> : <ArrowDropDown />} </div>
       </div>
       {opened && <HeaderMenu handleClose={handleClose} />}

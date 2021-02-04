@@ -1,7 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
-import moment from 'moment'
+import { STAFF_ROLES_LABEL } from '../../constants/staff'
+import useAsyncFn from '../../hooks/useAsyncFn'
+import { uploadProfileImage as uploadProfileImageAPI, API_BASE_URL } from '../../helpers/api'
+import useNotify from '../../hooks/useNotify'
+import useCurrentStaff from '../../hooks/useCurrentStaff'
+import { setProfileImage } from '../../redux/actions/staff'
 import {
   Avatar,
   Box,
@@ -14,25 +19,54 @@ import {
   makeStyles
 } from '@material-ui/core'
 
-const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  city: 'Los Angeles',
-  country: 'USA',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith',
-  timezone: 'GTM-7'
-}
-
 const useStyles = makeStyles(() => ({
-  root: {},
+  root: {
+    marginTop: 40
+  },
   avatar: {
     height: 100,
     width: 100
+  },
+  nameText: {
+    // fontSize: 30
+    textTransform: 'capitalize',
+    marginTop: 10,
+    marginBottom: 10
+  },
+  fileUploader: {
+    display: 'none'
+  },
+  uploadButton: {
+    cursor: 'pointer',
+
+    '& > label': {
+      cursor: 'pointer'
+    }
   }
 }))
 
 const Profile = ({ className, ...rest }) => {
   const classes = useStyles()
+  const staff = useCurrentStaff()
+
+  const {
+    error: serverError,
+    loading: submitting,
+    response,
+    executeFn: uploadProfileImage
+  } = useAsyncFn(uploadProfileImageAPI)
+
+  const handleSelectFile = (event) => {
+    const formData = new window.FormData()
+    formData.append('dp', event.target.files[0])
+    uploadProfileImage(formData)
+  }
+
+  useNotify({
+    message: 'Profile image uploaded successfully',
+    action: setProfileImage,
+    response
+  })
 
   return (
     <Card
@@ -47,40 +81,45 @@ const Profile = ({ className, ...rest }) => {
         >
           <Avatar
             className={classes.avatar}
-            src={user.avatar}
+            src={`${API_BASE_URL}/${staff.displayImage}`}
           />
           <Typography
             color='textPrimary'
+            className={classes.nameText}
             gutterBottom
             variant='h3'
           >
-            {user.name}
+            {staff.name}
           </Typography>
           <Typography
             color='textSecondary'
             variant='body1'
           >
-            {`${user.city} ${user.country}`}
+            {staff.email}
           </Typography>
           <Typography
             className={classes.dateText}
             color='textSecondary'
             variant='body1'
           >
-            {`${moment().format('hh:mm A')} ${user.timezone}`}
+            {STAFF_ROLES_LABEL[staff.role]}
           </Typography>
         </Box>
       </CardContent>
       <Divider />
       <CardActions>
         <Button
+          className={classes.uploadButton}
           color='primary'
           fullWidth
           variant='text'
         >
-          Upload picture
+          <label htmlFor='file-uploader'>Upload picture</label>
         </Button>
       </CardActions>
+      <input onChange={handleSelectFile} type='file' id='file-uploader' className={classes.fileUploader} />
+      {submitting && <div>Updating profile picture</div>}
+      {serverError && <div>An error occured on the server, refresh and try again.</div>}
     </Card>
   )
 }
