@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "babel-node": "babel-node",
-    "dev": "cross-env DEBUG=API:* BABEL_DISABLE_CACHE=1 nodemon --exec npm run babel-node -- ./src/app.js",
+    "dev": "DEBUG=API:* BABEL_DISABLE_CACHE=1 nodemon --exec npm run babel-node -- ./src/app.js",
     "build": "NODE_ENV=production babel src -d dist",
     "start": "NODE_ENV=production node dist/app.js",
     "mongo:start": "docker-compose up -d mongodb",
