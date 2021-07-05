@@ -1,16 +1,8 @@
-import React from 'react'
-import { Link } from '@reach/router'
+import React from "react";
+import { NavLink as RouterNavlink } from "react-router-dom";
 
-const NavLink = props => (
-  <Link
-    {...props}
-    getProps={(props) => {
-      // props include isCurrent, isPartiallyCurrent, location
-      return {
-        className: props.isCurrent ? 'active' : ''
-      }
-    }}
-  />
-)
+const NavLink = (props) => (
+  <RouterNavlink {...props} activeClassName="active" />
+);
 
-export default NavLink
+export default NavLink;
