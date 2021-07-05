@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "@reach/router";
+import { Redirect } from "react-router-dom";
 import ReactLoading from "react-loading";
 import { makeStyles } from "@material-ui/styles";
 import Box from "@material-ui/core/Box";
-
 import { fetchCurrentStaff } from "../../../redux/actions/staff";
 import AuthRoute from "./AuthRoute";
 
@@ -19,9 +18,7 @@ const useStyles = makeStyles({
 });
 
 const AuthRouteContainer = () => {
-  const navigateTo = useNavigate();
   const dispatch = useDispatch();
-  // const location = useLocation()
   const classess = useStyles();
   const {
     error,
@@ -33,19 +30,6 @@ const AuthRouteContainer = () => {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    // console.log({ location })
-    // if (currentStaff && currentStaff.role && ADMINISTRATOR.includes(currentStaff.role)) {
-    //   navigateTo(location.pathname)
-    // } else if (currentStaff && currentStaff.role) {
-    //   navigateTo(STAFF_ROLE_ROUTE[currentStaff.role])
-    // } else {
-    //   navigateTo('/')
-    // }
-    // eslint-disable-next-line
-    console.log({ currentStaff });
-  }, [currentStaff]);
-
   if (loading) {
     return (
       <Box className={classess.loadingBox}>
@@ -53,7 +37,7 @@ const AuthRouteContainer = () => {
       </Box>
     );
   }
-  if (error) navigateTo("/");
+  if (error) <Redirect to="/" />;
   return <AuthRoute />;
 };
 

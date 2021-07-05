@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Redirect } from "@reach/router";
+import { BrowserRouter as Router } from "react-router-dom";
 import AuthRoute from "./components/misc/AuthRoute";
 import LoginPage from "./components/Auth/LoginPage";
 import PerfectScrollBar from "react-perfect-scrollbar";
@@ -15,11 +15,7 @@ const App = () => {
     <PerfectScrollBar>
       <Router>
         <LoginPage path="/" />
-        {isTokenExpired ? (
-          <Redirect to="/home" from="/" />
-        ) : (
-          <AuthRoute path="/secure/*" />
-        )}
+        <AuthRoute path="/secure/*" />
         <NotfoundPage default />
       </Router>
     </PerfectScrollBar>
