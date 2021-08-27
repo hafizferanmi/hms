@@ -2,12 +2,13 @@ import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWTSECRET;
 
-const generateAuthToken = (id) =>
-  jwt.sign({ id }, JWT_SECRET, {
+const generateAuthToken = (id, secret = JWT_SECRET) =>
+  jwt.sign({ id }, secret, {
     expiresIn: "12h", // token expires in 12 hours
   });
 
-const verifyAuthToken = (token) => jwt.verify(token, JWT_SECRET);
+const verifyAuthToken = (token, secret = JWT_SECRET) =>
+  jwt.verify(token, secret);
 
 const getTokenFromHeader = (header) => header.replace("Bearer: ", "");
 
