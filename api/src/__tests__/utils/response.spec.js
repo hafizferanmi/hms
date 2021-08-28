@@ -1,5 +1,5 @@
 import { expect } from "@jest/globals";
-import response from "../../src/helpers/response";
+import response from "../../helpers/response";
 
 const { failed: failedResponse, success: successResponse } = response;
 const data = {

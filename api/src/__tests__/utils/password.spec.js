@@ -1,6 +1,6 @@
 import { expect } from "@jest/globals";
 import _ from "lodash";
-import passwordHelpers from "../../src/helpers/password";
+import passwordHelpers from "../../helpers/password";
 
 const { hashPassword, isCorrectPassword } = passwordHelpers;
 const secret = "secret";
