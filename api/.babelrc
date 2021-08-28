@@ -1,8 +1,7 @@
 {
   "plugins": [
     "transform-es2015-modules-commonjs",
-    ["transform-object-rest-spread", { "useBuiltIns": true }],
-    "@babel/plugin-proposal-object-rest-spread"
+    ["transform-object-rest-spread", { "useBuiltIns": true }]
   ],
   "presets": [
     [
