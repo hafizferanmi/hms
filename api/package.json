@@ -6,12 +6,6 @@
   "scripts": {
     "babel-node": "babel-node",
     "test-coverage": "jest --coverage",
-    "jest-coverage-html": {
-      "collectCoverage": true,
-      "coverageReporters": [
-        "html"
-      ]
-    },
     "test": "jest",
     "dev": "DEBUG=API:* BABEL_DISABLE_CACHE=1 nodemon --exec npm run babel-node -- ./src/app.js",
     "build": "NODE_ENV=production babel src -d dist",
@@ -50,6 +44,10 @@
     "ramda": "^0.27.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9",
+    "@babel/preset-env": "^7.15.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
