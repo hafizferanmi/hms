@@ -10,6 +10,7 @@ onAppStart();
 const debug = Debug("API:app.js");
 const app = express();
 const port = process.env.PORT;
+console.log({ port });
 const {
   adminRoutes,
   companyRoutes,

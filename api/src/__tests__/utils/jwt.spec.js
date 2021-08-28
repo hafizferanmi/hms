@@ -1,7 +1,7 @@
 import { expect } from "@jest/globals";
 import _ from "lodash";
 import JWT from "../../helpers/jwt";
-import { jwtSecret } from "../../../config/default.json";
+import { jwtSecret } from "../../src/helpers/jwt";
 
 const { generateAuthToken, verifyAuthToken } = JWT;
 
