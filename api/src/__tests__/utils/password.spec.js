@@ -3,15 +3,15 @@ import _ from "lodash";
 import passwordHelpers from "../../helpers/password";
 
 const { hashPassword, isCorrectPassword } = passwordHelpers;
-const secret = "secret";
-const hashedSecret =
-  "$2a$10$Vf3Td2Utmo2SZssxFTp9tOIGCmuFCtYm1iKSTvHeh.xKp0RZrbMFG";
 
 describe("Check to validate password helper functions", () => {
-  test("it should check if password is properly hashed", async () => {
-    const hashFromSecret = await hashPassword(secret);
+  const secret = "secret";
+  let hashedSecret;
 
-    expect(hashFromSecret).toBeTruthy();
+  test("it should check if password is properly hashed", async () => {
+    hashedSecret = await hashPassword(secret);
+
+    expect(hashedSecret).toBeTruthy();
   });
 
   test("it should check is password is correct", async () => {
