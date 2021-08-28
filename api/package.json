@@ -44,7 +44,8 @@
     "node-cron": "^2.0.3",
     "nodemailer": "^6.4.15",
     "nodemon": "^2.0.4",
-    "ramda": "^0.27.0"
+    "ramda": "^0.27.0",
+    "supertest": "^6.1.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
