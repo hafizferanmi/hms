@@ -1,16 +1,15 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import Debug from 'debug'
-import cors from 'cors'
+import express from "express";
+import Debug from "debug";
+import cors from "cors";
 // eslint-disable-next-line
-import _ from './helpers/env'
-import onAppStart from './onAppStart'
-import routes from './routes'
+import _ from "./helpers/env";
+import onAppStart from "./onAppStart";
+import routes from "./routes";
 
-onAppStart()
-const debug = Debug('API:app.js')
-const app = express()
-const port = process.env.PORT
+onAppStart();
+const debug = Debug("API:app.js");
+const app = express();
+const port = process.env.PORT;
 const {
   adminRoutes,
   companyRoutes,
@@ -23,30 +22,30 @@ const {
   settingsRoute,
   bulkUploadRoute,
   emailTemplate,
-  dashboardRoute
-} = routes
+  dashboardRoute,
+} = routes;
 
-app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static('uploads'))
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("uploads"));
 
-app.use('/admin', adminRoutes)
-app.use('/company', companyRoutes)
-app.use('/staff', staffRoutes)
-app.use('/rooms', roomsRoute)
-app.use('/roomTypes', roomTypesRoute)
-app.use('/checkIn', checkInroute)
-app.use('/hall', hallsRoute)
-app.use('/booking', hallBookingRoute)
-app.use('/settings', settingsRoute)
-app.use('/bulkUpload', bulkUploadRoute)
-app.use('/emailTemplate', emailTemplate)
-app.use('/dashboard', dashboardRoute)
+app.use("/admin", adminRoutes);
+app.use("/company", companyRoutes);
+app.use("/staff", staffRoutes);
+app.use("/rooms", roomsRoute);
+app.use("/roomTypes", roomTypesRoute);
+app.use("/checkIn", checkInroute);
+app.use("/hall", hallsRoute);
+app.use("/booking", hallBookingRoute);
+app.use("/settings", settingsRoute);
+app.use("/bulkUpload", bulkUploadRoute);
+app.use("/emailTemplate", emailTemplate);
+app.use("/dashboard", dashboardRoute);
 
-app.get('/', (req, res) => res.json({ message: 'Welcome!' }))
+app.get("/", (req, res) => res.json({ message: "Welcome!" }));
 
 app.listen(port, () => {
-  console.log('Server is up and running on port ' + port)
-  debug('Server is up and running on port ' + port)
-})
+  console.log("Server is up and running on port " + port);
+  debug("Server is up and running on port " + port);
+});
