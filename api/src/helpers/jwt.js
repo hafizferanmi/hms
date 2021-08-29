@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import config from "../helpers/config";
 
-const JWT_SECRET = process.env.JWTSECRET;
+const JWT_SECRET = config.JWT_SECRET;
 
 const generateAuthToken = (id, secret = JWT_SECRET) =>
   jwt.sign({ id }, secret, {

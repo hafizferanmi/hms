@@ -5,12 +5,14 @@ import cors from "cors";
 import _ from "./helpers/env";
 import onAppStart from "./onAppStart";
 import routes from "./routes";
+import { isProduction } from "./helpers/env";
+import config from "./helpers/config";
+
+const port = config.PORT;
 
 onAppStart();
 const debug = Debug("API:app.js");
 const app = express();
-const port = process.env.PORT;
-console.log({ port });
 const {
   adminRoutes,
   companyRoutes,
@@ -47,6 +49,6 @@ app.use("/dashboard", dashboardRoute);
 app.get("/", (req, res) => res.json({ message: "Welcome!" }));
 
 app.listen(port, () => {
-  console.log("Server is up and running on port " + port);
+  isProduction && console.log("Server is up and running on port " + port);
   debug("Server is up and running on port " + port);
 });

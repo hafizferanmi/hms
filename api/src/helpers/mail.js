@@ -1,22 +1,23 @@
-import mailgun from 'mailgun-js'
-import Debug from 'debug'
+import mailgun from "mailgun-js";
+import Debug from "debug";
+import config from "../helpers/config";
 
-const debug = Debug('API: mail.js')
+const debug = Debug("API: mail.js");
 
-const apiKey = process.env.MAILGUN_API_KEY
-const domain = process.env.MAILGUN_DOMAIN
-const mg = mailgun({ apiKey, domain })
+const apiKey = config.MAILGUN_API_KEY;
+const domain = config.MAILGUN_DOMAIN;
+const mg = mailgun({ apiKey, domain });
 
-const sendMail = async (mailConfig) => { // mailConfig = { from, to, subject, text }
-  debug('sendMail()')
+const sendMail = async ({ from, to, subject, text }) => {
+  debug("sendMail()");
   try {
-    await mg.messages().send(mailConfig)
-    debug('Mail sent')
-    return true
+    await mg.messages().send({ from, to, subject, text });
+    debug("Mail sent");
+    return true;
   } catch (e) {
-    debug('Mail not sent')
-    return false
+    debug("Mail not sent");
+    return false;
   }
-}
+};
 
-export default sendMail
+export default sendMail;

@@ -1,25 +1,26 @@
 import mongoose from "mongoose";
 import Debug from "debug";
+import config from "../helpers/config";
+import { isProduction } from "../helpers/env";
 
 const debug = Debug("API:onAppStart/db.js");
 
 const dbSetup = () => {
   debug("dbSetup()");
-  const mongoURL = process.env.MONGOURL;
 
-  if (process.env.NODE_ENV !== "production") {
+  if (isProduction) {
     mongoose.set("debug", true);
   }
 
   mongoose
-    .connect(mongoURL, {
+    .connect(config.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false,
     })
-    .then(() => console.log("Connected to mongodb"))
-    .catch((err) => console.error("Error connecting to MongoDB: ", err));
+    .then(() => debug("Connected to database"))
+    .catch((err) => debug("Issue with DB connection", err));
 };
 
 export default dbSetup;
