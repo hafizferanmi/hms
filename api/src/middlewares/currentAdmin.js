@@ -1,43 +1,43 @@
-import Debug from 'debug'
-import helpers from '../helpers'
-import Admin from '../models/admin'
+import Debug from "debug";
+import helpers from "../helpers";
+import Admin from "../models/admin";
 
-const { verifyAuthToken, getTokenFromHeader } = helpers.jwt
-const { failed } = helpers.response
+const { verifyAuthToken, getTokenFromHeader } = helpers.jwt;
+const { failed } = helpers.response;
 
-const debug = Debug('API:middlewares/currentAdmin.js')
+const debug = Debug("API:middlewares/currentAdmin.js");
 
 const currentAdmin = async (req, res, next) => {
-  debug('currentAdmin()')
-  const authToken = req.get('Authorization')
+  debug("currentAdmin()");
+  const authToken = req.get("Authorization");
   if (!authToken) {
-    return res.json(failed('Unauthorized'))
+    return res.json(failed("Unauthorized"));
   }
 
-  let decodedToken
+  let decodedToken;
   try {
-    const token = getTokenFromHeader(authToken)
-    decodedToken = verifyAuthToken(token)
+    const token = getTokenFromHeader(authToken);
+    decodedToken = verifyAuthToken(token);
   } catch (e) {
-    return res.status(403).json(failed('Unauthorized error!'))
+    return res.status(403).json(failed("Unauthorized error!"));
   }
 
   if (!decodedToken || !decodedToken.id) {
-    return res.json(failed('Unauthorized'))
+    return res.json(failed("Unauthorized"));
   }
 
-  let admin
+  let admin;
   try {
-    admin = await Admin.findById(decodedToken.id)
+    admin = await Admin.findById(decodedToken.id);
   } catch (e) {
-    return req.json(failed('Unauthorized'))
+    return req.json(failed("Unauthorized"));
   }
 
   if (!admin) {
-    return res.json(failed('Unauthorized'))
+    return res.json(failed("Unauthorized"));
   }
-  req.admin = admin
-  next()
-}
+  req.admin = admin;
+  next();
+};
 
-export default currentAdmin
+export default currentAdmin;
